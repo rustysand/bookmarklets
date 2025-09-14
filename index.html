@@ -5,7 +5,8 @@
     <title>Rusty's Bookmarklets</title>
 </head>
 <body>
-    <p>Drag a link to your bookmarks bar. Then click on the bookmark whenever you want to use the tool </p>
+    <p>First, select the option in your browser to show the bookmarks bar. The process is slightly different for each browser. Google it if you dont know how. </p>
+    <p>After the bookmarks bar is visible, you can drag the link below into your bookmarks bar. After that, whenever you have foresight open, you only need to click the bookmark to sort by row </p>
     <a href="javascript:(function(){function getLaneOfRow(row){return parseInt(row.getElementsByClassName('proposed-allocation-cell')[0].innerText.match(/FR-[0-9]{3}([0-9]{2})/)[1]);}function sortRows(){var parent=document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];var rows=Array.from(parent.getElementsByTagName('tr'));if(!rows[0].isSortedByLane){console.log('sorting');for(var i=0;i<rows.length;i++){parent.removeChild(rows[i]);}rows=rows.filter(row=>row.classList.contains('awsui-table-row'));rows.sort((a,b)=>getLaneOfRow(a)-getLaneOfRow(b));for(i=0;i<rows.length;i++){parent.appendChild(rows[i]);}rows[0].isSortedByLane=true;}else{console.log('already sorted');}}function trySort(){try{sortRows();}catch(e){console.log('error when sorting!!!');console.log(e);}window.setTimeout(trySort,1000);}window.setTimeout(trySort,1000);})();">Sort By Lane</a>
     
 </body>
