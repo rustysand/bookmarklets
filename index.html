@@ -9,5 +9,75 @@
     <p>After the bookmarks bar is visible, you can drag the link below into your bookmarks bar. After that, whenever you have foresight open, you only need to click the bookmark to sort by row </p>
     <a href="javascript:(function(){function getLaneOfRow(row){return parseInt(row.getElementsByClassName('proposed-allocation-cell')[0].innerText.match(/FR-[0-9]{3}([0-9]{2})/)[1]);}function sortRows(){var parent=document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];var rows=Array.from(parent.getElementsByTagName('tr'));if(!rows[0].isSortedByLane){console.log('sorting');for(var i=0;i<rows.length;i++){parent.removeChild(rows[i]);}rows=rows.filter(row=>row.classList.contains('awsui-table-row'));rows.sort((a,b)=>getLaneOfRow(a)-getLaneOfRow(b));for(i=0;i<rows.length;i++){parent.appendChild(rows[i]);}rows[0].isSortedByLane=true;}else{console.log('already sorted');}}function trySort(){try{sortRows();}catch(e){console.log('error when sorting!!!');console.log(e);}window.setTimeout(trySort,1000);}window.setTimeout(trySort,1000);})();">Sort By Lane</a>
     
+
+
+
+
+
+
+
+    <h1>CSV Downloader Bookmarklet</h1>
+    <p>Drag the following link to your bookmarks bar:</p>
+    <a id="bookmarklet-link" href="#">Download CSV</a>
+
+    <script>
+        function csvDownloader() {
+            function csvEscape(e) {
+                return e.includes(',') || e.includes('"') || e.includes('\n') ? `"${e.replace(/"/g, '""')}"` : e;
+            }
+            const tableContainer = document.querySelector('.awsui-table-container table');
+            if (!tableContainer) return alert('Table not found');
+            const thead = tableContainer.querySelector('thead');
+            if (!thead) return alert('Thead not found');
+            const tbody = tableContainer.querySelector('tbody');
+            if (!tbody) return alert('Tbody not found');
+            const headerRow = thead.rows[0];
+            if (!headerRow) return alert('Header row not found');
+            const headerCells = Array.from(headerRow.cells).map(cell => csvEscape(cell.innerText.trim()));
+            const rows = Array.from(tbody.rows);
+            let allCompleted = true;
+            for (const row of rows) {
+                const lastCellText = row.cells[row.cells.length - 1].innerText.trim();
+                if (lastCellText !== 'Completed') {
+                    allCompleted = false;
+                    break;
+                }
+            }
+            const status = allCompleted ? 'COMPLETED' : 'INCOMPLETE';
+            const headerDiv = document.querySelector('.sorter-table.header');
+            if (!headerDiv) return alert('Header div not found');
+            const spans = Array.from(headerDiv.querySelectorAll('span'));
+            const planIdSpan = spans.find(span => span.innerText.startsWith('Plan id:'));
+            if (!planIdSpan) return alert('Plan ID span not found');
+            const planId = planIdSpan.innerText;
+            let csvContent = `${csvEscape(status)}\n${csvEscape(planId)}\n`;
+            csvContent += headerCells.join(',') + '\n';
+            for (const row of rows) {
+                const cells = Array.from(row.cells).map(cell => csvEscape(cell.innerText.trim()));
+                csvContent += cells.join(',') + '\n';
+            }
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'tasks.csv';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+
+    <script>
+        // Dynamically set the href of the link to the bookmarklet code
+        document.getElementById('bookmarklet-link').href = 'javascript:(' + csvDownloader.toString() + ')()';
+    </script>   
+    
+
+    
 </body>
 </html>
+    
+
+
+
