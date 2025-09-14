@@ -36,7 +36,7 @@
             function csvEscape(e) {
                 return e.includes(',') || e.includes('"') || e.includes('\n') ? `"${e.replace(/"/g, '""')}"` : e;
             }
-            const tableContainer = document.querySelector('.awsui-table-container table');
+            const tableContainer = document.querySelector('.awsui-table-container');
             if (!tableContainer) return alert('Table not found');
             const thead = tableContainer.querySelector('thead');
             if (!thead) return alert('Thead not found');
@@ -55,10 +55,10 @@
                 }
             }
             const status = allCompleted ? 'COMPLETED' : 'INCOMPLETE';
-            const headerDiv = document.querySelector('.sorter-table.header');
+            const headerDiv = document.querySelector('.sorter-table-header');
             if (!headerDiv) return alert('Header div not found');
             const spans = Array.from(headerDiv.querySelectorAll('span'));
-            const planIdSpan = spans.find(span => span.innerText.startsWith('Plan id:'));
+            const planIdSpan = spans.find(span => span.innerText.startsWith('Plan Id :'));
             if (!planIdSpan) return alert('Plan ID span not found');
             const planId = planIdSpan.innerText;
             let csvContent = `${csvEscape(status)}\n${csvEscape(planId)}\n`;
