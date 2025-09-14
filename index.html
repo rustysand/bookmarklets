@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rusty's Bookmarklets</title>
 </head>
 <body>
-    contact the author: tsunami.numerate576@8alias.com
+ contact the author: tsunami.numerate576@8alias.com
     <h1>Steps to start sorting foresight by lane number</h1>
     <p>First, it helps to have the bookmarks bar visible in your browser. 
         The bookmarks bar is usually a bar under the address bar where you can save links.
@@ -19,80 +20,213 @@
         If the entire page refreshes, then you will just need to click the bookmark again to reactive the sorting program.</p>
     <p>Note that clicking the link on this page will not work. 
         The link has to be added to your bookmarks, 
-        and you must be on the foresight tab when you then click the bookmark.</p>
-    <a href="javascript:(function(){function getLaneOfRow(row){return parseInt(row.getElementsByClassName('proposed-allocation-cell')[0].innerText.match(/FR-[0-9]{3}([0-9]{2})/)[1]);}function sortRows(){var parent=document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];var rows=Array.from(parent.getElementsByTagName('tr'));if(!rows[0].isSortedByLane){console.log('sorting');for(var i=0;i<rows.length;i++){parent.removeChild(rows[i]);}rows=rows.filter(row=>row.classList.contains('awsui-table-row'));rows.sort((a,b)=>getLaneOfRow(a)-getLaneOfRow(b));for(i=0;i<rows.length;i++){parent.appendChild(rows[i]);}rows[0].isSortedByLane=true;}else{console.log('already sorted');}}function trySort(){try{sortRows();}catch(e){console.log('error when sorting!!!');console.log(e);}window.setTimeout(trySort,1000);}window.setTimeout(trySort,1000);})();">Sort By Lane</a>
-    
+        and you must be on the foresight tab when you then click the bookmark.</p>    
+    <a id="sorter-link" href="#">Sort By Lane</a>
 
 
-
-
-
-
-
-    <h1>CSV Downloader</h1>
-    <p>this tool downloads the recommendation table as well as the overall Completion status and plan id to a single cvs file
-        which can be easily copied and pasted into slack</p>
+    <h1>Auto Capture Complete/Incomplete</h1>
+    <p>these tools make it easier to submit to the slack channel. This is a collection of bookmarklets that allow the needed data to be automatically save and retrieved later. </p>
     <p>Drag the following link to your bookmarks bar:</p>
-    <a id="bookmarklet-link" href="#">Download CSV</a>
+    <a id="watcher-link" href="#">Start Watcher</a><br>
+    <a id="retriever-json-link" href="#">Retrieve JSON</a><br>
+    <a id="retriever-md-link" href="#">Retrieve Markdown</a><br>
+
 
     <script>
-        function csvDownloader() {
-            function csvEscape(e) {
-                return e.includes(',') || e.includes('"') || e.includes('\n') ? `"${e.replace(/"/g, '""')}"` : e;
+        function startWatcher() {
+            if (window.watcherActive) {
+                const timeLeft = getTimeLeft();
+                alert(`Watcher is already active. Time left: ${formatTime(timeLeft)}`);
+                return;
             }
-            const tableContainer = document.querySelector('.awsui-table-container');
-            if (!tableContainer) return alert('Table not found');
-            const thead = tableContainer.querySelector('thead');
-            if (!thead) return alert('Thead not found');
-            const tbody = tableContainer.querySelector('tbody');
-            if (!tbody) return alert('Tbody not found');
-            const headerRow = thead.rows[0];
-            if (!headerRow) return alert('Header row not found');
-            const headerCells = Array.from(headerRow.cells).map(cell => csvEscape(cell.innerText.trim()));
-            const rows = Array.from(tbody.rows);
-            let allCompleted = true;
-            for (const row of rows) {
-                const lastCellText = row.cells[row.cells.length - 1].innerText.trim();
-                if (lastCellText !== 'Completed') {
-                    allCompleted = false;
-                    break;
+            window.watcherActive = true;
+
+            function getTimeLeft() {
+                const headerDiv = document.querySelector('.sorter-table-header');
+                if (!headerDiv) return -1;
+                const spans = Array.from(headerDiv.querySelectorAll('span'));
+                const timerSpan = spans.find(span => span.innerText.startsWith('Time remaining:'));
+                if (!timerSpan) return -1;
+                const timeStr = timerSpan.innerText.split('Time remaining:')[1].trim();
+                const timeMatch = timeStr.match(/(\d+):(\d+)/);
+                if (!timeMatch) return -1;
+                const min = parseInt(timeMatch[1], 10);
+                const sec = parseInt(timeMatch[2], 10);
+                return (min * 60 + sec) * 1000; // in ms
+            }
+
+            function formatTime(ms) {
+                if (ms < 0) return 'Unknown';
+                const totalSec = Math.floor(ms / 1000);
+                const min = Math.floor(totalSec / 60);
+                const sec = totalSec % 60;
+                return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+            }
+
+            function captureData() {
+                const table = document.querySelector('.awsui-table-container');
+                if (!table) return null;
+                const thead = table.querySelector('thead');
+                if (!thead) return null;
+                const tbody = table.querySelector('tbody');
+                if (!tbody) return null;
+                const headerRow = thead.rows[0];
+                if (!headerRow) return null;
+                const headerCells = Array.from(headerRow.cells).map(cell => cell.innerText.trim());
+                const bodyRows = Array.from(tbody.rows);
+                let completedCount = 0;
+                for (const row of bodyRows) {
+                    const lastCellText = row.cells[row.cells.length - 1].innerText.trim();
+                    if (lastCellText === 'Completed') {
+                        completedCount++;
+                    }
                 }
+                const totalCount = bodyRows.length;
+                const allCompleted = completedCount === totalCount;
+                const status = allCompleted ? 'COMPLETED' : 'INCOMPLETE';
+                const headerDiv = document.querySelector('.sorter-table-header');
+                if (!headerDiv) return null;
+                const spans = Array.from(headerDiv.querySelectorAll('span'));
+                const planIdSpan = spans.find(span => span.innerText.startsWith('Plan Id :'));
+                if (!planIdSpan) return null;
+                const planId = planIdSpan.innerText;
+                const rowsData = bodyRows.map(row => Array.from(row.cells).map(cell => cell.innerText.trim()));
+                return {
+                    status,
+                    planId,
+                    completedCount,
+                    totalCount,
+                    headers: headerCells,
+                    rows: rowsData
+                };
             }
-            const status = allCompleted ? 'COMPLETED' : 'INCOMPLETE';
-            const headerDiv = document.querySelector('.sorter-table-header');
-            if (!headerDiv) return alert('Header div not found');
-            const spans = Array.from(headerDiv.querySelectorAll('span'));
-            const planIdSpan = spans.find(span => span.innerText.startsWith('Plan Id :'));
-            if (!planIdSpan) return alert('Plan ID span not found');
-            const planId = planIdSpan.innerText;
-            let csvContent = `${csvEscape(status)}\n${csvEscape(planId)}\n`;
-            csvContent += headerCells.join(',') + '\n';
-            for (const row of rows) {
-                const cells = Array.from(row.cells).map(cell => csvEscape(cell.innerText.trim()));
-                csvContent += cells.join(',') + '\n';
-            }
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'tasks.csv';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
+
+            const MAX_CAPTURES = 8;
+            const CHECK_INTERVAL = 1000; // ms
+            let captureDisabled = false;
+
+            const onCapture = (data) => console.log('Captured:', data.slice(0, 200));
+            const onTimerTick = (timeLeft) => console.log('Time left:', formatTime(timeLeft));
+
+            setInterval(() => {
+                const timeLeft = getTimeLeft();
+                if (timeLeft < 0) return;
+                onTimerTick(timeLeft);
+                if (timeLeft <= CHECK_INTERVAL && !captureDisabled) {
+                    const dataObj = captureData();
+                    if (dataObj) {
+                        const jsonData = JSON.stringify(dataObj);
+                        let captures = JSON.parse(localStorage.getItem('captures') || '[]');
+                        captures.push(jsonData);
+                        if (captures.length > MAX_CAPTURES) captures.shift();
+                        localStorage.setItem('captures', JSON.stringify(captures));
+                        onCapture(jsonData);
+                    }
+                    captureDisabled = true;
+                } else if (timeLeft > CHECK_INTERVAL && captureDisabled) {
+                    captureDisabled = false;
+                }
+            }, CHECK_INTERVAL);
+
+            alert('Watcher started.');
         }
     </script>
 
     <script>
-        // Dynamically set the href of the link to the bookmarklet code
-        document.getElementById('bookmarklet-link').href = 'javascript:(' + csvDownloader.toString() + ')()';
-    </script>   
-    
+        function retrieveJson() {
+            const captures = JSON.parse(localStorage.getItem('captures') || '[]');
+            if (!captures.length) {
+                alert('No captures available.');
+                return;
+            }
+            const num = parseInt(prompt('Enter capture number (1-' + Math.min(8, captures.length) + '):'), 10);
+            if (isNaN(num) || num < 1 || num > captures.length) {
+                alert('Invalid number.');
+                return;
+            }
+            const jsonData = captures[num - 1];
+            navigator.clipboard.writeText(jsonData).then(() => {
+                alert('Capture ' + num + ' (JSON) copied to clipboard!');
+            }).catch(() => {
+                alert('Clipboard copy failed. JSON: ' + jsonData.slice(0, 200));
+            });
+        }
+    </script>
 
-    
+    <script>
+        function retrieveMarkdown() {
+            const captures = JSON.parse(localStorage.getItem('captures') || '[]');
+            if (!captures.length) {
+                alert('No captures available.');
+                return;
+            }
+            const num = parseInt(prompt('Enter capture number (1-' + Math.min(8, captures.length) + '):'), 10);
+            if (isNaN(num) || num < 1 || num > captures.length) {
+                alert('Invalid number.');
+                return;
+            }
+            const dataObj = JSON.parse(captures[num - 1]);
+            let markdown = `**Plan ID: ${dataObj.planId} - Status: ${dataObj.status} ${dataObj.completedCount}/${dataObj.totalCount}**\n\n`;
+            markdown += '| ' + dataObj.headers.join(' | ') + ' |\n';
+            markdown += '| ' + dataObj.headers.map(() => '---').join(' | ') + ' |\n';
+            for (const row of dataObj.rows) {
+                markdown += '| ' + row.join(' | ') + ' |\n';
+            }
+            navigator.clipboard.writeText(markdown).then(() => {
+                alert('Capture ' + num + ' (Markdown) copied to clipboard!');
+            }).catch(() => {
+                alert('Clipboard copy failed. Markdown: ' + markdown.slice(0, 200));
+            });
+        }
+    </script>
+
+    <script>
+        function sortByLane() {
+            function getLaneOfRow(row) {
+                return parseInt(row.getElementsByClassName('proposed-allocation-cell')[0].innerText.match(/FR-[0-9]{3}([0-9]{2})/)[1]);
+            }
+            function sortRows() {
+                var parent = document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];
+                var rows = Array.from(parent.getElementsByTagName('tr'));
+                if (!rows[0].isSortedByLane) {
+                    console.log('sorting');
+                    for (var i = 0; i < rows.length; i++) {
+                        parent.removeChild(rows[i]);
+                    }
+                    rows = rows.filter(row => row.classList.contains('awsui-table-row'));
+                    rows.sort((a, b) => getLaneOfRow(a) - getLaneOfRow(b));
+                    for (i = 0; i < rows.length; i++) {
+                        parent.appendChild(rows[i]);
+                    }
+                    rows[0].isSortedByLane = true;
+                } else {
+                    console.log('already sorted');
+                }
+            }
+            function trySort() {
+                try {
+                    sortRows();
+                } catch (e) {
+                    console.log('error when sorting!!!');
+                    console.log(e);
+                }
+                window.setTimeout(trySort, 1000);
+            }
+            window.setTimeout(trySort, 1000);
+        }
+    </script>
+
+    <script>
+        // Dynamically set the hrefs
+        document.getElementById('watcher-link').href = 'javascript:(' + startWatcher.toString() + ')()';
+        document.getElementById('retriever-json-link').href = 'javascript:(' + retrieveJson.toString() + ')()';
+        document.getElementById('retriever-md-link').href = 'javascript:(' + retrieveMarkdown.toString() + ')()';
+        document.getElementById('sorter-link').href = 'javascript:(' + sortByLane.toString() + ')()';
+    </script>
 </body>
 </html>
-    
+
+
 
 
 
