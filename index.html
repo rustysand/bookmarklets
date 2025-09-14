@@ -5,8 +5,17 @@
     <title>Rusty's Bookmarklets</title>
 </head>
 <body>
-    <p>First, select the option in your browser to show the bookmarks bar. The process is slightly different for each browser. Google it if you dont know how. </p>
-    <p>After the bookmarks bar is visible, you can drag the link below into your bookmarks bar. After that, whenever you have foresight open, you only need to click the bookmark to sort by row </p>
+    <h1>Steps to start sorting foresight by lane number</h1>
+    <p>First, it helps to have the bookmarks bar visible in your browser. 
+        The bookmarks bar is usually a bar under the address bar where you can save links.
+        You might already have it set to visible, but if not, it's easy to make it show up, 
+        although the process is slightly different for each browser. 
+        Google it if you dont know how. </p>
+    <p>After the bookmarks bar is visible, you can drag the link below into your bookmarks bar. 
+        After that, whenever you have foresight open, 
+        you only need to click the bookmark once to activate a program that will keep the recommendations sorted by row,
+        even after the data refreshes automatically.
+        If the entire page refreshes, then you will just need to click the bookmark again to reactive the sorting program.</p>
     <a href="javascript:(function(){function getLaneOfRow(row){return parseInt(row.getElementsByClassName('proposed-allocation-cell')[0].innerText.match(/FR-[0-9]{3}([0-9]{2})/)[1]);}function sortRows(){var parent=document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];var rows=Array.from(parent.getElementsByTagName('tr'));if(!rows[0].isSortedByLane){console.log('sorting');for(var i=0;i<rows.length;i++){parent.removeChild(rows[i]);}rows=rows.filter(row=>row.classList.contains('awsui-table-row'));rows.sort((a,b)=>getLaneOfRow(a)-getLaneOfRow(b));for(i=0;i<rows.length;i++){parent.appendChild(rows[i]);}rows[0].isSortedByLane=true;}else{console.log('already sorted');}}function trySort(){try{sortRows();}catch(e){console.log('error when sorting!!!');console.log(e);}window.setTimeout(trySort,1000);}window.setTimeout(trySort,1000);})();">Sort By Lane</a>
     
 
@@ -16,7 +25,9 @@
 
 
 
-    <h1>CSV Downloader Bookmarklet</h1>
+    <h1>CSV Downloader</h1>
+    <p>this tool downloads the recommendation table as well as the overall Completion status and plan id to a single cvs file
+        which can be easily copied and pasted into slack</p>
     <p>Drag the following link to your bookmarks bar:</p>
     <a id="bookmarklet-link" href="#">Download CSV</a>
 
