@@ -54,7 +54,9 @@
 </head>
 <body>
     <div class="input-container" id="inputContainer" style="display: none;">
-        <textarea id="jsonInput" placeholder="Paste your JSON here (e.g., [[&quot;Name&quot;, &quot;Age&quot;], [&quot;Alice&quot;, 25], [&quot;Bob&quot;, 30]])"></textarea>
+        <textarea id="jsonInput" placeholder='Paste code from slack message here. Example: [["Stacking Filter","SLAM received (Recirc)"], ["KLAL", 25], ["FL7", 30]]'></textarea>
+
+<textarea id="jsonInput" placeholder='[["Stacking Filter","SLAM received (Recirc)"], ["Row1", 25], ["Row2", 30]]'></textarea>
         <button onclick="renderFromInput()">Render Table</button>
         <div id="errorMessage" class="error"></div>
     </div>
