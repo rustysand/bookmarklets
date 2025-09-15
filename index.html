@@ -305,7 +305,7 @@
 
         document.getElementById('retriever-md-link').href = 'javascript:(' + retrieveMarkdown.toString() + ')()';
 
-        const manualCode = [captureData, manualMarkdown].map(f => f.toString()).join(';') + ';manualMarkdown();';
+        const manualCode = [captureData, manualMarkdown,verticalizedTableRowString].map(f => f.toString()).join(';') + ';manualMarkdown();';
         document.getElementById('manual-md-link').href = 'javascript:(function(){' + manualCode + '})()';
 
         const downloadCode = [captureData, downloadJsonAndMd].map(f => f.toString()).join(';') + ';downloadJsonAndMd();';
