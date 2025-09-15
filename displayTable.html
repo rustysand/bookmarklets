@@ -31,11 +31,10 @@
 
     <script>
         function getJsonFromUrl() {
-            const params = new URLSearchParams(window.location.search);
-            const jsonStr = params.get('data');
-            if (!jsonStr) return null;
+            const hash = window.location.hash.slice(1); // Remove the '#' prefix
+            if (!hash) return null;
             try {
-                return JSON.parse(decodeURIComponent(jsonStr));
+                return JSON.parse(decodeURIComponent(hash));
             } catch (e) {
                 console.error('Error parsing JSON:', e);
                 return null;
