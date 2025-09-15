@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table from JSON</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <table id="dataTable"></table>
+
+    <script>
+        function getJsonFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const jsonStr = params.get('data');
+            if (!jsonStr) return null;
+            try {
+                return JSON.parse(decodeURIComponent(jsonStr));
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                return null;
+            }
+        }
+
+        function displayTable(data) {
+            if (!data || !Array.isArray(data) || data.length < 1) {
+                document.getElementById('dataTable').innerHTML = '<tr><td>No valid data found</td></tr>';
+                return;
+            }
+
+            const table = document.getElementById('dataTable');
+            let html = '';
+
+            // Headers
+            html += '<tr>';
+            data[0].forEach(header => {
+                html += `<th>${header}</th>`;
+            });
+            html += '</tr>';
+
+            // Rows
+            for (let i = 1; i < data.length; i++) {
+                html += '<tr>';
+                data[i].forEach(cell => {
+                    html += `<td>${cell}</td>`;
+                });
+                html += '</tr>';
+            }
+
+            table.innerHTML = html;
+        }
+
+        // Execute on page load
+        window.onload = () => {
+            const data = getJsonFromUrl();
+            displayTable(data);
+        };
+    </script>
+</body>
+</html>
