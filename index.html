@@ -36,14 +36,15 @@
 
     <script>
         function getTimeLeft() {
-            const headerDiv = document.querySelector('.sorter-table-header');
-            if (!headerDiv) return -1;
-            const spans = Array.from(headerDiv.querySelectorAll('span'));
-            const timerSpan = spans.find(span => span.innerText.startsWith('Time remaining:'));
-            if (!timerSpan) return -1;
-            const timeStr = timerSpan.innerText.split('Time remaining:')[1].trim();
+
+           const timeDiv = document.querySelector('.sorter-table-header .foresight-table-metadata');
+            if (!headerDiv) alert("error finding time left until next recommendation (code 1)");
+            const timerSpan = headerDiv.querySelector('.timer');
+            if (!timerSpan) alert("error finding time left until next recommendation (code 2)");
+            const timeStr = timerSpan.innerText;
+
             const timeMatch = timeStr.match(/(\d+):(\d+)/);
-            if (!timeMatch) return -1;
+            if (!timeMatch) return alert("error finding time left until next recommendation (code 3)");;
             const min = parseInt(timeMatch[1], 10);
             const sec = parseInt(timeMatch[2], 10);
             return (min * 60 + sec) * 1000; // in ms
