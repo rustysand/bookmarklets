@@ -195,11 +195,78 @@
     </script>
 
     <script>
+        class FlexIterable {
+          constructor(...items) {
+            this.items = items.map(item => ({ value: item, processed: false }));
+          }
+        
+          static from(array) {
+            return new FlexIterable(...array);
+          }
+        
+          forEachRemaining(actionCallback) {
+            for (let i = 0; i < this.items.length; i++) {
+              if (!this.items[i].processed) {
+                const result = actionCallback(this.items[i].value, i);
+                let wasProcessed = false;
+                let stopProcessing = false;
+        
+                if (Array.isArray(result)) {
+                  [wasProcessed, stopProcessing] = result;
+                } else {
+                  wasProcessed = result;
+                }
+        
+                if (wasProcessed) {
+                  this.items[i].processed = true;
+                }
+        
+                if (stopProcessing) {
+                  return;
+                }
+              }
+            }
+          }
+        
+          reset() {
+            this.items.forEach(item => {
+              item.processed = false;
+            });
+          }
+        }
+        
         function verticalizedTableRowString(row, headers){
             var str = "";
-            for (var i=0; i<headers.length; i++){
+            var headers = FlexIterable.from(headers);
+            headers.forEachRemaining( (v,i)=>{
+                var match = headers[i].match(/([0-9]{2,3}) mins/);
+                if (!match){
+                    str += headers[i]+" : " + row[i] + "\n";
+                    return true;
+                }
+                else{
+                    return [false, true];
+                }
+            });    
+            var minutesStr="";
+            var boxesStr="";
+            headers.forEachRemaining( (v,i)=>{
+               
+                var match = headers[i].match(/([0-9]{2,3}) mins/);
+                if (match){
+                    minutesStr += (minutesStr?"/ ":"") + match[1];
+                    boxesStr += (boxesStr?"/ ":"") + row[i];
+                }
+                return !!match;
+            });
+            if (minutesStr){
+                str+= minutesStr + " mins : " + boxesStr + " packages";
+            }            
+            headers.forEachRemaining( (v,i)=>{
                 str += headers[i]+" : " + row[i] + "\n";
-            }
+                return true;
+            });
+            
             return str;
         }
         function manualMarkdown() {
@@ -213,8 +280,10 @@
             +"===========================\n";
 
             for (const row of dataObj.rows) {
-                markdown += verticalizedTableRowString(row,dataObj.headers) ;
-                markdown+= "====================\n";
+                if(row.length > 1) {
+                    markdown += verticalizedTableRowString(row,dataObj.headers) ;
+                    markdown+= "====================\n";
+                }
             }
             
             navigator.clipboard.writeText(markdown).then(() => {
