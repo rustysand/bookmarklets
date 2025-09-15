@@ -26,12 +26,11 @@
     <h1>Tools for capturing recommendation completion status</h1>
     <p>these tools make it easier to submit to the slack channel. This is a collection of bookmarklets that allow the needed data to be automatically save and retrieved later.</p>
     <p>Drag the following link to your bookmarks bar:</p>
-
-    <a id="watcher-link" href="#">Start Autocapture</a><br>
-    <a id="retriever-json-link" href="#">Retrieve autocaptured JSON</a><br>
-    <a id="retriever-md-link" href="#">Retrieve autocaptured Markdown</a><br>
-    <a id="manual-md-link" href="#">Manually copy Markdown</a><br>
-    <a id="download-link" href="#">Manually Download JSON and MD</a><br>
+    <a id="manual-md-link" href="#">Manually copy Markdown to clipboard</a><br>
+    <a id="watcher-link" href="#">Start Autocapture (experimental)</a><br>
+    <a id="retriever-json-link" href="#">Retrieve autocaptured JSON  (experimental)</a><br>
+    <a id="retriever-md-link" href="#">Retrieve autocaptured Markdown  (experimental)</a><br>
+    <a id="download-link" href="#">Manually Download JSON and MD  (experimental)</a><br>
 
 
     <script>
@@ -196,18 +195,28 @@
     </script>
 
     <script>
+        function verticalizedTableRowString(row, headers){
+            var str = "";
+            for (var i=0; i<headers.length; i++){
+                str += headers[i]+" : " + row[i] + "\n";
+            }
+            return str;
+        }
         function manualMarkdown() {
             const dataObj = captureData();
             if (!dataObj) {
                 alert('Capture failed.');
                 return;
             }
-            let markdown = `**Plan ID: ${dataObj.planId} - Status: ${dataObj.status} ${dataObj.completedCount}/${dataObj.totalCount}**\n\n`;
-            markdown += '| ' + dataObj.headers.join(' | ') + ' |\n';
-            markdown += '| ' + dataObj.headers.map(() => '---').join(' | ') + ' |\n';
+            let markdown = dataObj.planId + "\n"
+            +dataObj.status+" " +dataObj.completedCount}+"/"+dataObj.totalCount+"\n"
+            +"===========================\n";
+
             for (const row of dataObj.rows) {
-                markdown += '| ' + row.join(' | ') + ' |\n';
+                markdown += verticalizedTableRowString(row,dataObj.headers) ;
+                markdown+= "====================\n";
             }
+            
             navigator.clipboard.writeText(markdown).then(() => {
                 alert('Markdown copied to clipboard!');
             }).catch(() => {
