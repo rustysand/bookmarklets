@@ -24,9 +24,40 @@
         tr:nth-child(even) {
             background-color: #f9f9f9;
         }
+        .input-container {
+            max-width: 800px;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            width: 100%;
+            height: 150px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-family: monospace;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
+    <div class="input-container" id="inputContainer" style="display: none;">
+        <textarea id="jsonInput" placeholder="Paste your JSON here (e.g., [[&quot;Name&quot;, &quot;Age&quot;], [&quot;Alice&quot;, 25], [&quot;Bob&quot;, 30]])"></textarea>
+        <button onclick="renderFromInput()">Render Table</button>
+        <div id="errorMessage" class="error"></div>
+    </div>
     <table id="dataTable"></table>
 
     <script>
@@ -42,14 +73,13 @@
         }
 
         function displayTable(data) {
+            const table = document.getElementById('dataTable');
             if (!data || !Array.isArray(data) || data.length < 1) {
-                document.getElementById('dataTable').innerHTML = '<tr><td>No valid data found</td></tr>';
-                return;
+                table.innerHTML = '<tr><td>No valid data found</td></tr>';
+                return false;
             }
 
-            const table = document.getElementById('dataTable');
             let html = '';
-
             // Headers
             html += '<tr>';
             data[0].forEach(header => {
@@ -67,12 +97,35 @@
             }
 
             table.innerHTML = html;
+            return true;
+        }
+
+        function renderFromInput() {
+            const jsonInput = document.getElementById('jsonInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+            errorMessage.textContent = '';
+            try {
+                const data = JSON.parse(jsonInput);
+                if (displayTable(data)) {
+                    // Update URL fragment with valid input
+                    window.location.hash = encodeURIComponent(jsonInput);
+                } else {
+                    errorMessage.textContent = 'Invalid data: Please provide a valid 2D array JSON.';
+                }
+            } catch (e) {
+                errorMessage.textContent = 'Invalid JSON: ' + e.message;
+            }
         }
 
         // Execute on page load
         window.onload = () => {
             const data = getJsonFromUrl();
-            displayTable(data);
+            if (data && displayTable(data)) {
+                document.getElementById('inputContainer').style.display = 'none';
+            } else {
+                document.getElementById('inputContainer').style.display = 'block';
+                document.getElementById('dataTable').innerHTML = '<tr><td>No data provided in URL. Use the input box above.</td></tr>';
+            }
         };
     </script>
 </body>
