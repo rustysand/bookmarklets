@@ -145,12 +145,14 @@
             const MAX_CAPTURES = 8;
             const CHECK_INTERVAL = 1000;
             const timeCushion = 5000;
+            var newRecTime = 60*1000;
+            const newRecInterval=30*60*1000;
             let captureDisabled = false;
             setInterval(() => {
                 const timeLeft = getTimeLeft();
                 if (timeLeft < 0) alert("time left less than 0!");
                 onTimerTick(timeLeft);
-                if (timeLeft <= CHECK_INTERVAL+timeCushion && !captureDisabled) {
+                if (timeLeft <= CHECK_INTERVAL+timeCushion+newRecTime && !captureDisabled) {
                     const dataObj = captureData();
                     if (dataObj) {
                         const jsonData = JSON.stringify(dataObj);
@@ -161,8 +163,9 @@
                         onCapture(jsonData);
                     }
                     captureDisabled = true;
-                } else if (timeLeft > CHECK_INTERVAL+timeCushion && captureDisabled) {
+                } else if (timeLeft > CHECK_INTERVAL+timeCushion+newRecTime && captureDisabled) {
                     captureDisabled = false;
+                    newRecTime = timeLeft - newRecInterval + CHECK_INTERVAL;
                 }
             }, CHECK_INTERVAL);
             alert('Watcher started.');
