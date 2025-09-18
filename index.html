@@ -170,6 +170,7 @@
                 } else if (timeLeft > CHECK_INTERVAL+timeCushion+newRecTime && captureDisabled) {
                     captureDisabled = false;
                     newRecTime = timeLeft - newRecInterval + CHECK_INTERVAL;
+                    if (newRecTime<0) newRecTime = 0;
                 }
             }, CHECK_INTERVAL);
             alert('Watcher started.');
