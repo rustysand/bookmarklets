@@ -57,7 +57,7 @@
 
            
            const timerSpan = getTimeLeftElement();
-            if (!timerSpan) return 0;
+            if (!timerSpan) return (30 * 60) * 1000;
             const timeStr = timerSpan.innerText;
 
             const timeMatch = timeStr.match(/(\d+):(\d+)/);
