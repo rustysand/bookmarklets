@@ -350,7 +350,7 @@
                 slackMsg+="```" + JSON.stringify(tableData) + "```";
             }
               
-            copyToClipBoard(slackMsg,"summary and "+asURL?"URL":"JSON");
+            copyToClipBoard(slackMsg,"summary and "+(asURL?"URL":"JSON"));
         }
         
         function manualSummaryAndJSON(asURL) {
