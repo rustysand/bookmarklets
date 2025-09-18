@@ -38,6 +38,7 @@
     
     <a id="watcher-link" href="#">Start Autocapture </a><br>
     <a id="retriever-summaryjson-link" href="#">Retrieve autocaptured summary and JSON  </a><br>
+    <a id="retriever-summaryurl-link" href="#">Retrieve autocaptured summary and URL  </a><br>
     <a id="clear-captures-link" href="#">clear captures</a><br>
     
     <p>The following are experimental and/or under development:</p>
@@ -452,6 +453,12 @@
         const retrieveSummaryJSONCode = [copyToClipBoard, retrieveCapture,summaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSON,formatTime].map(f => f.toString()).join(';')
         + ';retrieveSummaryJSON();';
         document.getElementById('retriever-summaryjson-link').href = 'javascript:(function(){' + retrieveSummaryJSONCode + '})()';
+
+
+        const retrieveSummaryURLCode = [copyToClipBoard, retrieveCapture,summaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSON,formatTime].map(f => f.toString()).join(';')
+        + ';retrieveSummaryJSON(true);';
+        document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLCode + '})()';
+        
 
         const manualCode = [captureData, manualMarkdown,verticalizedTableRowString,FlexIterable,copyToClipBoard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';manualMarkdown();';
         document.getElementById('manual-md-link').href = 'javascript:(function(){' + manualCode + '})()';
