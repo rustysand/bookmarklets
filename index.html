@@ -154,6 +154,7 @@
             setInterval(() => {
                 const timeLeft = getTimeLeft();
                 if (timeLeft < 0) alert("time left less than 0!");
+                console.log("forsight seems to be sending new recs at about" + newRecTime/1000 + " seconds left");
                 onTimerTick(timeLeft);
                 if (timeLeft <= CHECK_INTERVAL+timeCushion+newRecTime && !captureDisabled) {
                     const dataObj = captureData();
