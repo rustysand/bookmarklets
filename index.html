@@ -49,9 +49,10 @@
     <script>
         function getTimeLeftElement(){
              const timeDiv = document.querySelector('.sorter-table-header .foresight-table-metadata');
-             if (!timeDiv) alert("error finding time left until next recommendation (code 1)");
-             const timerSpan = timeDiv.querySelector('.timer');
-             return timerSpan;
+             if (timeDiv) 
+                 return timeDiv.querySelector('.timer');
+             else
+                 return null;
         }
         function getTimeLeft(inMS=true) {
 
