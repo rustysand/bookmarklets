@@ -145,32 +145,32 @@
                 return;
             }
             window.watcherActive = true;
-            const MAX_CAPTURES = 8;
-            const CHECK_INTERVAL = 1000;
-            const timeCushion = 10000;
-            var newRecTime = 60*1000;
-            const newRecInterval=30*60*1000;
-            let captureDisabled = false;
+            const MAX_CAPTURES = 21;
+            const CHECK_INTERVAL = 2000;
+            var earliestLikelyRecTime = 60*1000;
+            let overwriteCapture = false;
             setInterval(() => {
                 const timeLeft = getTimeLeft();
                 if (timeLeft < 0) alert("time left less than 0!");
-                console.log("forsight seems to be sending new recs at about" + newRecTime/1000 + " seconds left");
                 onTimerTick(timeLeft);
-                if (timeLeft <= CHECK_INTERVAL+timeCushion+newRecTime && !captureDisabled) {
+                if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
                     const dataObj = captureData();
                     if (dataObj) {
                         const jsonData = JSON.stringify(dataObj);
                         let captures = JSON.parse(localStorage.getItem('captures') || '[]');
-                        captures.unshift(jsonData);
-                        if (captures.length > MAX_CAPTURES) captures.pop();
+                        if (overwriteCapture){
+                           captures[0] = jsonData;
+                        }else{
+                            captures.unshift(jsonData);
+                            if (captures.length > MAX_CAPTURES) captures.pop();
+                            overwriteCapture = true;
+                        }
                         localStorage.setItem('captures', JSON.stringify(captures));
                         onCapture(jsonData);
-                    }
-                    captureDisabled = true;
-                } else if (timeLeft > CHECK_INTERVAL+timeCushion+newRecTime && captureDisabled) {
-                    captureDisabled = false;
-                    newRecTime = timeLeft - newRecInterval + CHECK_INTERVAL;
-                    if (newRecTime<0) newRecTime = 0;
+                    } else alert("capture fail, no dataObj");
+                    
+                } else if (timeLeft > CHECK_INTERVAL+earliestLikelyRecTime && overwriteCapture) {
+                    overwriteCapture = false;
                 }
             }, CHECK_INTERVAL);
             alert('Watcher started.');
