@@ -59,11 +59,11 @@
 
            
            const timerSpan = getTimeLeftElement();
-            if (!timerSpan) return (30 * 60) * 1000;
+            if (!timerSpan) return -1;
             const timeStr = timerSpan.innerText;
 
             const timeMatch = timeStr.match(/(\d+):(\d+)/);
-            if (!timeMatch) return alert("error finding time left until next recommendation (code 3)");
+            if (!timeMatch) return -1;
             if(!inMS) return timeMatch;
             const min = parseInt(timeMatch[1], 10);
             const sec = parseInt(timeMatch[2], 10);
@@ -140,6 +140,34 @@
         }
 
         function startWatcherMain() {
+            function showAlert(message) {
+              const alert = document.createElement('div');
+              const closeBtn = document.createElement('span');
+              
+              alert.textContent = message;
+              alert.style.cssText = `
+                position: fixed;
+                top: 10px;
+                right: 10px;
+                padding: 10px 30px 10px 10px;
+                background: #333;
+                color: white;
+                z-index: 1000;
+              `;
+              
+              closeBtn.textContent = '×';
+              closeBtn.style.cssText = `
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                cursor: pointer;
+              `;
+              
+              closeBtn.onclick = () => alert.remove();
+              
+              alert.appendChild(closeBtn);
+              document.body.appendChild(alert);
+            }
             if (window.watcherActive) {
                 const timeLeft = getTimeLeft();
                 alert(`Watcher is already active. Time left: ${formatTime(timeLeft)}`);
@@ -149,11 +177,19 @@
             const MAX_CAPTURES = 21;
             const CHECK_INTERVAL = 2000;
             var earliestLikelyRecTime = 60*1000;
-            let overwriteCapture = false;
+            var overwriteCapture = false;
+            var lastTimeLeft = Number.POSITIVE_INFINITY;
             setInterval(() => {
                 const timeLeft = getTimeLeft();
-                if (timeLeft < 0) alert("time left less than 0!");
                 onTimerTick(timeLeft);
+                if (timeLeft < 0) {
+                    return;
+                };
+                if (timeLeft > lastTimeLeft && !overwriteCapture)
+                {
+                    showAlert("timer reset before any capture was taken. last tick time left: "+ lastTimeLeft);
+                }
+                lastTimeLeft = timeLeft;
                 if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
                     const dataObj = captureData();
                     if (dataObj) {
@@ -170,7 +206,7 @@
                         onCapture(jsonData);
                     } else alert("capture fail, no dataObj");
                     
-                } else if (timeLeft > CHECK_INTERVAL+earliestLikelyRecTime && overwriteCapture) {
+                } else {
                     overwriteCapture = false;
                 }
             }, CHECK_INTERVAL);
