@@ -51,13 +51,13 @@
              const timeDiv = document.querySelector('.sorter-table-header .foresight-table-metadata');
              if (!timeDiv) alert("error finding time left until next recommendation (code 1)");
              const timerSpan = timeDiv.querySelector('.timer');
-             if (!timerSpan) alert("error finding time left until next recommendation (code 2)");
              return timerSpan;
         }
         function getTimeLeft(inMS=true) {
 
            
            const timerSpan = getTimeLeftElement();
+            if (!timerSpan) return 0;
             const timeStr = timerSpan.innerText;
 
             const timeMatch = timeStr.match(/(\d+):(\d+)/);
