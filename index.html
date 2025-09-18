@@ -123,20 +123,11 @@
         function onTimerTick(timeLeft) {
             console.log('Time left:', formatTime(timeLeft));
             console.log('last updated:', new Date());
-            const timerSpan = getTimeLeftElement();
-            var sib = timerSpan.nextElementSibling;
-            if (!sib || sib.innerText.indexOf("👁️")<0){
-                sib = document.createElement("span");
-                timerSpan.after(sib);
-            }
-            if (sib.innerText == "")
-                sib.innerText="👁️";
-            else if (sib.innerText == "👁️")
-                sib.innerText="👁️👁️";
-            else if (sib.innerText == "👁️👁️")
-                sib.innerText="👁️👁️👁️";
+            var nextRecEl = document.getElementsByClassName("awsui-badge-color-green awsui-badge-content")[0];
+            if (nextRecEl.style.backgroundColor == "blue")
+                nextRecEl.style.backgroundColor == "#009900";
             else
-                sib.innerText="👁️";
+                nextRecEl.style.backgroundColor == "blue";
         }
    
         function onCapture(data) {
