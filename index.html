@@ -412,9 +412,9 @@
                     rows.sort((a, b) =>{
                         chuteLaneA = getChuteAndLaneOfRow(a);
                         chuteLaneB = getChuteAndLaneOfRow(b);
-                        if (a[1]-b[1] == 0)
-                            return a[0]-b[0];
-                        return a[1]-b[1];
+                        if (chuteLaneA[1]-chuteLaneB[1] == 0)
+                            return chuteLaneA[0]-chuteLaneB[0];
+                        return chuteLaneA[1]-chuteLaneB[1];
                     });
                     for (i = 0; i < rows.length; i++) {
                         parent.appendChild(rows[i]);
