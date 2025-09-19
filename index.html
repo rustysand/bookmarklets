@@ -8,58 +8,62 @@
 <body>
     
     <p>contact the author: Rusty Sand (rustysan) tsunami.numerate576@8alias.com</p>
-    <h3><i>On this page I provide a collection of tools in the form of "bookmarklets". 
-        They are like links that you save to your bookmarks/favorites, 
-        but unlike ordinary bookmarks that take you to some website, 
-        when you click on these in your bookmarks, 
-        it executes a small program on whatever page you happen to have open at the time. 
-        If you aren't familiar with all this, 
+    <h3><i>On this page I provide a collection of tools in the form of "bookmarklets".
+        They are like links that you save to your bookmarks/favorites,
+        but unlike ordinary bookmarks that take you to some website,
+        when you click on these in your bookmarks,
+        it executes a small program on whatever page you happen to have open at the time.
+        If you aren't familiar with all this,
         you can learn by first following the steps below to sort foresight by lane number.
-        That sould give you a feel for how bookmarklets work, after which you will be 
+        That sould give you a feel for how bookmarklets work, after which you will be
         more prepared to use the more complex tools that follow.
     </i></h3>
     
     <h1>Steps to start sorting foresight by lane number</h1>
     <p>
-        First, it helps to have the bookmarks bar visible in your browser. 
+        First, it helps to have the bookmarks bar visible in your browser.
         <a href="https://help.usepastel.com/en/articles/3380923-how-to-turn-on-your-bookmarks-toolbar">here's a guide for various browsers if you don't know how</a>
     </p>
-    <p>After the bookmarks bar is visible, you can drag the link below into your bookmarks bar. 
-        After that, whenever you have foresight open, 
+    <p>After the bookmarks bar is visible, you can drag the link below into your bookmarks bar.
+        After that, whenever you have foresight open,
         you only need to click the bookmark once to activate a program that will keep the recommendations sorted by lane number,
         even after the data refreshes automatically.
         If the entire page refreshes, then you will just need to click the bookmark again to reactivate the sorting program.</p>
     
     <a id="sorter-link" href="#">Sort By Lane</a>
-    <p>Note that clicking the link on this page will not work. 
-        The link has to be added to your bookmarks, 
+    <p>Note that clicking the link on this page will not work.
+        The link has to be added to your bookmarks,
         and you must be on the foresight tab when you then click the bookmark.</p>
     <p>After you get this sorting bookmark working, feel free to move on to the other tools below.</p>
     <h1>Tools for capturing recommendation completion status</h1>
-    <h3><i>these tools make it easier to submit to the slack channel. 
-        This is a collection of bookmarklets that allow the needed data to be copied to the clipboard or automatically saved and retrieved later. 
+    <h3><i>these tools make it easier to submit to the slack channel.
+        This is a collection of bookmarklets that allow the needed data to be copied to the clipboard or automatically saved and retrieved later.
         Some of these bookmarks have rather long names that might not fit on your bookmarks bar nicely.
        After you add them to your bookmarks, feel free to edit the names, but changing the url/code will likely make the bookmarklet not function properly</i></h3>
-    <p>Drag the following link to your bookmarks bar. When the bookmark is clicked, it copies the data from foresight, kinda like taking a screenshot but better.</p>
+    <p>Drag the following link to your bookmarks bar. When the bookmark is clicked, 
+    it copies a clear image of the table from foresight,
+    kinda like taking a screenshot but better.
+    After you click it, it takes a few seconds to capture the image.
+    It will look like nothing happened at first, but you will see an alert when the capture completes.</p>
     
-    <a id="manual-saj-link" href="#">Manually copy Summary+JSON to clipboard</a><br>
+    <a id="capture-image-link" href="#">capture image</a><br>
     
-    <p>The following also copy the data to your clip board, but in other formats. Try them all and see which you like or just stick to the recommended format above:</p>
+    <p>The following copies a summary including completion status and plan id</p>
+    <a id="manual-summary-link" href="#">capture summary  </a><br>
     
-    <a id="manual-sajurl-link" href="#">Manually copy Summary+longURL to clipboard</a><br>
-    <a id="manual-md-link" href="#">Manually copy Markdown to clipboard</a><br>
     
     <p>The following is for capturing the data automatically when timer is close to zero. It will save up to 21 captures in your browser's local storage:</p>
     
     <a id="watcher-link" href="#">Start Autocapture </a><br>
 
-    <p>The following are for retrieving the data that was captured automatically. They both retrieve the same data, but in different formats.
-    When clicked, these bookmarklets will tell you how many captures are available and prompt you to enter a number to select the desired capture. 
+    <p>The following are for retrieving the data that was captured automatically. One retrieves the image, One retrieves the summary.
+    When clicked, these bookmarklets will tell you how many captures are available and prompt you to enter a number to select the desired capture.
     Entering 0 selects the most recent capture</p>
-    <a id="retriever-summaryjson-link" href="#">Retrieve autocaptured summary and JSON  </a><br>
-    <a id="retriever-summaryurl-link" href="#">Retrieve autocaptured summary and URL  </a><br>
 
-     <p>The following allows you to clear all auto-captures from local storage, 
+    <a id="retrieve-image-link" href="#">retrieve autocaptured image</a><br>
+    <a id="retrieve-summary-link" href="#">retrieve autocaptured summary</a><br>
+
+     <p>The following allows you to clear all auto-captures from local storage,
          which might be useful if you want to clean things up after saving the captures to a more permanent storage location.
          Note that the autocapture program also overwrites old captures on a FIFO basis once the number of captures reaches 21</p>
     <a id="clear-captures-link" href="#">clear captures</a><br>
@@ -71,17 +75,20 @@
     <p>But fear not. Simply close the error and click anywhere on the forsight page to make it in focus before clicking the bookmarklet again</p>
 
     <p>The following are experimental and/or under development:</p>
+    <a id="manual-sajurl-link" href="#">Manually copy Summary+longURL to clipboard</a><br>
+    <a id="manual-md-link" href="#">Manually copy Markdown to clipboard</a><br>
     <a id="retriever-json-link" href="#">Retrieve autocaptured JSON  (experimental)</a><br>
     <a id="retriever-md-link" href="#">Retrieve autocaptured Markdown  (experimental)</a><br>
     <a id="download-link" href="#">Manually Download JSON and MD  (experimental)</a><br>
+    <a id="manual-saj-link" href="#">Manually copy Summary+JSON to clipboard</a><br>
+    <a id="retriever-summaryjson-link" href="#">Retrieve autocaptured summary and JSON  </a><br>
+    <a id="retriever-summaryurl-link" href="#">Retrieve autocaptured summary and URL  </a><br>
     
-    <a id="capture-image-link" href="#">capture image  (experimental)</a><br>
-    <a id="retrieve-image-link" href="#">retrieve autocaptured image (experimental)</a><br>
 
     <script>
         function getTimeLeftElement(){
              const timeDiv = document.querySelector('.sorter-table-header .foresight-table-metadata');
-             if (timeDiv) 
+             if (timeDiv)
                  return timeDiv.querySelector('.timer');
              else
                  return null;
@@ -167,9 +174,52 @@
         }
    
         function onCapture(data) {
-            console.log('Captured:', data.json.slice(0, 200));
+            console.log('Captured:', JSON.stringify(data.data).slice(0, 200));
         }
+        
+        
+        async function captureImage() {
+            function loadScript(src) {
+                return new Promise((resolve, reject) => {
+                  if (window.html2canvas) {
+                    resolve();
+                    return;
+                  }
+                  const script = document.createElement('script');
+                  script.src = src;
+                  script.onload = resolve;
+                  script.onerror = reject;
+                  document.head.appendChild(script);
+                });
+            }
 
+            async function tableToPng(tableElement) {
+                const canvas = await html2canvas(tableElement, {
+                  allowTaint: true,
+                  scale: 1
+                });
+                return canvas.toDataURL('image/png');
+            }
+
+          
+            const container = document.querySelector('.awsui-table-container');
+            if (!container) {
+              alert('No .awsui-table-container found');
+              return;
+            }
+            const table = container.querySelector('table');
+            if (!table) {
+              alert('No table found in .awsui-table-container');
+              return;
+            }
+
+            await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
+            const dataUrl = await tableToPng(table);
+
+            return dataUrl;
+        }
+        
+        
         function startWatcherMain() {
             function showAlert(message) {
               console.log("sending alert to page with message: "+message);
@@ -212,7 +262,7 @@
             var timeChangeTolerance = 1000 * 60 * 4;
             var overwriteCapture = false;
             var lastTimeLeft = Number.POSITIVE_INFINITY;
-            setInterval(() => {
+            setInterval(async () => {
                 const timeLeft = getTimeLeft();
                 onTimerTick(timeLeft);
                 if (timeLeft < 0) {
@@ -225,7 +275,7 @@
                 lastTimeLeft = timeLeft;
                 if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
                     const dataObj = captureData();
-                    const img = captureImage();
+                    const img = await captureImage();
                     const toSave = {data: dataObj, image: img};
                     if (dataObj && img) {
                         
@@ -268,7 +318,7 @@
 
         
         
-        function copyToClipBoard(str, name="text"){
+        function copyToClipboard(str, name="text"){
             navigator.clipboard.writeText(str).then(() => {
                 alert(name+' copied to clipboard!');
             }).catch((e) => {
@@ -380,7 +430,7 @@
                 else{
                     return [false, true];
                 }
-            });    
+            });
             var minutesStr="";
             var boxesStr="";
             headers.forEachRemaining( (v,i)=>{
@@ -402,14 +452,14 @@
             
             return str;
         }
-        function captureMarkdownToClipBoard() {
+        function captureMarkdownToClipboard() {
             const dataObj = captureData();
             if (!dataObj) {
                 alert('Capture failed.');
                 return;
             }
             
-            copyToClipBoard(buildMarkdownFromDataObject(dataObj),"Markdown");
+            copyToClipboard(buildMarkdownFromDataObject(dataObj),"Markdown");
         }
 
         function copySummaryAndJSONFromDataObj(dataObj,asURL){
@@ -427,7 +477,7 @@
                 slackMsg+="```" + JSON.stringify(tableData) + "```";
             }
               
-            copyToClipBoard(slackMsg,"summary and "+(asURL?"URL":"JSON"));
+            copyToClipboard(slackMsg,"summary and "+(asURL?"URL":"JSON"));
         }
         
         function captureSummaryAndJSONtoClipboard(asURL) {
@@ -439,7 +489,7 @@
             copySummaryAndJSONFromDataObj(dataObj,asURL);
 
         }
-        function retrieveSummaryJSONtoClipBoard(asURL) {
+        function retrieveSummaryJSONtoClipboard(asURL) {
             var cap = retrieveCapture();
             if (!cap) return;
             const dataObj = cap.data;
@@ -483,50 +533,11 @@
 
 
 
-function captureImage() {
-    function loadScript(src) {
-        return new Promise((resolve, reject) => {
-          if (window.html2canvas) {
-            resolve();
-            return;
-          }
-          const script = document.createElement('script');
-          script.src = src;
-          script.onload = resolve;
-          script.onerror = reject;
-          document.head.appendChild(script);
-        });
-    }
-
-    async function tableToPng(tableElement) {
-        const canvas = await html2canvas(tableElement, {
-          allowTaint: true,
-          scale: 1
-        });
-        return canvas.toDataURL('image/png');
-    }
-
-  
-    const container = document.querySelector('.awsui-table-container');
-    if (!container) {
-      alert('No .awsui-table-container found');
-      return;
-    }
-    const table = container.querySelector('table');
-    if (!table) {
-      alert('No table found in .awsui-table-container');
-      return;
-    }
-
-    await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
-    const dataUrl = await tableToPng(table);
-
-    return dataUrl;
-}
 
 
 
-function copyImage(dataUrl) {
+
+async function copyImage(dataUrl) {
   const byteString = atob(dataUrl.split(',')[1]);
   const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
   const ab = new ArrayBuffer(byteString.length);
@@ -542,8 +553,8 @@ function copyImage(dataUrl) {
 
         
 
-function captureImageToClipboard() {
-    copyImage(captureImage());
+async function captureImageToClipboard() {
+    await copyImage(await captureImage());
 }
 
 
@@ -649,7 +660,7 @@ function imageDebugFunction (){
     console.log('Canvas dimensions:', canvas.width + 'x' + canvas.height);
     const ctx = canvas.getContext('2d');
     const imageData = ctx.getImageData(0, 0, 1, 1).data;
-    console.log('Top-left pixel RGBA:', imageData); 
+    console.log('Top-left pixel RGBA:', imageData);
     const dataUrl = canvas.toDataURL('image/png');
     console.log('Data URL length:', dataUrl.length);
     console.log('Data URL preview (first 100 chars):', dataUrl.substring(0, 100));
@@ -742,41 +753,62 @@ function imageDebugFunction (){
             }
             window.setTimeout(trySort, 1000);
         }
+        
+  
+          function retrieveSummaryToClipboard(){
+              var cap = retrieveCapture();
+              if(cap)
+                copyToClipboard(summaryFromDataObject(cap.data)[1], "summary");
+          }
+  
+          const retrieveSummaryCode = [retrieveCapture, copyToClipboard, formatTime, summaryFromDataObject, retrieveSummaryToClipboard].map(f => f.toString()).join(';') + ';retrieveSummaryToClipboard();';
+          document.getElementById('retrieve-summary-link').href = 'javascript:(function(){' + retrieveSummaryCode + '})()';
+  
+        function captureSummaryToClipboard(){
+            copyToClipboard(summaryFromDataObject(captureData())[1], "summary");
+        }
+        
+        
+        const summaryCode = [captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard].map(f => f.toString()).join(';') + ';captureSummaryToClipboard();';
+        document.getElementById('manual-summary-link').href = 'javascript:(function(){' + summaryCode + '})()';
+        
 
-        retrieveJSONtoClipboard (){
+        function retrieveJSONtoClipboard (){
             var cap = retrieveCapture();
             if(cap)
-                copyToClipBoard(JSON.stringify(retrieveCapture().data),"JSON");
+                copyToClipboard(JSON.stringify(retrieveCapture().data),"JSON");
         }
-        const retrieveJSONCode = [copyToClipBoard, retrieveCapture,retrieveJSONtoClipboard].map(f => f.toString()).join(';')
+        
+        
+        const retrieveJSONCode = [copyToClipboard, retrieveCapture,retrieveJSONtoClipboard].map(f => f.toString()).join(';')
         + ';retrieveJSONtoClipboard();';
         document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
  
         // Dynamically set the hrefs
-        const watcherCode = [getTimeLeft, formatTime, captureData, onTimerTick, onCapture, startWatcherMain,formatTime,getTimeLeftElement].map(f => f.toString()).join(';') + ';startWatcherMain();';
+        const watcherCode = [getTimeLeft, formatTime, captureData, onTimerTick, onCapture, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
         document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
 
 
-        const retrieveMDCode = [retrieveMarkdownToClipboard, retrieveCapture,buildMarkdownFromDataObject,summaryFromDataObject,copyToClipBoard].map(f => f.toString()).join(';') + ';retrieveMarkdownToClipboard();';
+        const retrieveMDCode = [retrieveMarkdownToClipboard, retrieveCapture,buildMarkdownFromDataObject,summaryFromDataObject,copyToClipboard].map(f => f.toString()).join(';') + ';retrieveMarkdownToClipboard();';
         document.getElementById('retriever-md-link').href = 'javascript:(function(){' + retrieveMDCode + '})()';
 
 
         
         
-        const retrieveSummaryJSONcode = [copyToClipBoard, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipBoard,formatTime].map(f => f.toString()).join(';')
+        const retrieveSummaryJSONcode = [copyToClipboard, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
         + ';retrieveSummaryJSON();';
         document.getElementById('retriever-summaryjson-link').href = 'javascript:(function(){' + retrieveSummaryJSONcode + '})()';
 
 
-        const retrieveSummaryURLcode = [copyToClipBoard, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipBoard,formatTime].map(f => f.toString()).join(';')
+        const retrieveSummaryURLcode = [copyToClipboard, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
         + ';retrieveSummaryJSON(true);';
         document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLcode + '})()';
         
 
-        const manualCode = [captureData, captureMarkdownToClipBoard,verticalizedTableRowString,FlexIterable,copyToClipBoard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipBoard();';
+        const manualCode = [captureData, captureMarkdownToClipboard,verticalizedTableRowString,FlexIterable,copyToClipboard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipboard();';
         document.getElementById('manual-md-link').href = 'javascript:(function(){' + manualCode + '})()';
         
-        const manualSummaryAndJSONbaseCode = [copySummaryAndJSONFromDataObj,summaryFromDataObject,captureData, captureSummaryAndJSONtoClipboard, copyToClipBoard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
+        const manualSummaryAndJSONbaseCode = [copySummaryAndJSONFromDataObj,summaryFromDataObject,captureData, captureSummaryAndJSONtoClipboard, copyToClipboard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
         
         const manualSummaryAndJSONcode =  manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard();';
         document.getElementById('manual-saj-link').href = 'javascript:(function(){' + manualSummaryAndJSONcode + '})()';
@@ -795,10 +827,10 @@ function imageDebugFunction (){
         document.getElementById('clear-captures-link').href = 'javascript:(function(){' + clearCapturesCode + '})()';
 
         
-        const captureImageCode = [captureImageToClipBoard].map(f => f.toString()).join(';') + ';captureImageToClipBoard();';
-        document.getElementById('save-image-link').href = 'javascript:(function(){' + captureImageCode + '})()';
+        const captureImageCode = [captureImageToClipboard, copyImage, captureImage].map(f => f.toString()).join(';') + ';captureImageToClipboard();';
+        document.getElementById('capture-image-link').href = 'javascript:(function(){' + captureImageCode + '})()';
 
-        const retrieveImageCode = [retrieveImageToClipboard].map(f => f.toString()).join(';') + ';retrieveImageToClipboard();';
+        const retrieveImageCode = [retrieveImageToClipboard, retrieveCapture, captureImage, copyImage].map(f => f.toString()).join(';') + ';retrieveImageToClipboard();';
         document.getElementById('retrieve-image-link').href = 'javascript:(function(){' + retrieveImageCode + '})()';
         
     </script>
