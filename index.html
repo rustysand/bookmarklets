@@ -605,6 +605,159 @@ function retrieveImage(){
 }
 
 
+
+function() minimalImageDebugFunction{
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      if (window.html2canvas) {
+        resolve();
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  async function minimalTableToPng(tableElement) {
+    const canvas = await html2canvas(tableElement, {
+      allowTaint: true,
+      scale: 1
+    });
+    return canvas.toDataURL('image/png');
+  }
+  async function minimalSaveTableImage() {
+    const container = document.querySelector('.awsui-table-container');
+    if (!container) {
+      alert('No .awsui-table-container found');
+      return;
+    }
+    const table = container.querySelector('table');
+    if (!table) {
+      alert('No table found in .awsui-table-container');
+      return;
+    }
+    try {
+      await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
+      const dataUrl = await minimalTableToPng(table);
+      localStorage.setItem('tableImage', dataUrl);
+      const a = document.createElement('a');
+      a.href = dataUrl;
+      a.download = 'minimal-table.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.src = dataUrl;
+      img.onload = () => {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        canvas.style.position = 'fixed';
+        canvas.style.top = '0';
+        canvas.style.left = '0';
+        canvas.style.zIndex = '9999';
+        canvas.style.border = '2px solid green';
+        document.body.appendChild(canvas);
+        setTimeout(() => {
+          document.body.removeChild(canvas);
+        }, 5000);
+      };
+      alert('Minimal debug save complete. Downloaded PNG. Displayed for 5s. Dimensions: ' + img.width + 'x' + img.height);
+    } catch (err) {
+      alert('Error: ' + err.message);
+    }
+  }
+  minimalSaveTableImage();
+}
+
+
+function() imageDebugFunction{
+  function loadScript(src) {
+    return new Promise((resolve, reject) => {
+      if (window.html2canvas) {
+        resolve();
+        return;
+      }
+      const script = document.createElement('script');
+      script.src = src;
+      script.onload = resolve;
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+  async function simpleTableToPng(tableElement) {
+    console.log('Starting html2canvas render...');
+    console.log('Table element:', tableElement);
+    console.log('Table outerHTML length:', tableElement.outerHTML.length);
+    const canvas = await html2canvas(tableElement, {
+      allowTaint: true,
+      useCORS: false,
+      backgroundColor: null,
+      scale: 1,
+      logging: true,
+      onclone: (clonedDoc, element) => {
+        console.log('Clone created, table in clone:', clonedDoc.body.querySelector('table'));
+      }
+    });
+    console.log('Canvas created:', canvas);
+    console.log('Canvas dimensions:', canvas.width + 'x' + canvas.height);
+    const ctx = canvas.getContext('2d');
+    const imageData = ctx.getImageData(0, 0, 1, 1).data;
+    console.log('Top-left pixel RGBA:', imageData); 
+    const dataUrl = canvas.toDataURL('image/png');
+    console.log('Data URL length:', dataUrl.length);
+    console.log('Data URL preview (first 100 chars):', dataUrl.substring(0, 100));
+    return { canvas, dataUrl };
+  }
+  async function debugSaveTableImage() {
+    const container = document.querySelector('.awsui-table-container');
+    if (!container) {
+      alert('No .awsui-table-container found');
+      return;
+    }
+    const table = container.querySelector('table');
+    if (!table) {
+      alert('No table found in .awsui-table-container');
+      return;
+    }
+    console.log('Found table, starting debug...');
+    try {
+      await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
+      const result = await simpleTableToPng(table);
+      localStorage.setItem('tableImage', result.dataUrl);
+      
+      const a = document.createElement('a');
+      a.href = result.dataUrl;
+      a.download = 'debug-table.png';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+     
+      result.canvas.style.position = 'fixed';
+      result.canvas.style.top = '0';
+      result.canvas.style.left = '0';
+      result.canvas.style.zIndex = '9999';
+      result.canvas.style.border = '2px solid red';
+      document.body.appendChild(result.canvas);
+      setTimeout(() => {
+        document.body.removeChild(result.canvas);
+      }, 10000);
+      alert('Debug save complete. Downloaded PNG. Check console and on-screen canvas. Data URL length: ' + result.dataUrl.length);
+    } catch (err) {
+      console.error('Error:', err);
+      alert('Error: ' + err.message);
+    }
+  }
+  debugSaveTableImage();
+}
+        
+
+
+
         
  
         function sortByLane() {
