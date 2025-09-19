@@ -462,6 +462,145 @@
             document.body.removeChild(linkMd);
             URL.revokeObjectURL(urlMd);
         }
+
+
+
+
+
+
+
+
+
+
+function() saveImage {
+  async function generateTableImage(t, e = {}) {
+    const { download = false, saveToStorage = false, useCanvas = false } = e;
+    return new Promise((e, r) => {
+      try {
+        const n = t.cloneNode(true);
+        const o = document.createElement("div");
+        o.style.position = "absolute";
+        o.style.left = "-10000px";
+        o.style.top = "0";
+        o.style.visibility = "hidden";
+        o.style.width = "auto";
+        o.style.height = "auto";
+        o.appendChild(n);
+        document.body.appendChild(o);
+        o.offsetHeight; // Force layout
+        const a = Math.max(n.scrollWidth, n.offsetWidth);
+        const i = Math.max(n.scrollHeight, n.offsetHeight);
+        if (a === 0 || i === 0) {
+          throw Error("Table dimensions could not be computed");
+        }
+        const l = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        l.setAttribute("width", a);
+        l.setAttribute("height", i);
+        l.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        const s = document.createElementNS("http://www.w3.org/2000/svg", "foreignObject");
+        s.setAttribute("width", "100%");
+        s.setAttribute("height", "100%");
+        s.setAttribute("x", "0");
+        s.setAttribute("y", "0");
+        s.appendChild(n);
+        l.appendChild(s);
+        const c = new XMLSerializer().serializeToString(l);
+        const d = new Blob([c], { type: "image/svg+xml;charset=utf-8" });
+        const u = URL.createObjectURL(d);
+        let p = null;
+        if (useCanvas) {
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            p = document.createElement("canvas");
+            p.width = a;
+            p.height = i;
+            const ctx = p.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+            URL.revokeObjectURL(u);
+            g();
+            e({ svgBlob: d, svgDataUrl: null, canvas: p });
+          };
+          img.onerror = (err) => {
+            console.warn("Canvas rendering failed (likely taint); using SVG only:", err);
+            URL.revokeObjectURL(u);
+            g();
+            e({ svgBlob: d, svgDataUrl: null, canvas: null });
+          };
+          img.src = u;
+        } else {
+          g();
+          e({ svgBlob: d, svgDataUrl: u, canvas: null });
+        }
+        function g() {
+          if (document.body.contains(o)) {
+            document.body.removeChild(o);
+          }
+        }
+        // Handle post-resolve actions
+        Promise.resolve().then(() => {
+          if (download) {
+            const a = document.createElement("a");
+            a.href = svgDataUrl || (canvas ? canvas.toDataURL("image/png") : "");
+            a.download = "table-image.svg";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          }
+          if (saveToStorage) {
+            try {
+              localStorage.setItem("tableImage", c);
+            } catch (err) {
+              alert("Failed to save to localStorage: " + err.message);
+            }
+          }
+          return { svgBlob: d, svgDataUrl: u, canvas: p };
+        }).catch(r);
+      } catch (err) {
+        if (document.body.contains(o)) {
+          document.body.removeChild(o);
+        }
+        r(err);
+      }
+    });
+  }
+  const t = document.querySelector(".awsui-table-container table");
+  if (!t) {
+    return alert("No table found in .awsui-table-container");
+  }
+  generateTableImage(t, { saveToStorage: true })
+    .then(() => {
+      alert("Table image saved to localStorage as 'tableImage'");
+    })
+    .catch(e => alert("Error: " + e.message));
+}
+
+function() retrieveImage{
+  async function copyToClipboard() {
+    if (!navigator.clipboard) {
+      return alert("Clipboard API not supported");
+    }
+
+    try {
+      const svgData = localStorage.getItem("tableImage");
+      if (!svgData) {
+        return alert("No image found in localStorage under 'tableImage'");
+      }
+
+      const blob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+      const clipboardItem = new ClipboardItem({ "image/svg+xml": blob });
+      await navigator.clipboard.write([clipboardItem]);
+      alert("SVG image copied to clipboard! Paste into an SVG viewer or editor.");
+    } catch (err) {
+      alert("Failed to copy: " + err.message);
+    }
+  }
+
+  copyToClipboard();
+}
+
+
+        
  
         function sortByLane() {
             function getChuteAndLaneOfRow(row) {
@@ -546,6 +685,13 @@
         
         const clearCapturesCode = [clearCaptures].map(f => f.toString()).join(';') + ';clearCaptures();';
         document.getElementById('clear-captures-link').href = 'javascript:(function(){' + clearCapturesCode + '})()';
+
+        
+        const saveImageCode = [saveImage].map(f => f.toString()).join(';') + ';saveImage();';
+        document.getElementById('save-image-link').href = 'javascript:(function(){' + saveImageCode + '})()';
+
+        const retrieveImageCode = [retrieveImage].map(f => f.toString()).join(';') + ';retrieveImage();';
+        document.getElementById('retrieve-image-link').href = 'javascript:(function(){' + retrieveImageCode + '})()';
         
     </script>
 </body>
