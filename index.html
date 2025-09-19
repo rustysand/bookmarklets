@@ -75,8 +75,8 @@
     <a id="retriever-md-link" href="#">Retrieve autocaptured Markdown  (experimental)</a><br>
     <a id="download-link" href="#">Manually Download JSON and MD  (experimental)</a><br>
     
-    <a id="save-image-link" href="#">save image  (experimental)</a><br>
-    <a id="retrieve-image-link" href="#">retrieve image (experimental)</a><br>
+    <a id="capture-image-link" href="#">capture image  (experimental)</a><br>
+    <a id="retrieve-image-link" href="#">retrieve autocaptured image (experimental)</a><br>
 
     <script>
         function getTimeLeftElement(){
@@ -167,7 +167,7 @@
         }
    
         function onCapture(data) {
-            console.log('Captured:', data.slice(0, 200));
+            console.log('Captured:', data.json.slice(0, 200));
         }
 
         function startWatcherMain() {
@@ -225,19 +225,21 @@
                 lastTimeLeft = timeLeft;
                 if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
                     const dataObj = captureData();
-                    if (dataObj) {
-                        const jsonData = JSON.stringify(dataObj);
+                    const img = captureImage();
+                    const toSave = {data: dataObj, image: img};
+                    if (dataObj && img) {
+                        
                         let captures = JSON.parse(localStorage.getItem('captures') || '[]');
                         if (overwriteCapture){
-                           captures[0] = jsonData;
+                           captures[0] = toSave;
                         }else{
-                            captures.unshift(jsonData);
+                            captures.unshift(toSave);
                             if (captures.length > MAX_CAPTURES) captures.pop();
                             overwriteCapture = true;
                         }
                         localStorage.setItem('captures', JSON.stringify(captures));
-                        onCapture(jsonData);
-                    } else alert("capture fail, no dataObj");
+                        onCapture(toSave);
+                    } else alert("capture fail, no dataObj or no image");
                     
                 } else {
                     overwriteCapture = false;
@@ -263,6 +265,8 @@
             }
             return captures[num];
         }
+
+        
         
         function copyToClipBoard(str, name="text"){
             navigator.clipboard.writeText(str).then(() => {
@@ -273,10 +277,14 @@
             });
         }
   
-        function retrieveMarkdown() {
+        function retrieveMarkdownToClipboard() {
 
-            const dataObj = JSON.parse(retrieveCapture());
+            const dataObj = retrieveCapture().data;
             copyMarkdownFromDataObj(dataObj);
+        }
+
+        function retrieveImageToClipboard(){
+            copyImage(retrieveCapture().image);
         }
         
         function summaryFromDataObject(dataObj){
@@ -394,7 +402,7 @@
             
             return str;
         }
-        function manualMarkdown() {
+        function captureMarkdownToClipBoard() {
             const dataObj = captureData();
             if (!dataObj) {
                 alert('Capture failed.');
@@ -404,7 +412,7 @@
             copyToClipBoard(buildMarkdownFromDataObject(dataObj),"Markdown");
         }
 
-        function summaryAndJSONFromDataObj(dataObj,asURL){
+        function copySummaryAndJSONFromDataObj(dataObj,asURL){
             function createURLWithJSON(baseUrl, obj) {
                 const jsonStr = encodeURIComponent(JSON.stringify(obj));
                 return `${baseUrl}#${jsonStr}`;
@@ -422,20 +430,20 @@
             copyToClipBoard(slackMsg,"summary and "+(asURL?"URL":"JSON"));
         }
         
-        function manualSummaryAndJSON(asURL) {
+        function captureSummaryAndJSONtoClipboard(asURL) {
             const dataObj = captureData();
             if (!dataObj) {
                 alert('Capture failed.');
                 return;
             }
-            summaryAndJSONFromDataObj(dataObj,asURL);
+            copySummaryAndJSONFromDataObj(dataObj,asURL);
 
         }
-        function retrieveSummaryJSON(asURL) {
+        function retrieveSummaryJSONtoClipBoard(asURL) {
             var cap = retrieveCapture();
             if (!cap) return;
-            const dataObj = JSON.parse(cap);
-            summaryAndJSONFromDataObj(dataObj,asURL);
+            const dataObj = cap.data;
+            copySummaryAndJSONFromDataObj(dataObj,asURL);
         }
  
         function downloadJsonAndMd() {
@@ -475,30 +483,30 @@
 
 
 
-function saveImage() {
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      if (window.html2canvas) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = src;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-  }
+function captureImage() {
+    function loadScript(src) {
+        return new Promise((resolve, reject) => {
+          if (window.html2canvas) {
+            resolve();
+            return;
+          }
+          const script = document.createElement('script');
+          script.src = src;
+          script.onload = resolve;
+          script.onerror = reject;
+          document.head.appendChild(script);
+        });
+    }
 
-  async function tableToPng(tableElement) {
-    const canvas = await html2canvas(tableElement, {
-      allowTaint: true,
-      scale: 1
-    });
-    return canvas.toDataURL('image/png');
-  }
+    async function tableToPng(tableElement) {
+        const canvas = await html2canvas(tableElement, {
+          allowTaint: true,
+          scale: 1
+        });
+        return canvas.toDataURL('image/png');
+    }
 
-  async function saveTableImage() {
+  
     const container = document.querySelector('.awsui-table-container');
     if (!container) {
       alert('No .awsui-table-container found');
@@ -510,56 +518,32 @@ function saveImage() {
       return;
     }
 
-    try {
-      await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
-      const dataUrl = await tableToPng(table);
-      localStorage.setItem('tableImage', dataUrl);
-      alert('Table image saved to localStorage as \'tableImage\'');
-    } catch (err) {
-      alert('Error: ' + err.message);
-    }
-  }
+    await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
+    const dataUrl = await tableToPng(table);
 
-  saveTableImage();
+    return dataUrl;
 }
 
 
 
-
+function copyImage(dataUrl) {
+  const byteString = atob(dataUrl.split(',')[1]);
+  const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  const blob = new Blob([ab], { type: mimeString });
+  const clipboardItem = new ClipboardItem({ 'image/png': blob });
+  await navigator.clipboard.write([clipboardItem]);
+  alert('PNG image copied to clipboard! Paste into Slack or other apps.');
+}
 
         
 
-function retrieveImage() {
-  async function copyImageToClipboard() {
-    if (!navigator.clipboard) {
-      alert('Clipboard API not supported');
-      return;
-    }
-
-    try {
-      const dataUrl = localStorage.getItem('tableImage');
-      if (!dataUrl) {
-        alert('No image found in localStorage under \'tableImage\'');
-        return;
-      }
-
-      const byteString = atob(dataUrl.split(',')[1]);
-      const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
-      const ab = new ArrayBuffer(byteString.length);
-      const ia = new Uint8Array(ab);
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
-      const blob = new Blob([ab], { type: mimeString });
-      const clipboardItem = new ClipboardItem({ 'image/png': blob });
-      await navigator.clipboard.write([clipboardItem]);
-      alert('PNG image copied to clipboard! Paste into Slack or other apps.');
-    } catch (err) {
-      alert('Failed to copy: ' + err.message);
-    }
-  }
-
-  copyImageToClipboard();
+function captureImageToClipboard() {
+    copyImage(captureImage());
 }
 
 
@@ -758,39 +742,47 @@ function imageDebugFunction (){
             }
             window.setTimeout(trySort, 1000);
         }
+
+        retrieveJSONtoClipboard (){
+            var cap = retrieveCapture();
+            if(cap)
+                copyToClipBoard(JSON.stringify(retrieveCapture().data),"JSON");
+        }
+        const retrieveJSONCode = [copyToClipBoard, retrieveCapture,retrieveJSONtoClipboard].map(f => f.toString()).join(';')
+        + ';retrieveJSONtoClipboard();';
+        document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
  
         // Dynamically set the hrefs
         const watcherCode = [getTimeLeft, formatTime, captureData, onTimerTick, onCapture, startWatcherMain,formatTime,getTimeLeftElement].map(f => f.toString()).join(';') + ';startWatcherMain();';
         document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
 
-        const retrieveJSONCode = [copyToClipBoard, retrieveCapture].map(f => f.toString()).join(';')
-        + ';var cap = retrieveCapture();if(cap)copyToClipBoard(retrieveCapture(),"JSON");';
-        document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
 
-        const retrieveMDCode = [retrieveMarkdown, retrieveCapture,buildMarkdownFromDataObject,summaryFromDataObject,copyToClipBoard].map(f => f.toString()).join(';') + ';retrieveMarkdown();';
+        const retrieveMDCode = [retrieveMarkdownToClipboard, retrieveCapture,buildMarkdownFromDataObject,summaryFromDataObject,copyToClipBoard].map(f => f.toString()).join(';') + ';retrieveMarkdownToClipboard();';
         document.getElementById('retriever-md-link').href = 'javascript:(function(){' + retrieveMDCode + '})()';
+
+
         
         
-        const retrieveSummaryJSONCode = [copyToClipBoard, retrieveCapture,summaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSON,formatTime].map(f => f.toString()).join(';')
+        const retrieveSummaryJSONcode = [copyToClipBoard, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipBoard,formatTime].map(f => f.toString()).join(';')
         + ';retrieveSummaryJSON();';
-        document.getElementById('retriever-summaryjson-link').href = 'javascript:(function(){' + retrieveSummaryJSONCode + '})()';
+        document.getElementById('retriever-summaryjson-link').href = 'javascript:(function(){' + retrieveSummaryJSONcode + '})()';
 
 
-        const retrieveSummaryURLCode = [copyToClipBoard, retrieveCapture,summaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSON,formatTime].map(f => f.toString()).join(';')
+        const retrieveSummaryURLcode = [copyToClipBoard, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipBoard,formatTime].map(f => f.toString()).join(';')
         + ';retrieveSummaryJSON(true);';
-        document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLCode + '})()';
+        document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLcode + '})()';
         
 
-        const manualCode = [captureData, manualMarkdown,verticalizedTableRowString,FlexIterable,copyToClipBoard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';manualMarkdown();';
+        const manualCode = [captureData, captureMarkdownToClipBoard,verticalizedTableRowString,FlexIterable,copyToClipBoard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipBoard();';
         document.getElementById('manual-md-link').href = 'javascript:(function(){' + manualCode + '})()';
         
-        const manualSummaryAndJSONBaseCode = [summaryAndJSONFromDataObj,summaryFromDataObject,captureData, manualSummaryAndJSON, copyToClipBoard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
+        const manualSummaryAndJSONbaseCode = [copySummaryAndJSONFromDataObj,summaryFromDataObject,captureData, captureSummaryAndJSONtoClipboard, copyToClipBoard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
         
-        const manualSummaryAndJSONCode =  manualSummaryAndJSONBaseCode + ';manualSummaryAndJSON();';
-        document.getElementById('manual-saj-link').href = 'javascript:(function(){' + manualSummaryAndJSONCode + '})()';
+        const manualSummaryAndJSONcode =  manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard();';
+        document.getElementById('manual-saj-link').href = 'javascript:(function(){' + manualSummaryAndJSONcode + '})()';
         
-        const manualSummaryAndURLCode = manualSummaryAndJSONBaseCode + ';manualSummaryAndJSON(true);';
-        document.getElementById('manual-sajurl-link').href = 'javascript:(function(){' + manualSummaryAndURLCode + '})()';
+        const manualSummaryAndURLcode = manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard(true);';
+        document.getElementById('manual-sajurl-link').href = 'javascript:(function(){' + manualSummaryAndURLcode + '})()';
         
         
 
@@ -803,10 +795,10 @@ function imageDebugFunction (){
         document.getElementById('clear-captures-link').href = 'javascript:(function(){' + clearCapturesCode + '})()';
 
         
-        const saveImageCode = [saveImage].map(f => f.toString()).join(';') + ';saveImage();';
-        document.getElementById('save-image-link').href = 'javascript:(function(){' + saveImageCode + '})()';
+        const captureImageCode = [captureImageToClipBoard].map(f => f.toString()).join(';') + ';captureImageToClipBoard();';
+        document.getElementById('save-image-link').href = 'javascript:(function(){' + captureImageCode + '})()';
 
-        const retrieveImageCode = [retrieveImage].map(f => f.toString()).join(';') + ';retrieveImage();';
+        const retrieveImageCode = [retrieveImageToClipboard].map(f => f.toString()).join(';') + ';retrieveImageToClipboard();';
         document.getElementById('retrieve-image-link').href = 'javascript:(function(){' + retrieveImageCode + '})()';
         
     </script>
