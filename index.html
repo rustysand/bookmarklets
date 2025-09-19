@@ -490,7 +490,7 @@ function saveImage() {
         o.style.height = "auto";
         o.appendChild(n);
         document.body.appendChild(o);
-        o.offsetHeight; // Force layout
+        o.offsetHeight; 
         const a = Math.max(n.scrollWidth, n.offsetWidth);
         const i = Math.max(n.scrollHeight, n.offsetHeight);
         if (a === 0 || i === 0) {
@@ -540,7 +540,7 @@ function saveImage() {
             document.body.removeChild(o);
           }
         }
-        // Handle post-resolve actions
+       
         Promise.resolve().then(() => {
           if (download) {
             const a = document.createElement("a");
@@ -553,6 +553,8 @@ function saveImage() {
           if (saveToStorage) {
             try {
               localStorage.setItem("tableImage", c);
+                console.log("setting storage to...");
+                console.log(c);
             } catch (err) {
               alert("Failed to save to localStorage: " + err.message);
             }
