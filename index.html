@@ -206,6 +206,7 @@
             const MAX_CAPTURES = 21;
             const CHECK_INTERVAL = 2000;
             var earliestLikelyRecTime = 60*1000;
+            var timeChangeTolerance = 1000 * 60 * 4;
             var overwriteCapture = false;
             var lastTimeLeft = Number.POSITIVE_INFINITY;
             setInterval(() => {
@@ -214,7 +215,7 @@
                 if (timeLeft < 0) {
                     return;
                 };
-                if (timeLeft > lastTimeLeft && !overwriteCapture)
+                if (timeLeft > lastTimeLeft+timeChangeTolerance && !overwriteCapture)
                 {
                     showAlert("timer reset before any capture was taken. last tick time left: "+ formatTime(lastTimeLeft));
                 }
@@ -252,7 +253,7 @@
                 return;
             }
             
-            const num = parseInt(prompt('How many captures back? Enter 0 for most recent capture. The oldest capture can be retrieved by entering the number '+ captures.length-1, "0"), 10);
+            const num = parseInt(prompt('How many captures back? Enter 0 for most recent capture. The oldest capture can be retrieved by entering the number '+ (captures.length-1), "0"), 10);
             if (isNaN(num) || num < 0 || num > captures.length-1) {
                 alert('Invalid number.');
                 return;
