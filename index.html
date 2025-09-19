@@ -328,13 +328,16 @@
         }
   
         function retrieveMarkdownToClipboard() {
-
-            const dataObj = retrieveCapture().data;
+            var cap = retrieveCapture();
+            if (!cap) return;
+            const dataObj = cap.data;
             copyMarkdownFromDataObj(dataObj);
         }
 
         function retrieveImageToClipboard(){
-            copyImage(retrieveCapture().image);
+            var cap = retrieveCapture();
+            if (!cap) return;
+            copyImage(cap.image);
         }
         
         function summaryFromDataObject(dataObj){
