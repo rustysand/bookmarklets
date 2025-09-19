@@ -475,7 +475,7 @@
 
 
 
-function() saveImage {
+function saveImage() {
   async function generateTableImage(t, e = {}) {
     const { download = false, saveToStorage = false, useCanvas = false } = e;
     return new Promise((e, r) => {
@@ -578,7 +578,7 @@ function() saveImage {
     .catch(e => alert("Error: " + e.message));
 }
 
-function() retrieveImage{
+function retrieveImage(){
   async function copyToClipboard() {
     if (!navigator.clipboard) {
       return alert("Clipboard API not supported");
