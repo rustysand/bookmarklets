@@ -116,7 +116,17 @@
             const sec = totalSec % 60;
             return `${min}:${sec < 10 ? '0' : ''}${sec}`;
         }
-   
+
+
+        function getPlanId (){
+            const headerDiv = document.querySelector('.sorter-table-header');
+            if (!headerDiv) return null;
+            const spans = Array.from(headerDiv.querySelectorAll('span'));
+            const planIdSpan = spans.find(span => span.innerText.startsWith('Plan Id :'));
+            if (!planIdSpan) return null;
+            return planIdSpan.innerText;
+        }
+        
         function captureData(isManual) {
             const table = document.querySelector('.awsui-table-container');
             if (!table) return null;
@@ -138,12 +148,8 @@
             const totalCount = bodyRows.length;
             const allCompleted = completedCount === totalCount;
             const status = allCompleted ? 'COMPLETED' : 'INCOMPLETE';
-            const headerDiv = document.querySelector('.sorter-table-header');
-            if (!headerDiv) return null;
-            const spans = Array.from(headerDiv.querySelectorAll('span'));
-            const planIdSpan = spans.find(span => span.innerText.startsWith('Plan Id :'));
-            if (!planIdSpan) return null;
-            const planId = planIdSpan.innerText;
+            const planId = getPlanId();
+            if (!planId) return null;
             const rowsData = bodyRows.map(row => Array.from(row.cells).map(cell => cell.innerText.trim()));
             const timeLeft = getTimeLeft();
             const timeOfRecommendation = new Date(document.querySelector('.sorter-table-header .foresight-table-metadata small').innerText).toString();
@@ -856,17 +862,77 @@ function imageDebugFunction (){
 }
         
 
+//refreshes include but are not limited to plan changes. plan change -> table refresh, but not table refresh -> plan change. 
+//therefore if you detect a plan change, you know a table refresh happened, but if you don't detect a plan change a refresh may still have happened. 
+class tableRefreshDetector(){
+        constructor() {
+            this.items = ;
+          }
 
+        start() {
+            
+        }
 
+        flag(){
+
+        }
+    
+        check() {
+            
+        }
+}
+
+ tableRefreshDetector_capture = {
+
+        rando: "oisj2389sdfn9"
+    ,
+        start() {
+            this.started = true;
+            this.flag = false;
+            this.planId = getPlanId();
+            this.tbody = getTBody();
+            this.firstRow = getFirstRow(this.tbody);
+            if(this.firstRow) 
+                this.firstRow[rando] = true;
+        }
+    ,
+        flag(){
+            this.flag = true;
+        }
+    ,      
+        didRefresh() {
+            if(!this.started)
+                alert("error: attempted to check unstarted detector!");
+            const pid = getPlanId();
+            const tb = getTBody();
+            const fr = getFirstRow(tb);
+            if( pid !== this.planId || this.tbody !== tb || this.firstRow !== fr )
+                return true;
+            if (!this.firstRow)
+                return false;
+            return !firstRow.oisj2389sdfn9  || this.flag;
+        }
+    ,
+        getFirstRow(tbody) {
+            if (tbody){
+                var rows = Array.from(this.tbody.getElementsByTagName('tr'));
+                return row[0];
+            }
+        }     
+}
         
- 
+
+function getTBody (){
+    return document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];
+}
+        
         function sortByLane() {
             function getChuteAndLaneOfRow(row) {
                 const matches = row.getElementsByClassName('proposed-allocation-cell')[0].innerText.match(/FR-[0-9]([0-9]{2})([0-9]{2})/);
                 return [parseInt(matches[1]),parseInt(matches[2])];
             }
             function sortRows() {
-                var parent = document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];
+                var parent = getTBody();
                 var rows = Array.from(parent.getElementsByTagName('tr'));
                 if (!rows[0].isSortedByLane) {
                     console.log('sorting');
@@ -930,7 +996,7 @@ function imageDebugFunction (){
         }
         
         
-        const summaryCode = [captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard].map(f => f.toString()).join(';') + ';captureSummaryToClipboard();';
+        const summaryCode = [getPlanId,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard].map(f => f.toString()).join(';') + ';captureSummaryToClipboard();';
         document.getElementById('manual-summary-link').href = 'javascript:(function(){' + summaryCode + '})()';
         
 
@@ -946,7 +1012,7 @@ function imageDebugFunction (){
         document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
  
         // Dynamically set the hrefs
-        const watcherCode = [getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
+        const watcherCode = [getPlanId,getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
         document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
 
 
@@ -966,10 +1032,10 @@ function imageDebugFunction (){
         document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLcode + '})()';
         
 
-        const manualCode = [captureData, captureMarkdownToClipboard,verticalizedTableRowString,FlexIterable,copyToClipboard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipboard();';
+        const manualCode = [getPlanId,captureData, captureMarkdownToClipboard,verticalizedTableRowString,FlexIterable,copyToClipboard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipboard();';
         document.getElementById('manual-md-link').href = 'javascript:(function(){' + manualCode + '})()';
         
-        const manualSummaryAndJSONbaseCode = [copySummaryAndJSONFromDataObj,summaryFromDataObject,captureData, captureSummaryAndJSONtoClipboard, copyToClipboard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
+        const manualSummaryAndJSONbaseCode = [copySummaryAndJSONFromDataObj,summaryFromDataObject,getPlanId,captureData, captureSummaryAndJSONtoClipboard, copyToClipboard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
         
         const manualSummaryAndJSONcode =  manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard();';
         document.getElementById('manual-saj-link').href = 'javascript:(function(){' + manualSummaryAndJSONcode + '})()';
@@ -979,10 +1045,12 @@ function imageDebugFunction (){
         
         
 
-        const downloadCode = [captureData, downloadJsonAndMd,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';downloadJsonAndMd();';
+        const downloadCode = [getPlanId,captureData, downloadJsonAndMd,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';downloadJsonAndMd();';
         document.getElementById('download-link').href = 'javascript:(function(){' + downloadCode + '})()';
-        
-        document.getElementById('sorter-link').href = 'javascript:(' + sortByLane.toString() + ')()';
+
+        const sortCode = [getTBody, sortByLane,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';sortByLane();';
+        document.getElementById('sorter-link').href = 'javascript:(function(){' + sortCode + '})()';
+    
         
         const clearCapturesCode = [clearCaptures].map(f => f.toString()).join(';') + ';clearCaptures();';
         document.getElementById('clear-captures-link').href = 'javascript:(function(){' + clearCapturesCode + '})()';
