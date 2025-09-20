@@ -147,7 +147,7 @@
             const timeLeft = getTimeLeft();
             const timeOfRecommendation = new Date(document.querySelector('.sorter-table-header .foresight-table-metadata small').innerText).toString();
             const timeOfCapture = new Date().toString();
-            return {
+            const ret =  {
                 status,
                 planId,
                 completedCount,
@@ -158,6 +158,9 @@
                 headers: headerCells,
                 rows: rowsData
             };
+            console.log('Captured:', JSON.stringify(ret).slice(0, 300));
+            localStorage.setItem('lastDataCapture', JSON.stringify(ret));
+            return ret;
         }
  
         function onTimerTick(timeLeft) {
@@ -173,9 +176,7 @@
             }
         }
    
-        function onCapture(data) {
-            console.log('Captured:', JSON.stringify(data.data).slice(0, 200));
-        }
+
         
         
 
@@ -384,7 +385,6 @@ async function captureImage() {
                             overwriteCapture = true;
                         }
                         localStorage.setItem('captures', JSON.stringify(captures));
-                        onCapture(toSave);
                     } else alert("capture fail, no dataObj or no image");
                     
                 } else {
