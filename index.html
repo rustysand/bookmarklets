@@ -147,7 +147,7 @@
             const rowsData = bodyRows.map(row => Array.from(row.cells).map(cell => cell.innerText.trim()));
             const timeLeft = getTimeLeft();
             const timeOfRecommendation = new Date(document.querySelector('.sorter-table-header .foresight-table-metadata small').innerText).toString();
-            const timeOfCapture = new Date().toString();
+            const timeOfCapture = Date.now();
             const ret =  {
                 status,
                 planId,
@@ -321,7 +321,9 @@ async function captureImage(isManual) {
         
         
         function startWatcherMain() {
-            function showAlert(message) {
+            function showAlert(message,isError=false) {
+              const leftright= isError?"left":"right";
+              const bgc = isError?"#900":"#080"; 
               console.log("sending alert to page with message: "+message);
               const alert = document.createElement('div');
               const closeBtn = document.createElement('span');
@@ -330,9 +332,9 @@ async function captureImage(isManual) {
               alert.style.cssText = `
                 position: fixed;
                 top: 10px;
-                right: 10px;
+                ${leftright}: 10px;
                 padding: 10px 30px 10px 10px;
-                background: #f00;
+                background: ${bgc};
                 color: white;
                 z-index: 1000;
               `;
@@ -361,6 +363,7 @@ async function captureImage(isManual) {
             const CHECK_INTERVAL = 2000;
             const CAPTURE_INTERVAL_SHORT = 10000;
             const CAPTURE_INTERVAL_LONG = 60000;
+            const MIN_IMAGE_URL_LENGTH = 1000;
             var earliestLikelyRecTime = 3*60*1000;
             var timeChangeTolerance = 1000 * 60 * 4;
             var lastTimeLeft = Number.POSITIVE_INFINITY;
@@ -383,20 +386,39 @@ async function captureImage(isManual) {
                     let lastCapture = captures[0];
                     let lastPlanIdCaptured = lastCapture?.data.planId;
                     console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
+                    const before = captureData();
                     const img = await captureImage();
                     const dataObj = captureData();
-                    const samePlan = dataObj.planId == lastPlanIdCaptured;
+                    const after = captureData();
+                    const alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
                     const toSave = {data: dataObj, image: img};
-                    if (dataObj && img) {
+                    const samePlan = dataObj?.planId === lastPlanIdCaptured;
+                    const saveAbort = () => {localStorage.setItem('aborted', JSON.stringify(toSave));};
+                    if(!dataObj && !after && !before) {
+                        showAlert(`last capture at ${alertTimeString} aborted. All three data objects missing.`);
+                        saveAbort();
+                    }else if(before?.planId !== dataObj?.planId || dataObj?.planId !== after?.planId) {
+                        showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`);
+                        saveAbort();
+                    }else if(!dataObj?.planId){
+                        showAlert(`last capture at ${alertTimeString} aborted because no planId captured`);
+                        saveAbort();
+                    }else if (img.length<MIN_IMAGE_URL_LENGTH) {
+                        showAlert(`capture at ${alertTimeString} aborted. Image too small.`, true);
+                        saveAbort();
+                    }else{
                         if (samePlan){
                            captures[0] = toSave;
                         }else{
                             captures.unshift(toSave);
                             if (captures.length > MAX_CAPTURES) captures.pop();
                         }
-                        localStorage.setItem('captures', JSON.stringify(captures));
+                        let str = JSON.stringify(captures);
+                        localStorage.setItem('captures', str);
                         lastCaptureTime = rightNow;
-                    } else alert("capture fail, no dataObj or no image");
+                        showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`);
+                        
+                    } 
                 }
 
                 const rightNow = Date.now();
