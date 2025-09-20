@@ -179,6 +179,42 @@
         
         
         async function captureImage() {
+
+            function verticalCollage(dataUrl1, dataUrl2) {
+              return new Promise((resolve, reject) => {
+                const img1 = new Image();
+                img1.src = dataUrl1;
+                img1.onload = () => {
+                  const img2 = new Image();
+                  img2.src = dataUrl2;
+                  img2.onload = () => {
+                    const maxWidth = Math.max(img1.width, img2.width);
+                    const totalHeight = img1.height + img2.height;
+                    const canvas = document.createElement('canvas');
+                    canvas.width = maxWidth;
+                    canvas.height = totalHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.fillStyle = 'white'; // Optional: white background
+                    ctx.fillRect(0, 0, maxWidth, totalHeight);
+            
+                    // Center and draw img1
+                    const x1 = (maxWidth - img1.width) / 2;
+                    ctx.drawImage(img1, x1, 0);
+            
+                    // Center and draw img2 below
+                    const x2 = (maxWidth - img2.width) / 2;
+                    ctx.drawImage(img2, x2, img1.height);
+            
+                    const collageDataUrl = canvas.toDataURL('image/png');
+                    resolve(collageDataUrl);
+                  };
+                  img2.onerror = reject;
+                };
+                img1.onerror = reject;
+              });
+            }
+
+
             function loadScript(src) {
                 return new Promise((resolve, reject) => {
                   if (window.html2canvas) {
@@ -202,21 +238,23 @@
             }
 
           
-            const container = document.querySelector('.recommendations-table');
+            const container = document.querySelector('.awsui-table-container');
             if (!container) {
-              alert('No .recommendations-table found');
+              alert('No .awsui-table-container found');
               return;
             }
-            const table = container;
+            const table = container.querySelector('table');
             if (!table) {
-              alert('No table found');
+              alert('No table found in .awsui-table-container');
               return;
             }
+
+            const header = document.querySelector('.awsui-table-heading-container');
 
             await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
-            const dataUrl = await tableToPng(table);
-
-            return dataUrl;
+            const dataUrl1 = await tableToPng(header);
+            const dataUrl2 = await tableToPng(table);
+            return await verticalCollage(dataUrl1, dataUrl2);
         }
         
         
