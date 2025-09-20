@@ -202,14 +202,14 @@
             }
 
           
-            const container = document.querySelector('.awsui-table-container');
+            const container = document.querySelector('.recommendations-table');
             if (!container) {
-              alert('No .awsui-table-container found');
+              alert('No .recommendations-table found');
               return;
             }
-            const table = container.querySelector('table');
+            const table = container;
             if (!table) {
-              alert('No table found in .awsui-table-container');
+              alert('No table found');
               return;
             }
 
