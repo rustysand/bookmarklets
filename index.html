@@ -75,6 +75,7 @@
     <p>But fear not. Simply close the error and click anywhere on the forsight page to make it in focus before clicking the bookmarklet again</p>
 
     <p>The following are experimental and/or under development:</p>
+     <a id="recopy-image-link" href="#">recopy manually captured img</a><br>
     <a id="manual-sajurl-link" href="#">Manually copy Summary+longURL to clipboard</a><br>
     <a id="manual-md-link" href="#">Manually copy Markdown to clipboard</a><br>
     <a id="retriever-json-link" href="#">Retrieve autocaptured JSON  (experimental)</a><br>
@@ -872,12 +873,26 @@ function imageDebugFunction (){
             window.setTimeout(trySort, 1000);
         }
         
-  
-          function retrieveSummaryToClipboard(){
-              var cap = retrieveCapture();
-              if(cap)
-                copyToClipboard(summaryFromDataObject(cap.data)[1], "summary");
-          }
+
+  function recopyImage(){
+      var text  = prompt("0 for image 1 for text");
+      if (text==="1"){
+        var v=localStorage.getItem('lastDataCapture');
+        copyToClipboard(v, "data");
+      } else{
+          var ur=localStorage.getItem('lastImgCapture');
+          if(ur)
+            copyImage(ur);
+      }
+  }
+  const recopyCode = [recopyImage, copyToClipboard, copyImage].map(f => f.toString()).join(';') + ';recopyImage();';
+  document.getElementById('recopy-image-link').href = 'javascript:(function(){' + recopyCode + '})()';
+        
+  function retrieveSummaryToClipboard(){
+      var cap = retrieveCapture();
+      if(cap)
+        copyToClipboard(summaryFromDataObject(cap.data)[1], "summary");
+  }
   
           const retrieveSummaryCode = [retrieveCapture, copyToClipboard, formatTime, summaryFromDataObject, retrieveSummaryToClipboard].map(f => f.toString()).join(';') + ';retrieveSummaryToClipboard();';
           document.getElementById('retrieve-summary-link').href = 'javascript:(function(){' + retrieveSummaryCode + '})()';
