@@ -321,7 +321,7 @@ async function captureImage(isManual) {
         
         
         function startWatcherMain() {
-            function showAlert(message,isError=false) {
+            function showAlert(message,ttl=60*60*1000,isError=false) {
               const leftright= isError?"left":"right";
               const bgc = isError?"#900":"#080"; 
               console.log("sending alert to page with message: "+message);
@@ -348,7 +348,7 @@ async function captureImage(isManual) {
               `;
               
               closeBtn.onclick = () => alert.remove();
-              
+              window.setTimeout(() => alert.remove(), ttl);
               alert.appendChild(closeBtn);
               document.body.appendChild(alert);
             }
@@ -364,6 +364,8 @@ async function captureImage(isManual) {
             const CAPTURE_INTERVAL_SHORT = 10000;
             const CAPTURE_INTERVAL_LONG = 60000;
             const MIN_IMAGE_URL_LENGTH = 1000;
+            const alertTTL1 = 10 * 60 * 1000;
+            const alertTTL2 = 12 * 60 * 60 * 1000;
             var earliestLikelyRecTime = 3*60*1000;
             var timeChangeTolerance = 1000 * 60 * 4;
             var lastTimeLeft = Number.POSITIVE_INFINITY;
@@ -393,18 +395,22 @@ async function captureImage(isManual) {
                     const alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
                     const toSave = {data: dataObj, image: img};
                     const samePlan = dataObj?.planId === lastPlanIdCaptured;
-                    const saveAbort = () => {localStorage.setItem('aborted', JSON.stringify(toSave));};
+                    const saveAbort = () => {
+                            let aborts = JSON.parse(localStorage.getItem('aborts') || '[]');
+                            aborts.unshift(toSave);
+                            localStorage.setItem('aborts', JSON.stringify(aborts));
+                    };
                     if(!dataObj && !after && !before) {
-                        showAlert(`last capture at ${alertTimeString} aborted. All three data objects missing.`);
+                        showAlert(`last capture at ${alertTimeString} aborted. All three data objects missing.`,alertTTL2,true);
                         saveAbort();
                     }else if(before?.planId !== dataObj?.planId || dataObj?.planId !== after?.planId) {
-                        showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`);
+                        showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,alertTTL2);
                         saveAbort();
                     }else if(!dataObj?.planId){
-                        showAlert(`last capture at ${alertTimeString} aborted because no planId captured`);
+                        showAlert(`last capture at ${alertTimeString} aborted because no planId captured`,alertTTL2,true);
                         saveAbort();
                     }else if (img.length<MIN_IMAGE_URL_LENGTH) {
-                        showAlert(`capture at ${alertTimeString} aborted. Image too small.`, true);
+                        showAlert(`capture at ${alertTimeString} aborted. Image too small.`,alertTTL2, true);
                         saveAbort();
                     }else{
                         if (samePlan){
@@ -416,7 +422,7 @@ async function captureImage(isManual) {
                         let str = JSON.stringify(captures);
                         localStorage.setItem('captures', str);
                         lastCaptureTime = rightNow;
-                        showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`);
+                        showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, alertTTL1);
                         
                     } 
                 }
