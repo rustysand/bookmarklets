@@ -116,7 +116,7 @@
             return `${min}:${sec < 10 ? '0' : ''}${sec}`;
         }
    
-        function captureData() {
+        function captureData(isManual) {
             const table = document.querySelector('.awsui-table-container');
             if (!table) return null;
             const thead = table.querySelector('thead');
@@ -159,7 +159,7 @@
                 rows: rowsData
             };
             console.log('Captured:', JSON.stringify(ret).slice(0, 300));
-            localStorage.setItem('lastDataCapture', JSON.stringify(ret));
+            if(isManual) localStorage.setItem('lastDataCapture', JSON.stringify(ret));
             return ret;
         }
  
@@ -183,7 +183,7 @@
 
 
 
-async function captureImage() {
+async function captureImage(isManual) {
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       if (window.html2canvas) {
@@ -229,7 +229,9 @@ async function captureImage() {
   ctx.drawImage(canvas1, x1, 0);
   const x2 = (maxWidth - canvas2.width) / 2;
   ctx.drawImage(canvas2, x2, canvas1.height);
-  return collageCanvas.toDataURL('image/png');
+  var ret = collageCanvas.toDataURL('image/png');
+  if (isManual) localStorage.setItem('lastImgCapture', ret);
+  return ret;
 }
 
 
@@ -352,44 +354,59 @@ async function captureImage() {
                 alert(`Watcher is already active. Time left: ${formatTime(timeLeft)}`);
                 return;
             }
+            
             window.watcherActive = true;
-            const MAX_CAPTURES = 21;
+            const MAX_CAPTURES = 24;
             const CHECK_INTERVAL = 2000;
-            var earliestLikelyRecTime = 2*60*1000;
+            const CAPTURE_INTERVAL_SHORT = 10000;
+            const CAPTURE_INTERVAL_LONG = 60000;
+            var earliestLikelyRecTime = 3*60*1000;
             var timeChangeTolerance = 1000 * 60 * 4;
-            var overwriteCapture = false;
             var lastTimeLeft = Number.POSITIVE_INFINITY;
+            var lastCaptureTime = 0;
             setInterval(async () => {
                 const timeLeft = getTimeLeft();
                 onTimerTick(timeLeft);
                 if (timeLeft < 0) {
                     return;
                 };
-                if (timeLeft > lastTimeLeft+timeChangeTolerance && !overwriteCapture)
+    
+                if (timeLeft > lastTimeLeft+timeChangeTolerance)
                 {
-                    showAlert("timer reset before any capture was taken. last tick time left: "+ formatTime(lastTimeLeft));
+                    console.log(`recommendation refresh detected. (lastTimeLeft,timeLeft): (${lastTimeLeft}, ${timeLeft})` );
                 }
                 lastTimeLeft = timeLeft;
-                if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
-                    const dataObj = captureData();
+
+                async function   justCaptureItFox(rightNow) {
+                    let captures = JSON.parse(localStorage.getItem('captures') || '[]');
+                    let lastCapture = captures[0];
+                    let lastPlanIdCaptured = lastCapture?.data.planId;
+                    console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
                     const img = await captureImage();
+                    const dataObj = captureData();
+                    const samePlan = dataObj.planId == lastPlanIdCaptured;
                     const toSave = {data: dataObj, image: img};
                     if (dataObj && img) {
-                        
-                        let captures = JSON.parse(localStorage.getItem('captures') || '[]');
-                        if (overwriteCapture){
+                        if (samePlan){
                            captures[0] = toSave;
                         }else{
                             captures.unshift(toSave);
                             if (captures.length > MAX_CAPTURES) captures.pop();
-                            overwriteCapture = true;
                         }
                         localStorage.setItem('captures', JSON.stringify(captures));
+                        lastCaptureTime = rightNow;
                     } else alert("capture fail, no dataObj or no image");
-                    
-                } else {
-                    overwriteCapture = false;
                 }
+
+                const rightNow = Date.now();
+                var diff = rightNow-lastCaptureTime;
+                if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
+                    if(diff>CAPTURE_INTERVAL_SHORT) {
+                        await justCaptureItFox(rightNow);
+                    }
+                } else if (diff>CAPTURE_INTERVAL_LONG) {
+                    await justCaptureItFox(rightNow);
+                } 
             }, CHECK_INTERVAL);
             alert('Watcher started.');
         }
@@ -552,7 +569,7 @@ async function captureImage() {
             return str;
         }
         function captureMarkdownToClipboard() {
-            const dataObj = captureData();
+            const dataObj = captureData(true);
             if (!dataObj) {
                 alert('Capture failed.');
                 return;
@@ -580,7 +597,7 @@ async function captureImage() {
         }
         
         function captureSummaryAndJSONtoClipboard(asURL) {
-            const dataObj = captureData();
+            const dataObj = captureData(true);
             if (!dataObj) {
                 alert('Capture failed.');
                 return;
@@ -596,7 +613,7 @@ async function captureImage() {
         }
  
         function downloadJsonAndMd() {
-            const dataObj = captureData();
+            const dataObj = captureData(true);
             if (!dataObj) {
                 alert('Capture failed.');
                 return;
@@ -653,7 +670,9 @@ async function copyImage(dataUrl) {
         
 
 async function captureImageToClipboard() {
-    await copyImage(await captureImage());
+var url  = await captureImage(true);
+
+    await copyImage(url);
 }
 
 
@@ -864,7 +883,7 @@ function imageDebugFunction (){
           document.getElementById('retrieve-summary-link').href = 'javascript:(function(){' + retrieveSummaryCode + '})()';
   
         function captureSummaryToClipboard(){
-            copyToClipboard(summaryFromDataObject(captureData())[1], "summary");
+            copyToClipboard(summaryFromDataObject(captureData(true))[1], "summary");
         }
         
         
@@ -884,7 +903,7 @@ function imageDebugFunction (){
         document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
  
         // Dynamically set the hrefs
-        const watcherCode = [getTimeLeft, formatTime, captureData, onTimerTick, onCapture, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
+        const watcherCode = [getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
         document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
 
 
