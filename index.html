@@ -40,7 +40,7 @@
         This is a collection of bookmarklets that allow the needed data to be copied to the clipboard or automatically saved and retrieved later.
         Some of these bookmarks have rather long names that might not fit on your bookmarks bar nicely.
        After you add them to your bookmarks, feel free to edit the names, but changing the url/code will likely make the bookmarklet not function properly</i></h3>
-    <p>Drag the following link to your bookmarks bar. When the bookmark is clicked, 
+    <p>Drag the following link to your bookmarks bar. When the bookmark is clicked,
     it copies a clear image of the table from foresight,
     kinda like taking a screenshot but better.
     After you click it, it takes a few seconds to capture the image.
@@ -262,7 +262,7 @@ async function captureImage(isManual) {
                     canvas.width = maxWidth;
                     canvas.height = totalHeight;
                     const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = 'white'; 
+                    ctx.fillStyle = 'white';
                     ctx.fillRect(0, 0, maxWidth, totalHeight);
             
                     
@@ -329,7 +329,7 @@ async function captureImage(isManual) {
         function startWatcherMain() {
             function showAlert(message,ttl=60*60*1000,isError=false) {
               const leftright= isError?"left":"right";
-              const bgc = isError?"#900":"#080"; 
+              const bgc = isError?"#900":"#080";
               console.log("sending alert to page with message: "+message);
               const alert = document.createElement('div');
               const closeBtn = document.createElement('span');
@@ -430,7 +430,7 @@ async function captureImage(isManual) {
                         lastCaptureTime = rightNow;
                         showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, alertTTL1);
                         
-                    } 
+                    }
                 }
 
                 const rightNow = Date.now();
@@ -441,7 +441,7 @@ async function captureImage(isManual) {
                     }
                 } else if (diff>CAPTURE_INTERVAL_LONG) {
                     await justCaptureItFox(rightNow);
-                } 
+                }
             }, CHECK_INTERVAL);
             alert('Watcher started.');
         }
@@ -862,11 +862,11 @@ function imageDebugFunction (){
 }
         
 
-//refreshes include but are not limited to plan changes. plan change -> table refresh, but not table refresh -> plan change. 
-//therefore if you detect a plan change, you know a table refresh happened, but if you don't detect a plan change a refresh may still have happened. 
-class tableRefreshDetector(){
+//refreshes include but are not limited to plan changes. plan change -> table refresh, but not table refresh -> plan change.
+//therefore if you detect a plan change, you know a table refresh happened, but if you don't detect a plan change a refresh may still have happened.
+class tableRefreshDetector{
         constructor() {
-            this.items = ;
+            
           }
 
         start() {
@@ -892,14 +892,14 @@ class tableRefreshDetector(){
             this.planId = getPlanId();
             this.tbody = getTBody();
             this.firstRow = getFirstRow(this.tbody);
-            if(this.firstRow) 
+            if(this.firstRow)
                 this.firstRow[rando] = true;
         }
     ,
         flag(){
             this.flag = true;
         }
-    ,      
+    ,
         didRefresh() {
             if(!this.started)
                 alert("error: attempted to check unstarted detector!");
@@ -918,7 +918,7 @@ class tableRefreshDetector(){
                 var rows = Array.from(this.tbody.getElementsByTagName('tr'));
                 return row[0];
             }
-        }     
+        }
 }
         
 
