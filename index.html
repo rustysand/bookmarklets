@@ -412,7 +412,7 @@ const tableRefreshDetector_capture = {
             
             window.watcherActive = true;
             
-            const CHECK_INTERVAL = 4000;
+            const CHECK_INTERVAL = 6000;
             const CAPTURE_INTERVAL_SHORT = 15000;
             const CAPTURE_INTERVAL_LONG = 90000;
             const MIN_IMAGE_URL_LENGTH = 1000;
@@ -430,15 +430,11 @@ const tableRefreshDetector_capture = {
                     return;
                 };
     
-                if (timeLeft > lastTimeLeft+timeChangeTolerance)
-                {
-                    console.log(`recommendation refresh detected. (lastTimeLeft,timeLeft): (${lastTimeLeft}, ${timeLeft})` );
-                }
                 lastTimeLeft = timeLeft;
 
                 async function   justCaptureItFox(rightNow) {
-                    let lastStoredTo = JSON.parse(localStorage.getItem('lastStoredTo') || "-1");
-                    let lastPlanIdCaptured = localStorage.getItem('lastPlanIdCaptured');
+                    var lastStoredTo = JSON.parse(localStorage.getItem('lastStoredTo') || "-1");
+                    var lastPlanIdCaptured = localStorage.getItem('lastPlanIdCaptured');
                     console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
                     var alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
                     tableRefreshDetector_capture.start();
@@ -468,9 +464,16 @@ const tableRefreshDetector_capture = {
                     alertTimeString = new Date(dataObj.timeOfCapture).toLocaleTimeString('en-US', {hour12: false });
                     const toSave = {data: dataObj, image: img};
                     const samePlan = dataObj.planId === lastPlanIdCaptured;
-                     let str = JSON.stringify(toSave);
+                     var str = JSON.stringify(toSave);
+                        console.log("last,new): ");
+                        console.log(lastPlanIdCaptured);
+                        console.log(dataObj.planId);
+                    console.log(`lastStoredTo: ${lastStoredTo}`);
                     if (!samePlan){
+                        console.log("not same plan");
+                        console.log(`lastStoredTo before: ${lastStoredTo}`);
                        lastStoredTo = (lastStoredTo+1)%sharedConstLiterals.MAX_CAPTURES;
+                        console.log(`lastStoredTo after: ${lastStoredTo}`);
                        localStorage.setItem(`lastPlanIdCaptured`, dataObj.planId);
                        localStorage.setItem(`lastStoredTo`, ""+lastStoredTo);
                     }
