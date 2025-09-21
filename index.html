@@ -333,43 +333,45 @@ class sharedConstLiterals {
         function startWatcherMain() {
 
 
-const tableRefreshDetector_capture = {
-
-        rando: "oisj2389sdfn9"
-    ,
-        start() {
-            this.started = true;
-            this.flag = false;
-            this.planId = getPlanId();
-            this.tbody = getTBody();
-            this.firstRow = this.getFirstRow(this.tbody);
-            if(this.firstRow)
-                this.firstRow[this.rando] = true;
-        }
-    ,
-        flag(){
-            this.flag = true;
-        }
-    ,
-        didRefresh() {
-            if(!this.started)
-                alert("error: attempted to check unstarted detector!");
-            const pid = getPlanId();
-            const tb = getTBody();
-            const fr = this.getFirstRow(tb);
-            if( pid !== this.planId || this.tbody !== tb || this.firstRow !== fr )
-                return true;
-            if (!this.firstRow)
-                return false;
-            return !fr[this.rando]  || this.flag;
-        }
-    ,
-        getFirstRow(tbody) {
-            if (tbody){
-                var rows = Array.from(this.tbody.getElementsByTagName('tr'));
-                return rows[0];
+window[sharedConstLiterals.sharedGlobalIdentifier] = {
+    tableRefreshDetector_capture: 
+    {
+            rando: "oisj2389sdfn9"
+        ,
+            start() {
+                this.started = true;
+                this.flag = false;
+                this.planId = getPlanId();
+                this.tbody = getTBody();
+                this.firstRow = this.getFirstRow(this.tbody);
+                if(this.firstRow)
+                    this.firstRow[this.rando] = true;
             }
-        }
+        ,
+            reportAlteration(){
+                this.flag = true;
+            }
+        ,
+            didRefresh() {
+                if(!this.started)
+                    alert("error: attempted to check unstarted detector!");
+                const pid = getPlanId();
+                const tb = getTBody();
+                const fr = this.getFirstRow(tb);
+                if( pid !== this.planId || this.tbody !== tb || this.firstRow !== fr )
+                    return true;
+                if (!this.firstRow)
+                    return false;
+                return !fr[this.rando]  || this.flag;
+            }
+        ,
+            getFirstRow(tbody) {
+                if (tbody){
+                    var rows = Array.from(this.tbody.getElementsByTagName('tr'));
+                    return rows[0];
+                }
+            }
+    }
 };
 
             
@@ -437,12 +439,13 @@ const tableRefreshDetector_capture = {
                     var lastPlanIdCaptured = localStorage.getItem('lastPlanIdCaptured');
                     console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
                     var alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
-                    tableRefreshDetector_capture.start();
+                    const detector = window[sharedConstLiterals.sharedGlobalIdentifier].tableRefreshDetector_capture;
+                    detector.start();
                     const img = await captureImage();
                     const dataObj = captureData();
                     
                     
-                    if(tableRefreshDetector_capture.didRefresh()) {
+                    if(detector.didRefresh()) {
                         showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,alertTTL2);
                         return;
                     }
@@ -934,67 +937,7 @@ function imageDebugFunction (){
   }
   debugSaveTableImage();
 }
-        
-
-//refreshes include but are not limited to plan changes. plan change -> table refresh, but not table refresh -> plan change.
-//therefore if you detect a plan change, you know a table refresh happened, but if you don't detect a plan change a refresh may still have happened.
-class tableRefreshDetector{
-        constructor() {
-            
-          }
-
-        start() {
-            
-        }
-
-        flag(){
-
-        }
-    
-        check() {
-            
-        }
-}
-
-const tableRefreshDetector_capture = {
-
-        rando: "oisj2389sdfn9"
-    ,
-        start() {
-            this.started = true;
-            this.flag = false;
-            this.planId = getPlanId();
-            this.tbody = getTBody();
-            this.firstRow = this.getFirstRow(this.tbody);
-            if(this.firstRow)
-                this.firstRow[this.rando] = true;
-        }
-    ,
-        flag(){
-            this.flag = true;
-        }
-    ,
-        didRefresh() {
-            if(!this.started)
-                alert("error: attempted to check unstarted detector!");
-            const pid = getPlanId();
-            const tb = getTBody();
-            const fr = this.getFirstRow(tb);
-            if( pid !== this.planId || this.tbody !== tb || this.firstRow !== fr )
-                return true;
-            if (!this.firstRow)
-                return false;
-            return !fr[this.rando]  || this.flag;
-        }
-    ,
-        getFirstRow(tbody) {
-            if (tbody){
-                var rows = Array.from(this.tbody.getElementsByTagName('tr'));
-                return rows[0];
-            }
-        }
-};
-        
+       
 
 function getTBody (){
     return document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];
@@ -1010,6 +953,7 @@ function getTBody (){
                 var rows = Array.from(parent.getElementsByTagName('tr'));
                 if (!rows[0].isSortedByLane) {
                     console.log('sorting');
+                    window[sharedConstLiterals.sharedGlobalIdentifier]?.tableRefreshDetector_capture.reportAlteration();
                     for (var i = 0; i < rows.length; i++) {
                         parent.removeChild(rows[i]);
                     }
@@ -1122,7 +1066,7 @@ function getTBody (){
         const downloadCode = [getPlanId,captureData, downloadJsonAndMd,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';downloadJsonAndMd();';
         document.getElementById('download-link').href = 'javascript:(function(){' + downloadCode + '})()';
 
-        const sortCode = [getTBody, sortByLane,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';sortByLane();';
+        const sortCode = [getTBody, sortByLane,getTimeLeft,getTimeLeftElement,formatTime, sharedConstLiterals].map(f => f.toString()).join(';') + ';sortByLane();';
         document.getElementById('sorter-link').href = 'javascript:(function(){' + sortCode + '})()';
     
         
