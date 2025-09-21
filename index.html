@@ -891,9 +891,9 @@ class tableRefreshDetector{
             this.flag = false;
             this.planId = getPlanId();
             this.tbody = getTBody();
-            this.firstRow = getFirstRow(this.tbody);
+            this.firstRow = this.getFirstRow(this.tbody);
             if(this.firstRow)
-                this.firstRow[rando] = true;
+                this.firstRow[this.rando] = true;
         }
     ,
         flag(){
@@ -905,18 +905,18 @@ class tableRefreshDetector{
                 alert("error: attempted to check unstarted detector!");
             const pid = getPlanId();
             const tb = getTBody();
-            const fr = getFirstRow(tb);
+            const fr = this.getFirstRow(tb);
             if( pid !== this.planId || this.tbody !== tb || this.firstRow !== fr )
                 return true;
             if (!this.firstRow)
                 return false;
-            return !firstRow.oisj2389sdfn9  || this.flag;
+            return !fr[this.rando]  || this.flag;
         }
     ,
         getFirstRow(tbody) {
             if (tbody){
                 var rows = Array.from(this.tbody.getElementsByTagName('tr'));
-                return row[0];
+                return rows[0];
             }
         }
 }
