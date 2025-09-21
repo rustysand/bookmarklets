@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -324,7 +324,11 @@ async function captureImage(isManual) {
             const dataUrl2 = await tableToPng(table);
             return await verticalCollage(dataUrl1, dataUrl2);
         }
-        
+
+class sharedConstLiterals {
+    static const MAX_CAPTURES = 24;
+    static const sharedGlobalIdentifier = "aoisejvna32452okjs";
+}
         
         function startWatcherMain() {
 
@@ -407,7 +411,7 @@ const tableRefreshDetector_capture = {
             }
             
             window.watcherActive = true;
-            const MAX_CAPTURES = 24;
+            
             const CHECK_INTERVAL = 4000;
             const CAPTURE_INTERVAL_SHORT = 15000;
             const CAPTURE_INTERVAL_LONG = 90000;
@@ -418,6 +422,7 @@ const tableRefreshDetector_capture = {
             var timeChangeTolerance = 1000 * 60 * 4;
             var lastTimeLeft = Number.POSITIVE_INFINITY;
             var lastCaptureTime = 0;
+            
             setInterval(async () => {
                 const timeLeft = getTimeLeft();
                 onTimerTick(timeLeft);
@@ -432,48 +437,49 @@ const tableRefreshDetector_capture = {
                 lastTimeLeft = timeLeft;
 
                 async function   justCaptureItFox(rightNow) {
-                    let captures = JSON.parse(localStorage.getItem('captures') || '[]');
-                    let lastCapture = captures[0];
-                    let lastPlanIdCaptured = lastCapture?.data?.planId;
+                    let lastStoredTo = JSON.parse(localStorage.getItem('lastStoredTo') || "-1");
+                    let lastPlanIdCaptured = JSON.parse(localStorage.getItem('lastPlanIdCaptured'));
                     console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
-
+                    const alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
                     tableRefreshDetector_capture.start();
                     const img = await captureImage();
                     const dataObj = captureData();
-                    
-                    const alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
-                    const toSave = {data: dataObj, image: img};
-                    const samePlan = dataObj?.planId === lastPlanIdCaptured;
-                    const saveAbort = () => {
-                            let aborts = JSON.parse(localStorage.getItem('aborts') || '[]');
-                            aborts.unshift(toSave);
-                            localStorage.setItem('aborts', JSON.stringify(aborts));
-                    };
+                    if(tableRefreshDetector_capture.didRefresh()) {
+                        showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,alertTTL2);
+                        return;
+                    }
+                
                     if(!dataObj) {
                         showAlert(`last capture at ${alertTimeString} aborted. No data object.`,alertTTL2,true);
-                        saveAbort();
-                    }else if(tableRefreshDetector_capture.didRefresh()) {
-                        showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,alertTTL2);
-                        saveAbort();
-                    }else if(!dataObj.planId){
-                        showAlert(`last capture at ${alertTimeString} aborted because no planId captured`,alertTTL2,true);
-                        saveAbort();
-                    }else if (img.length<MIN_IMAGE_URL_LENGTH) {
-                        showAlert(`capture at ${alertTimeString} aborted. Image too small.`,alertTTL2, true);
-                        saveAbort();
-                    }else{
-                        if (samePlan){
-                           captures[0] = toSave;
-                        }else{
-                            captures.unshift(toSave);
-                            if (captures.length > MAX_CAPTURES) captures.pop();
-                        }
-                        let str = JSON.stringify(captures);
-                        localStorage.setItem('captures', str);
-                        lastCaptureTime = rightNow;
-                        showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, alertTTL1);
-                        
+                        return;
                     }
+
+                    if(!dataObj.planId){
+                        showAlert(`last capture at ${alertTimeString} aborted because no planId captured`,alertTTL2,true);
+                        return;
+                    }
+                
+                    if (img.length<MIN_IMAGE_URL_LENGTH) {
+                        showAlert(`capture at ${alertTimeString} aborted. Image too small.`,alertTTL2, true);
+                        return;
+                    }
+                
+                    const toSave = {data: dataObj, image: img};
+                    const samePlan = dataObj.planId === lastPlanIdCaptured;
+                     let str = JSON.stringify(toSave);
+                    if (!samePlan){
+                       lastStoredTo = (lastStoreTo+1)%sharedConstLiterals.MAX_CAPTURES;
+                       localStorage.setItem(`lastPlanIdCaptured`, dataObj.planId);
+                       localStorage.setItem(`lastStoredTo`, ""+lastStoredTo);
+                    }
+                    localStorage.setItem(`captures[${lastStoredTo}]`, str);
+                    var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')) || [];
+                    timesCaptured[lastStoredTo] = rightNow;
+                    localStorage.setItem(`timesCaptured`, JSON.stringify(timesCaptured));
+                    lastCaptureTime = rightNow;
+                    showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, alertTTL1);
+                        
+                    
                 }
 
                 const rightNow = Date.now();
@@ -489,22 +495,32 @@ const tableRefreshDetector_capture = {
             alert('Watcher started.');
         }
         function clearCaptures (){
-            if(prompt("enter 'delete' below to delete all captures")==="delete")
-                localStorage.setItem('captures', JSON.stringify([]));
+            if(prompt("enter 'delete' below to delete all captures")==="delete"){
+                for (var i =0, i<sharedConstLiterals.MAX_CAPTURES, i++){
+                    localStorage.setItem(`captures[${i}]`, "");
+                }                     
+                localStorage.setItem(`lastPlanIdCaptured`, "");
+                localStorage.setItem(`lastStoredTo`, "");
+                localStorage.setItem('timesCaptured',"");
+
+            }
         }
         function retrieveCapture(){
-            const captures = JSON.parse(localStorage.getItem('captures') || '[]');
-            if (!captures.length) {
+            var timesCaptured = localStorage.getItem('timesCaptured');
+            if (!timesCaptured.length) {
                 alert('No captures available.');
                 return;
             }
-            
-            const num = parseInt(prompt('How many captures back? Enter 0 for most recent capture. The oldest capture can be retrieved by entering the number '+ (captures.length-1), "0"), 10);
-            if (isNaN(num) || num < 0 || num > captures.length-1) {
+            var str = "";
+            for (var i =0; i<timesCaptured.length; i++){
+                str+= `[${i}] ${timesCaptured[i]}` + "\n";
+            }
+            const num = parseInt(prompt(str), 10);
+            if (isNaN(num) || num < 0 || num > timesCaptured.length-1) {
                 alert('Invalid number.');
                 return;
             }
-            return captures[num];
+            return JSON.parse(localStorage.getItem(`captures[${num}]`));
         }
 
         
@@ -1055,7 +1071,7 @@ function getTBody (){
         document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
  
         // Dynamically set the hrefs
-        const watcherCode = [getPlanId,getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
+        const watcherCode = [sharedConstLiterals,getPlanId,getTBody,getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
         document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
 
 
@@ -1095,7 +1111,7 @@ function getTBody (){
         document.getElementById('sorter-link').href = 'javascript:(function(){' + sortCode + '})()';
     
         
-        const clearCapturesCode = [clearCaptures].map(f => f.toString()).join(';') + ';clearCaptures();';
+        const clearCapturesCode = [sharedConstLiterals,clearCaptures].map(f => f.toString()).join(';') + ';clearCaptures();';
         document.getElementById('clear-captures-link').href = 'javascript:(function(){' + clearCapturesCode + '})()';
 
         
