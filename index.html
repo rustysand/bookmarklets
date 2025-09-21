@@ -326,8 +326,8 @@ async function captureImage(isManual) {
         }
 
 class sharedConstLiterals {
-    static const MAX_CAPTURES = 24;
-    static const sharedGlobalIdentifier = "aoisejvna32452okjs";
+    static  MAX_CAPTURES = 24;
+    static  sharedGlobalIdentifier = "aoisejvna32452okjs";
 }
         
         function startWatcherMain() {
@@ -438,12 +438,14 @@ const tableRefreshDetector_capture = {
 
                 async function   justCaptureItFox(rightNow) {
                     let lastStoredTo = JSON.parse(localStorage.getItem('lastStoredTo') || "-1");
-                    let lastPlanIdCaptured = JSON.parse(localStorage.getItem('lastPlanIdCaptured'));
+                    let lastPlanIdCaptured = localStorage.getItem('lastPlanIdCaptured');
                     console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
-                    const alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
+                    var alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
                     tableRefreshDetector_capture.start();
                     const img = await captureImage();
                     const dataObj = captureData();
+                    
+                    
                     if(tableRefreshDetector_capture.didRefresh()) {
                         showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,alertTTL2);
                         return;
@@ -463,20 +465,20 @@ const tableRefreshDetector_capture = {
                         showAlert(`capture at ${alertTimeString} aborted. Image too small.`,alertTTL2, true);
                         return;
                     }
-                
+                    alertTimeString = new Date(dataObj.timeOfCapture).toLocaleTimeString('en-US', {hour12: false });
                     const toSave = {data: dataObj, image: img};
                     const samePlan = dataObj.planId === lastPlanIdCaptured;
                      let str = JSON.stringify(toSave);
                     if (!samePlan){
-                       lastStoredTo = (lastStoreTo+1)%sharedConstLiterals.MAX_CAPTURES;
+                       lastStoredTo = (lastStoredTo+1)%sharedConstLiterals.MAX_CAPTURES;
                        localStorage.setItem(`lastPlanIdCaptured`, dataObj.planId);
                        localStorage.setItem(`lastStoredTo`, ""+lastStoredTo);
                     }
                     localStorage.setItem(`captures[${lastStoredTo}]`, str);
                     var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')) || [];
-                    timesCaptured[lastStoredTo] = rightNow;
+                    timesCaptured[lastStoredTo] = dataObj.timeOfCapture;
                     localStorage.setItem(`timesCaptured`, JSON.stringify(timesCaptured));
-                    lastCaptureTime = rightNow;
+                    lastCaptureTime = dataObj.timeOfCapture;
                     showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, alertTTL1);
                         
                     
@@ -496,7 +498,7 @@ const tableRefreshDetector_capture = {
         }
         function clearCaptures (){
             if(prompt("enter 'delete' below to delete all captures")==="delete"){
-                for (var i =0, i<sharedConstLiterals.MAX_CAPTURES, i++){
+                for (var i =0; i<sharedConstLiterals.MAX_CAPTURES; i++){
                     localStorage.setItem(`captures[${i}]`, "");
                 }                     
                 localStorage.setItem(`lastPlanIdCaptured`, "");
@@ -505,15 +507,24 @@ const tableRefreshDetector_capture = {
 
             }
         }
+
+            function formatTimeStamp(t,excludeDate){
+                return new Date(t).toLocaleString("en-US", {timeZoneName: "short", hour12: false, year: (excludeDate ? undefined : "numeric"), month: (excludeDate ? undefined : "short"), day: (excludeDate ? undefined : "numeric"), hour: 'numeric', minute: 'numeric'});
+
+            }
         function retrieveCapture(){
-            var timesCaptured = localStorage.getItem('timesCaptured');
+       
+            var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured'));
             if (!timesCaptured.length) {
                 alert('No captures available.');
                 return;
             }
             var str = "";
+            var cat = "";
             for (var i =0; i<timesCaptured.length; i++){
-                str+= `[${i}] ${timesCaptured[i]}` + "\n";
+                cat = `[${i}] ${formatTimeStamp(timesCaptured[i])}` + "\n";
+                console.log(cat);
+                str+= cat;
             }
             const num = parseInt(prompt(str), 10);
             if (isNaN(num) || num < 0 || num > timesCaptured.length-1) {
@@ -1047,7 +1058,7 @@ function getTBody (){
         copyToClipboard(summaryFromDataObject(cap.data)[1], "summary");
   }
   
-          const retrieveSummaryCode = [retrieveCapture, copyToClipboard, formatTime, summaryFromDataObject, retrieveSummaryToClipboard].map(f => f.toString()).join(';') + ';retrieveSummaryToClipboard();';
+          const retrieveSummaryCode = [retrieveCapture, copyToClipboard, formatTime,formatTimeStamp, summaryFromDataObject, retrieveSummaryToClipboard].map(f => f.toString()).join(';') + ';retrieveSummaryToClipboard();';
           document.getElementById('retrieve-summary-link').href = 'javascript:(function(){' + retrieveSummaryCode + '})()';
   
         function captureSummaryToClipboard(){
@@ -1066,7 +1077,7 @@ function getTBody (){
         }
         
         
-        const retrieveJSONCode = [copyToClipboard, retrieveCapture,retrieveJSONtoClipboard].map(f => f.toString()).join(';')
+        const retrieveJSONCode = [copyToClipboard, formatTime, formatTimeStamp,retrieveCapture,retrieveJSONtoClipboard].map(f => f.toString()).join(';')
         + ';retrieveJSONtoClipboard();';
         document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
  
@@ -1075,18 +1086,18 @@ function getTBody (){
         document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
 
 
-        const retrieveMDCode = [retrieveMarkdownToClipboard, retrieveCapture,buildMarkdownFromDataObject,summaryFromDataObject,copyToClipboard].map(f => f.toString()).join(';') + ';retrieveMarkdownToClipboard();';
+        const retrieveMDCode = [retrieveMarkdownToClipboard, formatTime, formatTimeStamp,retrieveCapture,buildMarkdownFromDataObject,summaryFromDataObject,copyToClipboard].map(f => f.toString()).join(';') + ';retrieveMarkdownToClipboard();';
         document.getElementById('retriever-md-link').href = 'javascript:(function(){' + retrieveMDCode + '})()';
 
 
         
         
-        const retrieveSummaryJSONcode = [copyToClipboard, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
+        const retrieveSummaryJSONcode = [copyToClipboard,formatTimeStamp, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
         + ';retrieveSummaryJSON();';
         document.getElementById('retriever-summaryjson-link').href = 'javascript:(function(){' + retrieveSummaryJSONcode + '})()';
 
 
-        const retrieveSummaryURLcode = [copyToClipboard, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
+        const retrieveSummaryURLcode = [copyToClipboard,formatTimeStamp, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
         + ';retrieveSummaryJSON(true);';
         document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLcode + '})()';
         
@@ -1118,7 +1129,7 @@ function getTBody (){
         const captureImageCode = [captureImageToClipboard, copyImage, captureImage].map(f => f.toString()).join(';') + ';captureImageToClipboard();';
         document.getElementById('capture-image-link').href = 'javascript:(function(){' + captureImageCode + '})()';
 
-        const retrieveImageCode = [retrieveImageToClipboard, retrieveCapture, captureImage, copyImage].map(f => f.toString()).join(';') + ';retrieveImageToClipboard();';
+        const retrieveImageCode = [retrieveImageToClipboard,formatTime,formatTimeStamp, retrieveCapture, captureImage, copyImage].map(f => f.toString()).join(';') + ';retrieveImageToClipboard();';
         document.getElementById('retrieve-image-link').href = 'javascript:(function(){' + retrieveImageCode + '})()';
         
     </script>
