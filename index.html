@@ -486,6 +486,7 @@ const tableRefreshDetector_capture = {
 
                 const rightNow = Date.now();
                 var diff = rightNow-lastCaptureTime;
+                console.log("diff: "+diff);
                 if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
                     if(diff>CAPTURE_INTERVAL_SHORT) {
                         await justCaptureItFox(rightNow);
