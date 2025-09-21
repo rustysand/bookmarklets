@@ -366,9 +366,9 @@ async function captureImage(isManual) {
             
             window.watcherActive = true;
             const MAX_CAPTURES = 24;
-            const CHECK_INTERVAL = 2000;
-            const CAPTURE_INTERVAL_SHORT = 10000;
-            const CAPTURE_INTERVAL_LONG = 60000;
+            const CHECK_INTERVAL = 4000;
+            const CAPTURE_INTERVAL_SHORT = 15000;
+            const CAPTURE_INTERVAL_LONG = 90000;
             const MIN_IMAGE_URL_LENGTH = 1000;
             const alertTTL1 = 10 * 60 * 1000;
             const alertTTL2 = 12 * 60 * 60 * 1000;
@@ -392,7 +392,7 @@ async function captureImage(isManual) {
                 async function   justCaptureItFox(rightNow) {
                     let captures = JSON.parse(localStorage.getItem('captures') || '[]');
                     let lastCapture = captures[0];
-                    let lastPlanIdCaptured = lastCapture?.data.planId;
+                    let lastPlanIdCaptured = lastCapture?.data?.planId;
                     console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
                     const before = captureData();
                     const img = await captureImage();
