@@ -327,6 +327,48 @@ async function captureImage(isManual) {
         
         
         function startWatcherMain() {
+
+
+const tableRefreshDetector_capture = {
+
+        rando: "oisj2389sdfn9"
+    ,
+        start() {
+            this.started = true;
+            this.flag = false;
+            this.planId = getPlanId();
+            this.tbody = getTBody();
+            this.firstRow = this.getFirstRow(this.tbody);
+            if(this.firstRow)
+                this.firstRow[this.rando] = true;
+        }
+    ,
+        flag(){
+            this.flag = true;
+        }
+    ,
+        didRefresh() {
+            if(!this.started)
+                alert("error: attempted to check unstarted detector!");
+            const pid = getPlanId();
+            const tb = getTBody();
+            const fr = this.getFirstRow(tb);
+            if( pid !== this.planId || this.tbody !== tb || this.firstRow !== fr )
+                return true;
+            if (!this.firstRow)
+                return false;
+            return !fr[this.rando]  || this.flag;
+        }
+    ,
+        getFirstRow(tbody) {
+            if (tbody){
+                var rows = Array.from(this.tbody.getElementsByTagName('tr'));
+                return rows[0];
+            }
+        }
+};
+
+            
             function showAlert(message,ttl=60*60*1000,isError=false) {
               const leftright= isError?"left":"right";
               const bgc = isError?"#900":"#080";
@@ -394,10 +436,11 @@ async function captureImage(isManual) {
                     let lastCapture = captures[0];
                     let lastPlanIdCaptured = lastCapture?.data?.planId;
                     console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
-                    const before = captureData();
+
+                    tableRefreshDetector_capture.start();
                     const img = await captureImage();
                     const dataObj = captureData();
-                    const after = captureData();
+                    
                     const alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
                     const toSave = {data: dataObj, image: img};
                     const samePlan = dataObj?.planId === lastPlanIdCaptured;
@@ -406,13 +449,13 @@ async function captureImage(isManual) {
                             aborts.unshift(toSave);
                             localStorage.setItem('aborts', JSON.stringify(aborts));
                     };
-                    if(!dataObj && !after && !before) {
-                        showAlert(`last capture at ${alertTimeString} aborted. All three data objects missing.`,alertTTL2,true);
+                    if(!dataObj) {
+                        showAlert(`last capture at ${alertTimeString} aborted. No data object.`,alertTTL2,true);
                         saveAbort();
-                    }else if(before?.planId !== dataObj?.planId || dataObj?.planId !== after?.planId) {
+                    }else if(tableRefreshDetector_capture.didRefresh()) {
                         showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,alertTTL2);
                         saveAbort();
-                    }else if(!dataObj?.planId){
+                    }else if(!dataObj.planId){
                         showAlert(`last capture at ${alertTimeString} aborted because no planId captured`,alertTTL2,true);
                         saveAbort();
                     }else if (img.length<MIN_IMAGE_URL_LENGTH) {
@@ -882,7 +925,7 @@ class tableRefreshDetector{
         }
 }
 
- tableRefreshDetector_capture = {
+const tableRefreshDetector_capture = {
 
         rando: "oisj2389sdfn9"
     ,
@@ -919,7 +962,7 @@ class tableRefreshDetector{
                 return rows[0];
             }
         }
-}
+};
         
 
 function getTBody (){
