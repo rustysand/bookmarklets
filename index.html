@@ -375,37 +375,74 @@ window[sharedConstLiterals.sharedGlobalIdentifier] = {
 };
 
             
-            function showAlert(message,ttl=60*60*1000,isError=false) {
-              const leftright= isError?"left":"right";
-              const bgc = isError?"#900":"#080";
-              console.log("sending alert to page with message: "+message);
-              const alert = document.createElement('div');
-              const closeBtn = document.createElement('span');
-              
-              alert.textContent = message;
-              alert.style.cssText = `
+            let alertBox = null;
+            let toggleBtn = null;
+            let isExpanded = true;
+            function createAlertBox() {
+              alertBox = document.createElement('div');
+              alertBox.style.cssText = `
                 position: fixed;
-                top: 10px;
-                ${leftright}: 10px;
-                padding: 10px 30px 10px 10px;
-                background: ${bgc};
-                color: white;
+                bottom: 10px;
+                right: 10px;
+                width: 300px;
+                height: 120px; /* Approx 6 lines at 20px line-height */
+                overflow-y: auto;
+                background: #fff;
+                border: 1px solid #ccc;
+                padding: 10px;
                 z-index: 1000;
+                display: block;
               `;
-              
-              closeBtn.textContent = '×';
-              closeBtn.style.cssText = `
-                position: absolute;
-                top: 5px;
-                right: 5px;
+              toggleBtn = document.createElement('button');
+              toggleBtn.textContent = 'Alerts';
+              toggleBtn.style.cssText = `
+                position: fixed;
+                bottom: 10px;
+                right: 10px;
+                padding: 5px 10px;
+                background: #333;
+                color: white;
+                border: none;
                 cursor: pointer;
+                z-index: 1000;
+                display: none;
               `;
-              
-              closeBtn.onclick = () => alert.remove();
-              window.setTimeout(() => alert.remove(), ttl);
-              alert.appendChild(closeBtn);
-              document.body.appendChild(alert);
+              toggleBtn.onclick = () => {
+                isExpanded = !isExpanded;
+                if (isExpanded) {
+                  alertBox.style.display = 'block';
+                  toggleBtn.style.display = 'none';
+                } else {
+                  alertBox.style.display = 'none';
+                  toggleBtn.style.display = 'block';
+                }
+              };
+              document.body.appendChild(alertBox);
+              document.body.appendChild(toggleBtn);
             }
+            function showAlert(message, type = 'blue') {
+              if (!alertBox) {
+                createAlertBox();
+              }
+              const alertItem = document.createElement('div');
+              alertItem.textContent = message;
+              let color;
+              switch (type) {
+                case 'red': color = '#f00'; break;
+                case 'green': color = '#0f0'; break;
+                default: color = '#00f';
+              }
+              alertItem.style.cssText = `
+                padding: 5px;
+                margin-bottom: 5px;
+                background: ${color};
+                color: white;
+              `;
+              alertBox.appendChild(alertItem);
+              alertBox.scrollTop = alertBox.scrollHeight; // Scroll to bottom
+            }
+
+            
             if (window.watcherActive) {
                 const timeLeft = getTimeLeft();
                 alert(`Watcher is already active. Time left: ${formatTime(timeLeft)}`);
@@ -446,22 +483,22 @@ window[sharedConstLiterals.sharedGlobalIdentifier] = {
                     
                     
                     if(detector.didRefresh()) {
-                        showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,alertTTL2);
+                        showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,'blue');
                         return;
                     }
                 
                     if(!dataObj) {
-                        showAlert(`last capture at ${alertTimeString} aborted. No data object.`,alertTTL2,true);
+                        showAlert(`last capture at ${alertTimeString} aborted. No data object.`,'red');
                         return;
                     }
 
                     if(!dataObj.planId){
-                        showAlert(`last capture at ${alertTimeString} aborted because no planId captured`,alertTTL2,true);
+                        showAlert(`last capture at ${alertTimeString} aborted because no planId captured`,'red');
                         return;
                     }
                 
                     if (img.length<MIN_IMAGE_URL_LENGTH) {
-                        showAlert(`capture at ${alertTimeString} aborted. Image too small.`,alertTTL2, true);
+                        showAlert(`capture at ${alertTimeString} aborted. Image too small.`,'red');
                         return;
                     }
                     alertTimeString = new Date(dataObj.timeOfCapture).toLocaleTimeString('en-US', {hour12: false });
@@ -485,7 +522,7 @@ window[sharedConstLiterals.sharedGlobalIdentifier] = {
                     timesCaptured[lastStoredTo] = dataObj.timeOfCapture;
                     localStorage.setItem(`timesCaptured`, JSON.stringify(timesCaptured));
                     lastCaptureTime = dataObj.timeOfCapture;
-                    showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, alertTTL1);
+                    showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, 'green');
                         
                     
                 }
