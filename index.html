@@ -329,6 +329,83 @@ class sharedConstLiterals {
     static  MAX_CAPTURES = 24;
     static  sharedGlobalIdentifier = "aoisejvna32452okjs";
 }
+
+
+
+
+/*
+            let alertBox = null;
+            let toggleBtn = null;
+            let isExpanded = true;
+            function createAlertBox() {
+              alertBox = document.createElement('div');
+              alertBox.style.cssText = `
+                position: fixed;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 300px;
+                height: 120px; // Approx 6 lines at 20px line-height 
+                overflow-y: auto;
+                background: #fff;
+                border: 1px solid #ccc;
+                padding: 10px;
+                z-index: 1000;
+                display: block;
+              `;
+              toggleBtn = document.createElement('button');
+              toggleBtn.textContent = 'Alerts';
+              toggleBtn.style.cssText = `
+                position: fixed;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 5px 10px;
+                background: #333;
+                color: white;
+                border: none;
+                cursor: pointer;
+                z-index: 1000;
+                display: none;
+              `;
+              toggleBtn.onclick = () => {
+                isExpanded = !isExpanded;
+                if (isExpanded) {
+                  alertBox.style.display = 'block';
+                  toggleBtn.style.display = 'none';
+                } else {
+                  alertBox.style.display = 'none';
+                  toggleBtn.style.display = 'block';
+                }
+              };
+              document.body.appendChild(alertBox);
+              document.body.appendChild(toggleBtn);
+            }
+            function showAlert(message, type = 'blue') {
+              if (!alertBox) {
+                createAlertBox();
+              }
+              const alertItem = document.createElement('div');
+              alertItem.textContent = message;
+              let color;
+              switch (type) {
+                case 'red': color = '#900'; break;
+                case 'green': color = '#090'; break;
+                default: color = '#009';
+              }
+              alertItem.style.cssText = `
+                padding: 5px;
+                margin-bottom: 5px;
+                background: ${color};
+                color: white;
+              `;
+              alertBox.appendChild(alertItem);
+              alertBox.scrollTop = alertBox.scrollHeight;
+            }
+
+            */
+
+
         
         function startWatcherMain() {
 
@@ -374,73 +451,79 @@ window[sharedConstLiterals.sharedGlobalIdentifier] = {
     }
 };
 
-            
-            let alertBox = null;
-            let toggleBtn = null;
-            let isExpanded = true;
-            function createAlertBox() {
-              alertBox = document.createElement('div');
-              alertBox.style.cssText = `
+            let outerAlertsContainer = null;
+            let alertsContainer = null;
+            let toggleButton = null;
+            let currentFilter = 'all';
+            function initializeAlertSystem() {
+              outerAlertsContainer = document.createElement('div');
+              outerAlertsContainer.style.cssText = `
                 position: fixed;
-                bottom: 10px;
-                right: 10px;
+                top: 10px;
+                left: 50%;
+                transform: translateX(-50%);
                 width: 300px;
-                height: 120px; /* Approx 6 lines at 20px line-height */
-                overflow-y: auto;
                 background: #fff;
                 border: 1px solid #ccc;
-                padding: 10px;
-                z-index: 1000;
-                display: block;
-              `;
-              toggleBtn = document.createElement('button');
-              toggleBtn.textContent = 'Alerts';
-              toggleBtn.style.cssText = `
-                position: fixed;
-                bottom: 10px;
-                right: 10px;
-                padding: 5px 10px;
-                background: #333;
-                color: white;
-                border: none;
-                cursor: pointer;
                 z-index: 1000;
                 display: none;
               `;
-              toggleBtn.onclick = () => {
-                isExpanded = !isExpanded;
-                if (isExpanded) {
-                  alertBox.style.display = 'block';
-                  toggleBtn.style.display = 'none';
-                } else {
-                  alertBox.style.display = 'none';
-                  toggleBtn.style.display = 'block';
-                }
+              const header = document.createElement('div');
+              header.style.cssText = `padding: 5px; border-bottom: 1px solid #ccc;`;
+              ['all', 'red', 'green', 'blue'].forEach(type => {
+                const btn = document.createElement('button');
+                btn.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+                btn.style.marginRight = '5px';
+                btn.onclick = () => setFilter(type);
+                header.appendChild(btn);
+              });
+              outerAlertsContainer.appendChild(header);
+              alertsContainer = document.createElement('div');
+              alertsContainer.style.cssText = `
+                max-height: 120px;
+                overflow-y: auto;
+                padding: 10px;
+              `;
+              outerAlertsContainer.appendChild(alertsContainer);
+              document.body.appendChild(outerAlertsContainer);
+              toggleButton = document.createElement('button');
+              toggleButton.textContent = 'Alerts';
+              toggleButton.style.cssText = `
+                position: fixed;
+                 top: 10px;
+                right: calc(50% - 150px);
+                transform: translateX(-50%);
+                z-index: 1000;
+              `;
+              toggleButton.onclick = () => {
+                outerAlertsContainer.style.display = outerAlertsContainer.style.display === 'none' ? 'block' : 'none';
               };
-              document.body.appendChild(alertBox);
-              document.body.appendChild(toggleBtn);
+              document.body.appendChild(toggleButton);
+            }
+            function setFilter(filter) {
+              currentFilter = filter;
+              Array.from(alertsContainer.children).forEach(alert => {
+                alert.style.display = (filter === 'all' || alert.classList.contains(filter)) ? 'block' : 'none';
+              });
             }
             function showAlert(message, type = 'blue') {
-              if (!alertBox) {
-                createAlertBox();
+              if (!outerAlertsContainer) {
+                initializeAlertSystem();
               }
-              const alertItem = document.createElement('div');
-              alertItem.textContent = message;
-              let color;
-              switch (type) {
-                case 'red': color = '#f00'; break;
-                case 'green': color = '#0f0'; break;
-                default: color = '#00f';
-              }
-              alertItem.style.cssText = `
+              const alert = document.createElement('div');
+              alert.textContent = message;
+              alert.classList.add('alert', type);
+              alert.style.cssText = `
                 padding: 5px;
                 margin-bottom: 5px;
-                background: ${color};
                 color: white;
+                background-color: ${type};
               `;
-              alertBox.appendChild(alertItem);
-              alertBox.scrollTop = alertBox.scrollHeight; // Scroll to bottom
+              alertsContainer.appendChild(alert);
+              alertsContainer.scrollTop = alertsContainer.scrollHeight;
             }
+            
+
 
             
             if (window.watcherActive) {
