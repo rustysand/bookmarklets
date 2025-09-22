@@ -601,7 +601,7 @@ window[sharedConstLiterals.sharedGlobalIdentifier] = {
                        localStorage.setItem(`lastStoredTo`, ""+lastStoredTo);
                     }
                     localStorage.setItem(`captures[${lastStoredTo}]`, str);
-                    var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')) || [];
+                    var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')||"[]");
                     timesCaptured[lastStoredTo] = dataObj.timeOfCapture;
                     localStorage.setItem(`timesCaptured`, JSON.stringify(timesCaptured));
                     lastCaptureTime = dataObj.timeOfCapture;
@@ -641,7 +641,8 @@ window[sharedConstLiterals.sharedGlobalIdentifier] = {
             }
         function retrieveCapture(){
        
-            var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured'));
+            var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')||"[]");
+            
             if (!timesCaptured.length) {
                 alert('No captures available.');
                 return;
