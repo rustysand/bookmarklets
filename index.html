@@ -1,260 +1,260 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rusty's bookmarks</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rusty's bookmarks</title>
 </head>
 <body>
-    
-    <p>contact the author: Rusty Sand (rustysan) tsunami.numerate576@8alias.com</p>
-    <h3><i>On this page I provide a collection of tools in the form of "bookmarklets".
-        They are like links that you save to your bookmarks/favorites,
-        but unlike ordinary bookmarks that take you to some website,
-        when you click on these in your bookmarks,
-        it executes a small program on whatever page you happen to have open at the time.
-        If you aren't familiar with all this,
-        you can learn by first following the steps below to sort foresight by lane number.
-        That sould give you a feel for how bookmarklets work, after which you will be
-        more prepared to use the more complex tools that follow.
-    </i></h3>
-    
-    <h1>Steps to start sorting foresight by lane number</h1>
-    <p>
-        First, it helps to have the bookmarks bar visible in your browser.
-        <a href="https://help.usepastel.com/en/articles/3380923-how-to-turn-on-your-bookmarks-toolbar">here's a guide for various browsers if you don't know how</a>
-    </p>
-    <p>After the bookmarks bar is visible, you can drag the link below into your bookmarks bar.
-        After that, whenever you have foresight open,
-        you only need to click the bookmark once to activate a program that will keep the recommendations sorted by lane number,
-        even after the data refreshes automatically.
-        If the entire page refreshes, then you will just need to click the bookmark again to reactivate the sorting program.</p>
-    
-    <a id="sorter-link" href="#">Sort By Lane</a>
-    <p>Note that clicking the link on this page will not work.
-        The link has to be added to your bookmarks,
-        and you must be on the foresight tab when you then click the bookmark.</p>
-    <p>After you get this sorting bookmark working, feel free to move on to the other tools below.</p>
-    <h1>Tools for capturing recommendation completion status</h1>
-    <h3><i>these tools make it easier to submit to the slack channel.
-        This is a collection of bookmarklets that allow the needed data to be copied to the clipboard or automatically saved and retrieved later.
-        Some of these bookmarks have rather long names that might not fit on your bookmarks bar nicely.
-       After you add them to your bookmarks, feel free to edit the names, but changing the url/code will likely make the bookmarklet not function properly</i></h3>
-    <p>Drag the following link to your bookmarks bar. When the bookmark is clicked,
-    it copies a clear image of the table from foresight,
-    kinda like taking a screenshot but better.
-    After you click it, it takes a few seconds to capture the image.
-    It will look like nothing happened at first, but you will see an alert when the capture completes.</p>
-    
-    <a id="capture-image-link" href="#">capture image</a><br>
-    
-    <p>The following copies a summary including completion status and plan id</p>
-    <a id="manual-simplesummary-link" href="#">capture simple summary  </a><br>
-   
-     
-    
-    
-    <p>The following is for capturing the data automatically when timer is close to zero. It will save up to 21 captures in your browser's local storage:</p>
-    
-    <a id="watcher-link" href="#">Start Autocapture </a><br>
 
-    <p>The following are for retrieving the data that was captured automatically. One retrieves the image, One retrieves the summary.
-    When clicked, these bookmarklets will tell you how many captures are available and prompt you to enter a number to select the desired capture.
-    Entering 0 selects the most recent capture</p>
+<p>contact the author: Rusty Sand (rustysan) tsunami.numerate576@8alias.com</p>
+<h3><i>On this page I provide a collection of tools in the form of "bookmarklets".
+    They are like links that you save to your bookmarks/favorites,
+    but unlike ordinary bookmarks that take you to some website,
+    when you click on these in your bookmarks,
+    it executes a small program on whatever page you happen to have open at the time.
+    If you aren't familiar with all this,
+    you can learn by first following the steps below to sort foresight by lane number.
+    That sould give you a feel for how bookmarklets work, after which you will be
+    more prepared to use the more complex tools that follow.
+</i></h3>
 
-    <a id="retrieve-image-link" href="#">retrieve autocaptured image</a><br>
-    <a id="retrieve-simplesummary-link" href="#">retrieve simple autocaptured summary</a><br>
-    
+<h1>Steps to start sorting foresight by lane number</h1>
+<p>
+    First, it helps to have the bookmarks bar visible in your browser.
+    <a href="https://help.usepastel.com/en/articles/3380923-how-to-turn-on-your-bookmarks-toolbar">here's a guide for various browsers if you don't know how</a>
+</p>
+<p>After the bookmarks bar is visible, you can drag the link below into your bookmarks bar.
+    After that, whenever you have foresight open,
+    you only need to click the bookmark once to activate a program that will keep the recommendations sorted by lane number,
+    even after the data refreshes automatically.
+    If the entire page refreshes, then you will just need to click the bookmark again to reactivate the sorting program.</p>
 
-    
-       
+<a id="sorter-link" href="#">Sort By Lane</a>
+<p>Note that clicking the link on this page will not work.
+    The link has to be added to your bookmarks,
+    and you must be on the foresight tab when you then click the bookmark.</p>
+<p>After you get this sorting bookmark working, feel free to move on to the other tools below.</p>
+<h1>Tools for capturing recommendation completion status</h1>
+<h3><i>these tools make it easier to submit to the slack channel.
+    This is a collection of bookmarklets that allow the needed data to be copied to the clipboard or automatically saved and retrieved later.
+    Some of these bookmarks have rather long names that might not fit on your bookmarks bar nicely.
+   After you add them to your bookmarks, feel free to edit the names, but changing the url/code will likely make the bookmarklet not function properly</i></h3>
+<p>Drag the following link to your bookmarks bar. When the bookmark is clicked,
+it copies a clear image of the table from foresight,
+kinda like taking a screenshot but better.
+After you click it, it takes a few seconds to capture the image.
+It will look like nothing happened at first, but you will see an alert when the capture completes.</p>
 
-     <p>The following allows you to clear all auto-captures from local storage,
-         which might be useful if you want to clean things up after saving the captures to a more permanent storage location.
-         Note that the autocapture program also overwrites old captures on a FIFO basis once the number of captures reaches 21</p>
-    <a id="clear-captures-link" href="#">clear captures</a><br>
-    
-  
+<a id="capture-image-link" href="#">capture image</a><br>
 
-    <p>Note that for any of the bookmarks that copy things to your clipboard to work, the forsight tab must be open and in focus. Otherwise you will an error like this:</p>
-    <img src="focus.png"/>
-    <p>But fear not. Simply close the error and click anywhere on the forsight page to make it in focus before clicking the bookmarklet again</p>
+<p>The following copies a summary including completion status and plan id</p>
+<a id="manual-simplesummary-link" href="#">capture simple summary  </a><br>
 
-    <p>The following are experimental and/or under development:</p>
-     <a id="manual-summary-link" href="#">capture detailed summary  </a><br>
-    <a id="retrieve-summary-link" href="#">retrieve detailed autocaptured summary</a><br>
-     <a id="recopy-image-link" href="#">recopy manually captured img</a><br>
-    <a id="manual-sajurl-link" href="#">Manually copy Summary+longURL to clipboard</a><br>
-    <a id="manual-md-link" href="#">Manually copy Markdown to clipboard</a><br>
-    <a id="retriever-json-link" href="#">Retrieve autocaptured JSON  (experimental)</a><br>
-    <a id="retriever-md-link" href="#">Retrieve autocaptured Markdown  (experimental)</a><br>
-    <a id="download-link" href="#">Manually Download JSON and MD  (experimental)</a><br>
-    <a id="manual-saj-link" href="#">Manually copy Summary+JSON to clipboard</a><br>
-    <a id="retriever-summaryjson-link" href="#">Retrieve autocaptured summary and JSON  </a><br>
-    <a id="retriever-summaryurl-link" href="#">Retrieve autocaptured summary and URL  </a><br>
-    
-
-    <script>
-        function getTimeLeftElement(){
-             const timeDiv = document.querySelector('.sorter-table-header .foresight-table-metadata');
-             if (timeDiv)
-                 return timeDiv.querySelector('.timer');
-             else
-                 return null;
-        }
-        function getTimeLeft(inMS=true) {
-
-           
-           const timerSpan = getTimeLeftElement();
-            if (!timerSpan) return -1;
-            const timeStr = timerSpan.innerText;
-
-            const timeMatch = timeStr.match(/(\d+):(\d+)/);
-            if (!timeMatch) return -1;
-            if(!inMS) return timeMatch;
-            const min = parseInt(timeMatch[1], 10);
-            const sec = parseInt(timeMatch[2], 10);
-            return (min * 60 + sec) * 1000;
-        }
-
-        function formatTime(ms) {
-            if (ms < 0) return 'Unknown';
-            const totalSec = Math.floor(ms / 1000);
-            const min = Math.floor(totalSec / 60);
-            const sec = totalSec % 60;
-            return `${min}:${sec < 10 ? '0' : ''}${sec}`;
-        }
-
-
-        function getPlanId (){
-            const headerDiv = document.querySelector('.sorter-table-header');
-            if (!headerDiv) return null;
-            const spans = Array.from(headerDiv.querySelectorAll('span'));
-            const planIdSpan = spans.find(span => span.innerText.startsWith('Plan Id :'));
-            if (!planIdSpan) return null;
-            return planIdSpan.innerText;
-        }
-        
-        function captureData(isManual) {
-            const table = document.querySelector('.awsui-table-container');
-            if (!table) return null;
-            const thead = table.querySelector('thead');
-            if (!thead) return null;
-            const tbody = table.querySelector('tbody');
-            if (!tbody) return null;
-            const headerRow = thead.rows[0];
-            if (!headerRow) return null;
-            const headerCells = Array.from(headerRow.cells).map(cell => cell.innerText.trim());
-            const bodyRows = Array.from(tbody.rows);
-            let completedCount = 0;
-            let totalCount = 0;
-            for (const row of bodyRows) {
-                const lastCellText = row.cells[row.cells.length - 1].innerText.trim();
-                if (lastCellText === 'Completed') {
-                    completedCount++;
-                }
-                if(!row.classList.contains("recommendation-table-dependent-grouping-row")){
-                    if (row.getElementsByTagName("td").length > 1) {
-                        totalCount++;
-                    }else{
-                        alert("problem counting number of recommendations. TD tags <=1 but appropriate class not found.");
-                    }
-                }
-            }
-    
-            const allCompleted = completedCount === totalCount;
-            const status = allCompleted ? 'COMPLETED' : 'INCOMPLETE';
-            const planId = getPlanId();
-            if (!planId) return null;
-            const rowsData = bodyRows.map(row => Array.from(row.cells).map(cell => cell.innerText.trim()));
-            const timeLeft = getTimeLeft();
-            const timeOfRecommendation = new Date(document.querySelector('.sorter-table-header .foresight-table-metadata small').innerText).toString();
-            const timeOfCapture = Date.now();
-            const ret =  {
-                status,
-                planId,
-                completedCount,
-                totalCount,
-                timeOfRecommendation,
-                timeOfCapture,
-                timeLeft,
-                headers: headerCells,
-                rows: rowsData
-            };
-            console.log('Captured:', JSON.stringify(ret).slice(0, 300));
-            if(isManual) localStorage.setItem('lastDataCapture', JSON.stringify(ret));
-            return ret;
-        }
  
-        function onTimerTick(timeLeft) {
-            console.log('Time left:', formatTime(timeLeft));
-            console.log('last updated:', new Date());
-            const el = getTimeLeftElement();
-            if(el)
-            {
-                if (el.style.backgroundColor == "blue")
-                    el.style.backgroundColor = "#009900";
-                else
-                    el.style.backgroundColor = "blue";
-            }
-        }
+
+
+<p>The following is for capturing the data automatically when timer is close to zero. It will save up to 21 captures in your browser's local storage:</p>
+
+<a id="watcher-link" href="#">Start Autocapture </a><br>
+
+<p>The following are for retrieving the data that was captured automatically. One retrieves the image, One retrieves the summary.
+When clicked, these bookmarklets will tell you how many captures are available and prompt you to enter a number to select the desired capture.
+Entering 0 selects the most recent capture</p>
+
+<a id="retrieve-image-link" href="#">retrieve autocaptured image</a><br>
+<a id="retrieve-simplesummary-link" href="#">retrieve simple autocaptured summary</a><br>
+
+
+
    
 
-        
-        
+ <p>The following allows you to clear all auto-captures from local storage,
+     which might be useful if you want to clean things up after saving the captures to a more permanent storage location.
+     Note that the autocapture program also overwrites old captures on a FIFO basis once the number of captures reaches 21</p>
+<a id="clear-captures-link" href="#">clear captures</a><br>
+
+
+
+<p>Note that for any of the bookmarks that copy things to your clipboard to work, the forsight tab must be open and in focus. Otherwise you will an error like this:</p>
+<img src="focus.png"/>
+<p>But fear not. Simply close the error and click anywhere on the forsight page to make it in focus before clicking the bookmarklet again</p>
+
+<p>The following are experimental and/or under development:</p>
+ <a id="manual-summary-link" href="#">capture detailed summary  </a><br>
+<a id="retrieve-summary-link" href="#">retrieve detailed autocaptured summary</a><br>
+ <a id="recopy-image-link" href="#">recopy manually captured img</a><br>
+<a id="manual-sajurl-link" href="#">Manually copy Summary+longURL to clipboard</a><br>
+<a id="manual-md-link" href="#">Manually copy Markdown to clipboard</a><br>
+<a id="retriever-json-link" href="#">Retrieve autocaptured JSON  (experimental)</a><br>
+<a id="retriever-md-link" href="#">Retrieve autocaptured Markdown  (experimental)</a><br>
+<a id="download-link" href="#">Manually Download JSON and MD  (experimental)</a><br>
+<a id="manual-saj-link" href="#">Manually copy Summary+JSON to clipboard</a><br>
+<a id="retriever-summaryjson-link" href="#">Retrieve autocaptured summary and JSON  </a><br>
+<a id="retriever-summaryurl-link" href="#">Retrieve autocaptured summary and URL  </a><br>
+
+
+<script>
+    function getTimeLeftElement(){
+         const timeDiv = document.querySelector('.sorter-table-header .foresight-table-metadata');
+         if (timeDiv)
+             return timeDiv.querySelector('.timer');
+         else
+             return null;
+    }
+    function getTimeLeft(inMS=true) {
+
+       
+       const timerSpan = getTimeLeftElement();
+        if (!timerSpan) return -1;
+        const timeStr = timerSpan.innerText;
+
+        const timeMatch = timeStr.match(/(\d+):(\d+)/);
+        if (!timeMatch) return -1;
+        if(!inMS) return timeMatch;
+        const min = parseInt(timeMatch[1], 10);
+        const sec = parseInt(timeMatch[2], 10);
+        return (min * 60 + sec) * 1000;
+    }
+
+    function formatTime(ms) {
+        if (ms < 0) return 'Unknown';
+        const totalSec = Math.floor(ms / 1000);
+        const min = Math.floor(totalSec / 60);
+        const sec = totalSec % 60;
+        return `${min}:${sec < 10 ? '0' : ''}${sec}`;
+    }
+
+
+    function getPlanId (){
+        const headerDiv = document.querySelector('.sorter-table-header');
+        if (!headerDiv) return null;
+        const spans = Array.from(headerDiv.querySelectorAll('span'));
+        const planIdSpan = spans.find(span => span.innerText.startsWith('Plan Id :'));
+        if (!planIdSpan) return null;
+        return planIdSpan.innerText;
+    }
+    
+    function captureData(isManual) {
+        const table = document.querySelector('.awsui-table-container');
+        if (!table) return null;
+        const thead = table.querySelector('thead');
+        if (!thead) return null;
+        const tbody = table.querySelector('tbody');
+        if (!tbody) return null;
+        const headerRow = thead.rows[0];
+        if (!headerRow) return null;
+        const headerCells = Array.from(headerRow.cells).map(cell => cell.innerText.trim());
+        const bodyRows = Array.from(tbody.rows);
+        let completedCount = 0;
+        let totalCount = 0;
+        for (const row of bodyRows) {
+            const lastCellText = row.cells[row.cells.length - 1].innerText.trim();
+            if (lastCellText === 'Completed') {
+                completedCount++;
+            }
+            if(!row.classList.contains("recommendation-table-dependent-grouping-row")){
+                if (row.getElementsByTagName("td").length > 1) {
+                    totalCount++;
+                }else{
+                    alert("problem counting number of recommendations. TD tags <=1 but appropriate class not found.");
+                }
+            }
+        }
+
+        const allCompleted = completedCount === totalCount;
+        const status = allCompleted ? 'COMPLETED' : 'INCOMPLETE';
+        const planId = getPlanId();
+        if (!planId) return null;
+        const rowsData = bodyRows.map(row => Array.from(row.cells).map(cell => cell.innerText.trim()));
+        const timeLeft = getTimeLeft();
+        const timeOfRecommendation = new Date(document.querySelector('.sorter-table-header .foresight-table-metadata small').innerText).toString();
+        const timeOfCapture = Date.now();
+        const ret =  {
+            status,
+            planId,
+            completedCount,
+            totalCount,
+            timeOfRecommendation,
+            timeOfCapture,
+            timeLeft,
+            headers: headerCells,
+            rows: rowsData
+        };
+        console.log('Captured:', JSON.stringify(ret).slice(0, 300));
+        if(isManual) localStorage.setItem('lastDataCapture', JSON.stringify(ret));
+        return ret;
+    }
+
+    function onTimerTick(timeLeft) {
+        console.log('Time left:', formatTime(timeLeft));
+        console.log('last updated:', new Date());
+        const el = getTimeLeftElement();
+        if(el)
+        {
+            if (el.style.backgroundColor == "blue")
+                el.style.backgroundColor = "#009900";
+            else
+                el.style.backgroundColor = "blue";
+        }
+    }
+
+
+    
+    
 
 
 
 
 async function captureImage(isManual) {
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      if (window.html2canvas) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = src;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
-  }
-  async function elementToCanvas(element) {
-    return await html2canvas(element, {
-      allowTaint: true,
-      scale: 1
-    });
-  }
-  const container = document.querySelector('.awsui-table-container');
-  if (!container) {
-    alert('No .awsui-table-container found');
+function loadScript(src) {
+return new Promise((resolve, reject) => {
+  if (window.html2canvas) {
+    resolve();
     return;
   }
-  const table = container.querySelector('table');
-  if (!table) {
-    alert('No table found in .awsui-table-container');
-    return;
-  }
-  const header = document.querySelector('.awsui-table-regions-container');
-  await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
-  const canvas1 = await elementToCanvas(header);
-  const canvas2 = await elementToCanvas(table);
-  const maxWidth = Math.max(canvas1.width, canvas2.width);
-  const totalHeight = canvas1.height + canvas2.height;
-  const collageCanvas = document.createElement('canvas');
-  collageCanvas.width = maxWidth;
-  collageCanvas.height = totalHeight;
-  const ctx = collageCanvas.getContext('2d');
-  ctx.fillStyle = 'white';
-  ctx.fillRect(0, 0, maxWidth, totalHeight);
-  const x1 = (maxWidth - canvas1.width) / 2;
-  ctx.drawImage(canvas1, x1, 0);
-  const x2 = (maxWidth - canvas2.width) / 2;
-  ctx.drawImage(canvas2, x2, canvas1.height);
-  var ret = collageCanvas.toDataURL('image/png');
-  if (isManual) localStorage.setItem('lastImgCapture', ret);
-  return ret;
+  const script = document.createElement('script');
+  script.src = src;
+  script.onload = resolve;
+  script.onerror = reject;
+  document.head.appendChild(script);
+});
+}
+async function elementToCanvas(element) {
+return await html2canvas(element, {
+  allowTaint: true,
+  scale: 1
+});
+}
+const container = document.querySelector('.awsui-table-container');
+if (!container) {
+alert('No .awsui-table-container found');
+return;
+}
+const table = container.querySelector('table');
+if (!table) {
+alert('No table found in .awsui-table-container');
+return;
+}
+const header = document.querySelector('.awsui-table-regions-container');
+await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
+const canvas1 = await elementToCanvas(header);
+const canvas2 = await elementToCanvas(table);
+const maxWidth = Math.max(canvas1.width, canvas2.width);
+const totalHeight = canvas1.height + canvas2.height;
+const collageCanvas = document.createElement('canvas');
+collageCanvas.width = maxWidth;
+collageCanvas.height = totalHeight;
+const ctx = collageCanvas.getContext('2d');
+ctx.fillStyle = 'white';
+ctx.fillRect(0, 0, maxWidth, totalHeight);
+const x1 = (maxWidth - canvas1.width) / 2;
+ctx.drawImage(canvas1, x1, 0);
+const x2 = (maxWidth - canvas2.width) / 2;
+ctx.drawImage(canvas2, x2, canvas1.height);
+var ret = collageCanvas.toDataURL('image/png');
+if (isManual) localStorage.setItem('lastImgCapture', ret);
+return ret;
 }
 
 
@@ -262,170 +262,251 @@ async function captureImage(isManual) {
 
 
 
-        async function captureImageV0() {
+    async function captureImageV0() {
 
-            function verticalCollage(dataUrl1, dataUrl2) {
-              return new Promise((resolve, reject) => {
-                const img1 = new Image();
-                img1.src = dataUrl1;
-                img1.onload = () => {
-                  const img2 = new Image();
-                  img2.src = dataUrl2;
-                  img2.onload = () => {
-                    const maxWidth = Math.max(img1.width, img2.width);
-                    const totalHeight = img1.height + img2.height;
-                    const canvas = document.createElement('canvas');
-                    canvas.width = maxWidth;
-                    canvas.height = totalHeight;
-                    const ctx = canvas.getContext('2d');
-                    ctx.fillStyle = 'white';
-                    ctx.fillRect(0, 0, maxWidth, totalHeight);
-            
-                    
-                    const x1 = (maxWidth - img1.width) / 2;
-                    ctx.drawImage(img1, x1, 0);
-            
-                    
-                    const x2 = (maxWidth - img2.width) / 2;
-                    ctx.drawImage(img2, x2, img1.height);
-            
-                    const collageDataUrl = canvas.toDataURL('image/png');
-                    resolve(collageDataUrl);
-                  };
-                  img2.onerror = reject;
-                };
-                img1.onerror = reject;
-              });
-            }
-
-
-            function loadScript(src) {
-                return new Promise((resolve, reject) => {
-                  if (window.html2canvas) {
-                    resolve();
-                    return;
-                  }
-                  const script = document.createElement('script');
-                  script.src = src;
-                  script.onload = resolve;
-                  script.onerror = reject;
-                  document.head.appendChild(script);
-                });
-            }
-
-            async function tableToPng(tableElement) {
-                const canvas = await html2canvas(tableElement, {
-                  allowTaint: true,
-                  scale: 1
-                });
-                return canvas.toDataURL('image/png');
-            }
-
-          
-            const container = document.querySelector('.awsui-table-container');
-            if (!container) {
-              alert('No .awsui-table-container found');
-              return;
-            }
-            const table = container.querySelector('table');
-            if (!table) {
-              alert('No table found in .awsui-table-container');
-              return;
-            }
-
-            const header = document.querySelector('.awsui-table-heading-container');
-
-            await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
-            const dataUrl1 = await tableToPng(header);
-            const dataUrl2 = await tableToPng(table);
-            return await verticalCollage(dataUrl1, dataUrl2);
+        function verticalCollage(dataUrl1, dataUrl2) {
+          return new Promise((resolve, reject) => {
+            const img1 = new Image();
+            img1.src = dataUrl1;
+            img1.onload = () => {
+              const img2 = new Image();
+              img2.src = dataUrl2;
+              img2.onload = () => {
+                const maxWidth = Math.max(img1.width, img2.width);
+                const totalHeight = img1.height + img2.height;
+                const canvas = document.createElement('canvas');
+                canvas.width = maxWidth;
+                canvas.height = totalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = 'white';
+                ctx.fillRect(0, 0, maxWidth, totalHeight);
+        
+                
+                const x1 = (maxWidth - img1.width) / 2;
+                ctx.drawImage(img1, x1, 0);
+        
+                
+                const x2 = (maxWidth - img2.width) / 2;
+                ctx.drawImage(img2, x2, img1.height);
+        
+                const collageDataUrl = canvas.toDataURL('image/png');
+                resolve(collageDataUrl);
+              };
+              img2.onerror = reject;
+            };
+            img1.onerror = reject;
+          });
         }
 
-class sharedConstLiterals {
-    static  MAX_CAPTURES = 7;
-    static  sharedGlobalIdentifier = "aoisejvna32452okjs";
-}
+
+        function loadScript(src) {
+            return new Promise((resolve, reject) => {
+              if (window.html2canvas) {
+                resolve();
+                return;
+              }
+              const script = document.createElement('script');
+              script.src = src;
+              script.onload = resolve;
+              script.onerror = reject;
+              document.head.appendChild(script);
+            });
+        }
+
+        async function tableToPng(tableElement) {
+            const canvas = await html2canvas(tableElement, {
+              allowTaint: true,
+              scale: 1
+            });
+            return canvas.toDataURL('image/png');
+        }
+
+      
+        const container = document.querySelector('.awsui-table-container');
+        if (!container) {
+          alert('No .awsui-table-container found');
+          return;
+        }
+        const table = container.querySelector('table');
+        if (!table) {
+          alert('No table found in .awsui-table-container');
+          return;
+        }
+
+        const header = document.querySelector('.awsui-table-heading-container');
+
+        await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
+        const dataUrl1 = await tableToPng(header);
+        const dataUrl2 = await tableToPng(table);
+        return await verticalCollage(dataUrl1, dataUrl2);
+    }
+
+
 
 
 
 
 /*
-            let alertBox = null;
-            let toggleBtn = null;
-            let isExpanded = true;
-            function createAlertBox() {
-              alertBox = document.createElement('div');
-              alertBox.style.cssText = `
+        let alertBox = null;
+        let toggleBtn = null;
+        let isExpanded = true;
+        function createAlertBox() {
+          alertBox = document.createElement('div');
+          alertBox.style.cssText = `
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 120px; // Approx 6 lines at 20px line-height
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            z-index: 1000;
+            display: block;
+          `;
+          toggleBtn = document.createElement('button');
+          toggleBtn.textContent = 'Alerts';
+          toggleBtn.style.cssText = `
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            z-index: 1000;
+            display: none;
+          `;
+          toggleBtn.onclick = () => {
+            isExpanded = !isExpanded;
+            if (isExpanded) {
+              alertBox.style.display = 'block';
+              toggleBtn.style.display = 'none';
+            } else {
+              alertBox.style.display = 'none';
+              toggleBtn.style.display = 'block';
+            }
+          };
+          document.body.appendChild(alertBox);
+          document.body.appendChild(toggleBtn);
+        }
+        function showAlert(message, type = 'blue') {
+          if (!alertBox) {
+            createAlertBox();
+          }
+          const alertItem = document.createElement('div');
+          alertItem.textContent = message;
+          let color;
+          switch (type) {
+            case 'red': color = '#900'; break;
+            case 'green': color = '#090'; break;
+            default: color = '#009';
+          }
+          alertItem.style.cssText = `
+            padding: 5px;
+            margin-bottom: 5px;
+            background: ${color};
+            color: white;
+          `;
+          alertBox.appendChild(alertItem);
+          alertBox.scrollTop = alertBox.scrollHeight;
+        }
+
+        */
+
+function getSharedGlobals(){
+   
+    if (window["aoisejvna32452okjs"])
+        return window["aoisejvna32452okjs"];
+    window["aoisejvna32452okjs"] = {};
+    var thingy = window["aoisejvna32452okjs"];
+
+    function setFilter(filter) {
+          alertSystem.currentFilter = filter;
+          Array.from(alertSystem.alertsContainer.children).forEach(alert => {
+            alert.style.display = (filter === 'all' || alert.classList.contains(filter)) ? 'block' : 'none';
+          });
+    };
+    const alertSystem = {};
+    alertSystem.outerAlertsContainer = document.createElement('div');
+    alertSystem.outerAlertsContainer.style.cssText = `
                 position: fixed;
                 top: 10px;
                 left: 50%;
                 transform: translateX(-50%);
                 width: 300px;
-                height: 120px; // Approx 6 lines at 20px line-height 
-                overflow-y: auto;
                 background: #fff;
                 border: 1px solid #ccc;
-                padding: 10px;
-                z-index: 1000;
-                display: block;
-              `;
-              toggleBtn = document.createElement('button');
-              toggleBtn.textContent = 'Alerts';
-              toggleBtn.style.cssText = `
-                position: fixed;
-                top: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                padding: 5px 10px;
-                background: #333;
-                color: white;
-                border: none;
-                cursor: pointer;
                 z-index: 1000;
                 display: none;
               `;
-              toggleBtn.onclick = () => {
-                isExpanded = !isExpanded;
-                if (isExpanded) {
-                  alertBox.style.display = 'block';
-                  toggleBtn.style.display = 'none';
-                } else {
-                  alertBox.style.display = 'none';
-                  toggleBtn.style.display = 'block';
-                }
-              };
-              document.body.appendChild(alertBox);
-              document.body.appendChild(toggleBtn);
-            }
-            function showAlert(message, type = 'blue') {
-              if (!alertBox) {
-                createAlertBox();
-              }
-              const alertItem = document.createElement('div');
-              alertItem.textContent = message;
-              let color;
-              switch (type) {
-                case 'red': color = '#900'; break;
-                case 'green': color = '#090'; break;
-                default: color = '#009';
-              }
-              alertItem.style.cssText = `
-                padding: 5px;
-                margin-bottom: 5px;
-                background: ${color};
-                color: white;
+    const header = document.createElement('div');
+    header.style.cssText = `padding: 5px; border-bottom: 1px solid #ccc;`;
+    ['all', 'red', 'green', 'blue'].forEach(type => {
+        const btn = document.createElement('button');
+        btn.textContent = type.charAt(0).toUpperCase() + type.slice(1);
+        btn.style.marginRight = '5px';
+        btn.onclick = () => setFilter(type);
+        header.appendChild(btn);
+    });
+    alertSystem.outerAlertsContainer.appendChild(header);
+    alertSystem.alertsContainer = document.createElement('div');
+    alertSystem.alertsContainer.style.cssText = `
+        max-height: 120px;
+        overflow-y: auto;
+        padding: 10px;
+      `;
+    alertSystem.outerAlertsContainer.appendChild(alertSystem.alertsContainer);
+    document.body.appendChild(alertSystem.outerAlertsContainer);
+    alertSystem.toggleButton = document.createElement('button');
+    alertSystem.toggleButton.textContent = 'Alerts';
+    alertSystem.toggleButton.style.cssText = `
+        position: fixed;
+         top: 10px;
+        right: calc(50% - 150px);
+        transform: translateX(-50%);
+        z-index: 1000;
+    `;
+    alertSystem.toggleButton.onclick = () => {
+        alertSystem.outerAlertsContainer.style.display = alertSystem.outerAlertsContainer.style.display === 'none' ? 'block' : 'none';
+    };
+    document.body.appendChild(alertSystem.toggleButton);
+            
+
+
+
+
+    thingy.showAlert=  function (message, type = 'blue',showTime=true) {
+          
+          const alert = document.createElement('div');
+          const messageEl = document.createElement("span");
+          messageEl.textContent = message;
+          if(showTime){
+              const timeEl = document.createElement("span");
+              timeEl.textContent = new Date().toLocaleTimeString('en-US', {hour12: false });
+              timeEl.style.cssText =`
+                color: black;
+                background-color: white;
               `;
-              alertBox.appendChild(alertItem);
-              alertBox.scrollTop = alertBox.scrollHeight;
-            }
-
-            */
-
-function initializeSharedGlobals(){
-    if (window[sharedConstLiterals.sharedGlobalIdentifier])
-        return window[sharedConstLiterals.sharedGlobalIdentifier];
-    window[sharedConstLiterals.sharedGlobalIdentifier] = {};
-    var thingy = window[sharedConstLiterals.sharedGlobalIdentifier];
+              alert.appendChild(timeEl);
+          }
+          alert.appendChild(messageEl);
+          alert.classList.add('alert', type);
+          alert.style.cssText = `
+            padding: 5px;
+            margin-bottom: 5px;
+            color: white;
+            background-color: ${type};
+          `;
+          alertSystem.alertsContainer.appendChild(alert);
+          alertSystem.alertsContainer.scrollTop = alertSystem.alertsContainer.scrollHeight;
+    };
+    thingy.MAX_CAPTURES = 7;
+    
     thingy.tableRefreshDetector_capture= {
             rando: "oisj2389sdfn9"
         ,
@@ -463,445 +544,366 @@ function initializeSharedGlobals(){
                 }
             }
     };
-    thingy.alertSystem = {
-             outerAlertsContainer : null;
-             alertsContainer : null;
-             toggleButton : null;
-             currentFilter : 'all';
-    };
+
+
     return thingy;
 }
-        
-        
-        function startWatcherMain() {
-
-            function initializeAlertSystem() {
-              var sharedGlobals = initializeSharedGlobals();
-              if (sharedGlobals.alertSystem.outerAlertsContainer) {
-                return sharedGlobals.alertSystem;
-              }
-              sharedGlobals.alertSystem.outerAlertsContainer = document.createElement('div');
-              sharedGlobals.alertSystem.outerAlertsContainer.style.cssText = `
-                position: fixed;
-                top: 10px;
-                left: 50%;
-                transform: translateX(-50%);
-                width: 300px;
-                background: #fff;
-                border: 1px solid #ccc;
-                z-index: 1000;
-                display: none;
-              `;
-              const header = document.createElement('div');
-              header.style.cssText = `padding: 5px; border-bottom: 1px solid #ccc;`;
-              ['all', 'red', 'green', 'blue'].forEach(type => {
-                const btn = document.createElement('button');
-                btn.textContent = type.charAt(0).toUpperCase() + type.slice(1);
-                btn.style.marginRight = '5px';
-                btn.onclick = () => setFilter(type);
-                header.appendChild(btn);
-              });
-              sharedGlobals.alertSystem.outerAlertsContainer.appendChild(header);
-              sharedGlobals.alertSystem.alertsContainer = document.createElement('div');
-              sharedGlobals.alertSystem.alertsContainer.style.cssText = `
-                max-height: 120px;
-                overflow-y: auto;
-                padding: 10px;
-              `;
-              sharedGlobals.alertSystem.outerAlertsContainer.appendChild(alertsContainer);
-              document.body.appendChild(outerAlertsContainer);
-              sharedGlobals.alertSystem.toggleButton = document.createElement('button');
-              sharedGlobals.alertSystem.toggleButton.textContent = 'Alerts';
-              sharedGlobals.alertSystem.toggleButton.style.cssText = `
-                position: fixed;
-                 top: 10px;
-                right: calc(50% - 150px);
-                transform: translateX(-50%);
-                z-index: 1000;
-              `;
-              sharedGlobals.alertSystem.toggleButton.onclick = () => {
-                sharedGlobals.alertSystem.outerAlertsContainer.style.display = sharedGlobals.alertSystem.outerAlertsContainer.style.display === 'none' ? 'block' : 'none';
-              };
-              document.body.appendChild(sharedGlobals.alertSystem.toggleButton);
-              return sharedGlobals.alertSystem;
-            }
-            function setFilter(filter) {
-              sharedGlobals.alertSystem.currentFilter = filter;
-              Array.from(sharedGlobals.alertSystem.alertsContainer.children).forEach(alert => {
-                alert.style.display = (filter === 'all' || alert.classList.contains(filter)) ? 'block' : 'none';
-              });
-            }
-            function showAlert(message, type = 'blue') {
-             
-              initializeAlertSystem();
-              
-              const alert = document.createElement('div');
-              alert.textContent = message;
-              alert.classList.add('alert', type);
-              alert.style.cssText = `
-                padding: 5px;
-                margin-bottom: 5px;
-                color: white;
-                background-color: ${type};
-              `;
-              alertsContainer.appendChild(alert);
-              alertsContainer.scrollTop = alertsContainer.scrollHeight;
-            }
-            
-
-
-            
-            if (window.watcherActive) {
-                const timeLeft = getTimeLeft();
-                alert(`Watcher is already active. Time left: ${formatTime(timeLeft)}`);
-                return;
-            }
-            
-            window.watcherActive = true;
-            
-            const CHECK_INTERVAL = 6000;
-            const CAPTURE_INTERVAL_SHORT = 15000;
-            const CAPTURE_INTERVAL_LONG = 90000;
-            const MIN_IMAGE_URL_LENGTH = 1000;
-            const alertTTL1 = 10 * 60 * 1000;
-            const alertTTL2 = 12 * 60 * 60 * 1000;
-            var earliestLikelyRecTime = 3*60*1000;
-            var timeChangeTolerance = 1000 * 60 * 4;
-            var lastTimeLeft = Number.POSITIVE_INFINITY;
-            var lastCaptureTime = 0;
-            
-            setInterval(async () => {
-                const timeLeft = getTimeLeft();
-                onTimerTick(timeLeft);
-                if (timeLeft < 0) {
-                    return;
-                };
     
-                lastTimeLeft = timeLeft;
+    
+function startWatcherMain() {
+    const globals = getSharedGlobals();
+    if (globals.watcherActive) {
+        const timeLeft = getTimeLeft();
+        alert(`Watcher is already active. Time left: ${formatTime(timeLeft)}`);
+        return;
+    }
+    
+    globals.watcherActive = true;
+    
+    const CHECK_INTERVAL = 6000;
+    const CAPTURE_INTERVAL_SHORT = 15000;
+    const CAPTURE_INTERVAL_LONG = 90000;
+    const MIN_IMAGE_URL_LENGTH = 1000;
+    const alertTTL1 = 10 * 60 * 1000;
+    const alertTTL2 = 12 * 60 * 60 * 1000;
+    var earliestLikelyRecTime = 3*60*1000;
+    var timeChangeTolerance = 1000 * 60 * 4;
+    var lastTimeLeft = Number.POSITIVE_INFINITY;
+    var lastCaptureTime = 0;
+    
+    setInterval(async () => {
+        const timeLeft = getTimeLeft();
+        onTimerTick(timeLeft);
+        if (timeLeft < 0) {
+            return;
+        };
 
-                async function   justCaptureItFox(rightNow) {
-                    var lastStoredTo = JSON.parse(localStorage.getItem('lastStoredTo') || "-1");
-                    var lastPlanIdCaptured = localStorage.getItem('lastPlanIdCaptured');
-                    console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
-                    var alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
-                    const detector = window[sharedConstLiterals.sharedGlobalIdentifier].tableRefreshDetector_capture;
-                    detector.start();
-                    const img = await captureImage();
-                    const dataObj = captureData();
-                    
-                    
-                    if(detector.didRefresh()) {
-                        showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,'blue');
-                        return;
-                    }
-                
-                    if(!dataObj) {
-                        showAlert(`last capture at ${alertTimeString} aborted. No data object.`,'red');
-                        return;
-                    }
+        lastTimeLeft = timeLeft;
 
-                    if(!dataObj.planId){
-                        showAlert(`last capture at ${alertTimeString} aborted because no planId captured`,'red');
-                        return;
-                    }
-                
-                    if (img.length<MIN_IMAGE_URL_LENGTH) {
-                        showAlert(`capture at ${alertTimeString} aborted. Image too small.`,'red');
-                        return;
-                    }
-                    alertTimeString = new Date(dataObj.timeOfCapture).toLocaleTimeString('en-US', {hour12: false });
-                    const toSave = {data: dataObj, image: img};
-                    const samePlan = dataObj.planId === lastPlanIdCaptured;
-                     var str = JSON.stringify(toSave);
-                        console.log("last,new): ");
-                        console.log(lastPlanIdCaptured);
-                        console.log(dataObj.planId);
-                    console.log(`lastStoredTo: ${lastStoredTo}`);
-                    if (!samePlan){
-                        console.log("not same plan");
-                        console.log(`lastStoredTo before: ${lastStoredTo}`);
-                       lastStoredTo = (lastStoredTo+1)%sharedConstLiterals.MAX_CAPTURES;
-                        console.log(`lastStoredTo after: ${lastStoredTo}`);
-                       localStorage.setItem(`lastPlanIdCaptured`, dataObj.planId);
-                       localStorage.setItem(`lastStoredTo`, ""+lastStoredTo);
-                    }
-                    localStorage.setItem(`captures[${lastStoredTo}]`, str);
-                    var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')||"[]");
-                    timesCaptured[lastStoredTo] = dataObj.timeOfCapture;
-                    localStorage.setItem(`timesCaptured`, JSON.stringify(timesCaptured));
-                    lastCaptureTime = dataObj.timeOfCapture;
-                    showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, 'green');
-                        
-                    
-                }
-
-                const rightNow = Date.now();
-                var diff = rightNow-lastCaptureTime;
-                console.log("diff: "+diff);
-                if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
-                    if(diff>CAPTURE_INTERVAL_SHORT) {
-                        await justCaptureItFox(rightNow);
-                    }
-                } else if (diff>CAPTURE_INTERVAL_LONG) {
-                    await justCaptureItFox(rightNow);
-                }
-            }, CHECK_INTERVAL);
-            alert('Watcher started.');
-        }
-        function clearCaptures (){
-            if(prompt("enter 'delete' below to delete all captures")==="delete"){
-                for (var i =0; i<sharedConstLiterals.MAX_CAPTURES; i++){
-                    localStorage.setItem(`captures[${i}]`, "");
-                }                     
-                localStorage.setItem(`lastPlanIdCaptured`, "");
-                localStorage.setItem(`lastStoredTo`, "");
-                localStorage.setItem('timesCaptured',"");
-
-            }
-        }
-
-            function formatTimeStamp(t,excludeDate){
-                return new Date(t).toLocaleString("en-US", {timeZoneName: "short", hour12: false, year: (excludeDate ? undefined : "numeric"), month: (excludeDate ? undefined : "short"), day: (excludeDate ? undefined : "numeric"), hour: 'numeric', minute: 'numeric'});
-
-            }
-        function retrieveCapture(){
-       
-            var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')||"[]");
+        async function   justCaptureItFox(rightNow) {
+            var lastStoredTo = JSON.parse(localStorage.getItem('lastStoredTo') || "-1");
+            var lastPlanIdCaptured = localStorage.getItem('lastPlanIdCaptured');
+            console.log("lastPlanIdCaptured: "+lastPlanIdCaptured);
+            var alertTimeString = new Date(rightNow).toLocaleTimeString('en-US', {hour12: false });
+            const detector = globals.tableRefreshDetector_capture;
+            detector.start();
+            const img = await captureImage();
+            const dataObj = captureData();
             
-            if (!timesCaptured.length) {
-                alert('No captures available.');
+            
+            if(detector.didRefresh()) {
+                globals.showAlert(`last capture at ${alertTimeString} aborted due to indication of recommendation refresh.`,'blue');
                 return;
             }
-            var str = "";
-            var cat = "";
-            for (var i =0; i<timesCaptured.length; i++){
-                cat = `[${i}] ${formatTimeStamp(timesCaptured[i])}` + "\n";
-                console.log(cat);
-                str+= cat;
-            }
-            const num = parseInt(prompt(str), 10);
-            if (isNaN(num) || num < 0 || num > timesCaptured.length-1) {
-                alert('Invalid number.');
+        
+            if(!dataObj) {
+                globals.showAlert(`last capture at ${alertTimeString} aborted. No data object.`,'red');
                 return;
             }
-            return JSON.parse(localStorage.getItem(`captures[${num}]`));
-        }
 
-        
-        
-        function copyToClipboard(str, name="text"){
-            navigator.clipboard.writeText(str).then(() => {
-                alert(name+' copied to clipboard!');
-            }).catch((e) => {
-                alert('Clipboard copy failed: ' + e);
-                console.log(e);
-            });
-        }
-  
-        function retrieveMarkdownToClipboard() {
-            var cap = retrieveCapture();
-            if (!cap) return;
-            const dataObj = cap.data;
-            copyMarkdownFromDataObj(dataObj);
-        }
-
-        function retrieveImageToClipboard(){
-            var cap = retrieveCapture();
-            if (!cap) return;
-            copyImage(cap.image);
-        }
-        
-        function summaryFromDataObject(dataObj, wantSimple=false){
-            function formatTimeStamp(t,excludeDate){
-                return new Date(t).toLocaleString("en-US", {timeZoneName: "short", hour12: false, year: (excludeDate ? undefined : "numeric"), month: (excludeDate ? undefined : "short"), day: (excludeDate ? undefined : "numeric"), hour: 'numeric', minute: 'numeric'});
-
+            if(!dataObj.planId){
+                globals.showAlert(`last capture at ${alertTimeString} aborted because no planId captured`,'red');
+                return;
             }
-            const ret = [
-                         [dataObj.planId]
-                         ,["time of recommendation : " +formatTimeStamp(dataObj.timeOfRecommendation)]
-                         ,["time of capture : " +formatTimeStamp(dataObj.timeOfCapture, true)]
-                         ,["time left : " +formatTime( dataObj.timeLeft)]
-                         ,[dataObj.status+" " +dataObj.completedCount+"/"+dataObj.totalCount]
-                        ];
-            return [
-                ret
-                , wantSimple ? 
-                      [ret[0],ret[4]].join("\n")+"\n"
-                    : [ret[0],ret[1],ret[2],ret[3],ret[4]].join("\n")+"\n"
-            ];
-        }
         
-        function buildMarkdownFromDataObject(dataObj){
-            let markdown = summaryFromDataObject(dataObj)[1]
-            +"===========================\n";
-
-            for (const row of dataObj.rows) {
-                if(row.length > 1) {
-                    markdown += verticalizedTableRowString(row,dataObj.headers) ;
-                    markdown+= "====================\n";
-                }
+            if (img.length<MIN_IMAGE_URL_LENGTH) {
+                globals.showAlert(`capture at ${alertTimeString} aborted. Image too small.`,'red');
+                return;
             }
-            return markdown;
+            alertTimeString = new Date(dataObj.timeOfCapture).toLocaleTimeString('en-US', {hour12: false });
+            const toSave = {data: dataObj, image: img};
+            const samePlan = dataObj.planId === lastPlanIdCaptured;
+             var str = JSON.stringify(toSave);
+                console.log("last,new): ");
+                console.log(lastPlanIdCaptured);
+                console.log(dataObj.planId);
+            console.log(`lastStoredTo: ${lastStoredTo}`);
+            if (!samePlan){
+                console.log("not same plan");
+                console.log(`lastStoredTo before: ${lastStoredTo}`);
+               lastStoredTo = (lastStoredTo+1)%globals.MAX_CAPTURES;
+                console.log(`lastStoredTo after: ${lastStoredTo}`);
+               localStorage.setItem(`lastPlanIdCaptured`, dataObj.planId);
+               localStorage.setItem(`lastStoredTo`, ""+lastStoredTo);
+            }
+            localStorage.setItem(`captures[${lastStoredTo}]`, str);
+            var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')||"[]");
+            timesCaptured[lastStoredTo] = dataObj.timeOfCapture;
+            localStorage.setItem(`timesCaptured`, JSON.stringify(timesCaptured));
+            lastCaptureTime = dataObj.timeOfCapture;
+            globals.showAlert(`last capture taken at ${alertTimeString} (${dataObj.rows.length},${img.length})`, 'green');
+                
+            
         }
- 
-        class FlexIterable {
-          constructor(...items) {
-            this.items = items.map(item => ({ value: item, processed: false }));
-            this.filters = [];
-          }
 
-          static from(array) {
-            return new FlexIterable(...array);
-          }
+        const rightNow = Date.now();
+        var diff = rightNow-lastCaptureTime;
+        console.log("diff: "+diff);
+        if (timeLeft <= CHECK_INTERVAL+earliestLikelyRecTime ) {
+            if(diff>CAPTURE_INTERVAL_SHORT) {
+                await justCaptureItFox(rightNow);
+            }
+        } else if (diff>CAPTURE_INTERVAL_LONG) {
+            await justCaptureItFox(rightNow);
+        }
+    }, CHECK_INTERVAL);
+    alert('Watcher started.');
+}
+    function clearCaptures (){
+        const globals = getSharedGlobals();
+        if(prompt("enter 'delete' below to delete all captures")==="delete"){
+            for (var i =0; i<globals.MAX_CAPTURES; i++){
+                localStorage.setItem(`captures[${i}]`, "");
+            }
+            localStorage.setItem(`lastPlanIdCaptured`, "");
+            localStorage.setItem(`lastStoredTo`, "");
+            localStorage.setItem('timesCaptured',"");
 
-          addFilter(filterCallback) {
-            this.filters.push(filterCallback);
-          }
+        }
+    }
 
-          removeFilter(filterCallback) {
-            this.filters = this.filters.filter(f => f !== filterCallback);
-          }
+        function formatTimeStamp(t,excludeDate){
+            return new Date(t).toLocaleString("en-US", {timeZoneName: "short", hour12: false, year: (excludeDate ? undefined : "numeric"), month: (excludeDate ? undefined : "short"), day: (excludeDate ? undefined : "numeric"), hour: 'numeric', minute: 'numeric'});
 
-          forEachRemaining(actionCallback) {
-            for (let i = 0; i < this.items.length; i++) {
-              if (!this.items[i].processed) {
-                const satisfiesFilters = this.filters.every(filter => filter(this.items[i].value, i));
-                if (satisfiesFilters) {
-                  const result = actionCallback(this.items[i].value, i);
-                  let wasProcessed = false;
-                  let stopProcessing = false;
+        }
+    function retrieveCapture(){
+   
+        var timesCaptured = JSON.parse(localStorage.getItem('timesCaptured')||"[]");
+        
+        if (!timesCaptured.length) {
+            alert('No captures available.');
+            return;
+        }
+        var str = "";
+        var cat = "";
+        for (var i =0; i<timesCaptured.length; i++){
+            cat = `[${i}] ${formatTimeStamp(timesCaptured[i])}` + "\n";
+            console.log(cat);
+            str+= cat;
+        }
+        const num = parseInt(prompt(str), 10);
+        if (isNaN(num) || num < 0 || num > timesCaptured.length-1) {
+            alert('Invalid number.');
+            return;
+        }
+        return JSON.parse(localStorage.getItem(`captures[${num}]`));
+    }
 
-                  if (Array.isArray(result)) {
-                    [wasProcessed, stopProcessing] = result;
-                  } else {
-                    wasProcessed = result;
-                  }
+    
+    
+    function copyToClipboard(str, name="text"){
+        navigator.clipboard.writeText(str).then(() => {
+            alert(name+' copied to clipboard!');
+        }).catch((e) => {
+            alert('Clipboard copy failed: ' + e);
+            console.log(e);
+        });
+    }
 
-                  if (wasProcessed) {
-                    this.items[i].processed = true;
-                  }
+    function retrieveMarkdownToClipboard() {
+        var cap = retrieveCapture();
+        if (!cap) return;
+        const dataObj = cap.data;
+        copyMarkdownFromDataObj(dataObj);
+    }
 
-                  if (stopProcessing) {
-                    return;
-                  }
-                }
+    function retrieveImageToClipboard(){
+        var cap = retrieveCapture();
+        if (!cap) return;
+        copyImage(cap.image);
+    }
+    
+    function summaryFromDataObject(dataObj, wantSimple=false){
+        function formatTimeStamp(t,excludeDate){
+            return new Date(t).toLocaleString("en-US", {timeZoneName: "short", hour12: false, year: (excludeDate ? undefined : "numeric"), month: (excludeDate ? undefined : "short"), day: (excludeDate ? undefined : "numeric"), hour: 'numeric', minute: 'numeric'});
+
+        }
+        const ret = [
+                     [dataObj.planId]
+                     ,["time of recommendation : " +formatTimeStamp(dataObj.timeOfRecommendation)]
+                     ,["time of capture : " +formatTimeStamp(dataObj.timeOfCapture, true)]
+                     ,["time left : " +formatTime( dataObj.timeLeft)]
+                     ,[dataObj.status+" " +dataObj.completedCount+"/"+dataObj.totalCount]
+                    ];
+        return [
+            ret
+            , wantSimple ?
+                  [ret[0],ret[4]].join("\n")+"\n"
+                : [ret[0],ret[1],ret[2],ret[3],ret[4]].join("\n")+"\n"
+        ];
+    }
+    
+    function buildMarkdownFromDataObject(dataObj){
+        let markdown = summaryFromDataObject(dataObj)[1]
+        +"===========================\n";
+
+        for (const row of dataObj.rows) {
+            if(row.length > 1) {
+                markdown += verticalizedTableRowString(row,dataObj.headers) ;
+                markdown+= "====================\n";
+            }
+        }
+        return markdown;
+    }
+
+    class FlexIterable {
+      constructor(...items) {
+        this.items = items.map(item => ({ value: item, processed: false }));
+        this.filters = [];
+      }
+
+      static from(array) {
+        return new FlexIterable(...array);
+      }
+
+      addFilter(filterCallback) {
+        this.filters.push(filterCallback);
+      }
+
+      removeFilter(filterCallback) {
+        this.filters = this.filters.filter(f => f !== filterCallback);
+      }
+
+      forEachRemaining(actionCallback) {
+        for (let i = 0; i < this.items.length; i++) {
+          if (!this.items[i].processed) {
+            const satisfiesFilters = this.filters.every(filter => filter(this.items[i].value, i));
+            if (satisfiesFilters) {
+              const result = actionCallback(this.items[i].value, i);
+              let wasProcessed = false;
+              let stopProcessing = false;
+
+              if (Array.isArray(result)) {
+                [wasProcessed, stopProcessing] = result;
+              } else {
+                wasProcessed = result;
+              }
+
+              if (wasProcessed) {
+                this.items[i].processed = true;
+              }
+
+              if (stopProcessing) {
+                return;
               }
             }
           }
-
-          reset() {
-            this.items.forEach(item => {
-              item.processed = false;
-            });
-          }
         }
-        
-        function verticalizedTableRowString(row, headers){
-            var str = "";
-            var headers = FlexIterable.from(headers);
-            headers.addFilter(header=>header.indexOf("Assigned?")<0);
-            headers.forEachRemaining( (v,i)=>{
-                var match = v.match(/([0-9]{2,3}) mins/);
-                if (!match){
-                    str += v+" : " + row[i] + "\n";
-                    return true;
-                }
-                else{
-                    return [false, true];
-                }
-            });
-            var minutesStr="";
-            var boxesStr="";
-            headers.forEachRemaining( (v,i)=>{
-               console.log(v);
-                var match = v.match(/([0-9]{2,3}) mins/);
-                if (match){
-                    minutesStr += (minutesStr?"/ ":"") + match[1];
-                    boxesStr += (boxesStr?"/ ":"") + row[i];
-                }
-                return !!match;
-            });
-            if (minutesStr){
-                str+= minutesStr + " mins : " + boxesStr + " packages\n";
-            }
-            headers.forEachRemaining( (v,i)=>{
+      }
+
+      reset() {
+        this.items.forEach(item => {
+          item.processed = false;
+        });
+      }
+    }
+    
+    function verticalizedTableRowString(row, headers){
+        var str = "";
+        var headers = FlexIterable.from(headers);
+        headers.addFilter(header=>header.indexOf("Assigned?")<0);
+        headers.forEachRemaining( (v,i)=>{
+            var match = v.match(/([0-9]{2,3}) mins/);
+            if (!match){
                 str += v+" : " + row[i] + "\n";
                 return true;
-            });
-            
-            return str;
-        }
-        function captureMarkdownToClipboard() {
-            const dataObj = captureData(true);
-            if (!dataObj) {
-                alert('Capture failed.');
-                return;
             }
-            
-            copyToClipboard(buildMarkdownFromDataObject(dataObj),"Markdown");
-        }
-
-        function copySummaryAndJSONFromDataObj(dataObj,asURL){
-            function createURLWithJSON(baseUrl, obj) {
-                const jsonStr = encodeURIComponent(JSON.stringify(obj));
-                return `${baseUrl}#${jsonStr}`;
-            }
-
-            let [tableSummaryRows, slackMsg] = summaryFromDataObject(dataObj);
-            const tableData = [...tableSummaryRows,dataObj.headers,...dataObj.rows];
-            if(asURL)
-                slackMsg+= createURLWithJSON("https://rustysand.github.io/bookmarklets/displayTable.html",tableData);
             else{
-                slackMsg+= "https://rustysand.github.io/bookmarklets/displayTable.html\n";
-                slackMsg+="```" + JSON.stringify(tableData) + "```";
+                return [false, true];
             }
-              
-            copyToClipboard(slackMsg,"summary and "+(asURL?"URL":"JSON"));
+        });
+        var minutesStr="";
+        var boxesStr="";
+        headers.forEachRemaining( (v,i)=>{
+           console.log(v);
+            var match = v.match(/([0-9]{2,3}) mins/);
+            if (match){
+                minutesStr += (minutesStr?"/ ":"") + match[1];
+                boxesStr += (boxesStr?"/ ":"") + row[i];
+            }
+            return !!match;
+        });
+        if (minutesStr){
+            str+= minutesStr + " mins : " + boxesStr + " packages\n";
+        }
+        headers.forEachRemaining( (v,i)=>{
+            str += v+" : " + row[i] + "\n";
+            return true;
+        });
+        
+        return str;
+    }
+    function captureMarkdownToClipboard() {
+        const dataObj = captureData(true);
+        if (!dataObj) {
+            alert('Capture failed.');
+            return;
         }
         
-        function captureSummaryAndJSONtoClipboard(asURL) {
-            const dataObj = captureData(true);
-            if (!dataObj) {
-                alert('Capture failed.');
-                return;
-            }
-            copySummaryAndJSONFromDataObj(dataObj,asURL);
+        copyToClipboard(buildMarkdownFromDataObject(dataObj),"Markdown");
+    }
 
+    function copySummaryAndJSONFromDataObj(dataObj,asURL){
+        function createURLWithJSON(baseUrl, obj) {
+            const jsonStr = encodeURIComponent(JSON.stringify(obj));
+            return `${baseUrl}#${jsonStr}`;
         }
-        function retrieveSummaryJSONtoClipboard(asURL) {
-            var cap = retrieveCapture();
-            if (!cap) return;
-            const dataObj = cap.data;
-            copySummaryAndJSONFromDataObj(dataObj,asURL);
+
+        let [tableSummaryRows, slackMsg] = summaryFromDataObject(dataObj);
+        const tableData = [...tableSummaryRows,dataObj.headers,...dataObj.rows];
+        if(asURL)
+            slackMsg+= createURLWithJSON("https://rustysand.github.io/bookmarklets/displayTable.html",tableData);
+        else{
+            slackMsg+= "https://rustysand.github.io/bookmarklets/displayTable.html\n";
+            slackMsg+="```" + JSON.stringify(tableData) + "```";
         }
- 
-        function downloadJsonAndMd() {
-            const dataObj = captureData(true);
-            if (!dataObj) {
-                alert('Capture failed.');
-                return;
-            }
-            const jsonData = JSON.stringify(dataObj, null, 2);
-            const blobJson = new Blob([jsonData], { type: 'application/json;charset=utf-8;' });
-            const urlJson = URL.createObjectURL(blobJson);
-            const linkJson = document.createElement('a');
-            linkJson.href = urlJson;
-            linkJson.download = 'tasks.json';
-            document.body.appendChild(linkJson);
-            linkJson.click();
-            document.body.removeChild(linkJson);
-            URL.revokeObjectURL(urlJson);
-            let markdown = buildMarkdownFromDataObject(dataObj);
-            const blobMd = new Blob([markdown], { type: 'text/markdown;charset=utf-8;' });
-            const urlMd = URL.createObjectURL(blobMd);
-            const linkMd = document.createElement('a');
-            linkMd.href = urlMd;
-            linkMd.download = 'tasks.md';
-            document.body.appendChild(linkMd);
-            linkMd.click();
-            document.body.removeChild(linkMd);
-            URL.revokeObjectURL(urlMd);
+          
+        copyToClipboard(slackMsg,"summary and "+(asURL?"URL":"JSON"));
+    }
+    
+    function captureSummaryAndJSONtoClipboard(asURL) {
+        const dataObj = captureData(true);
+        if (!dataObj) {
+            alert('Capture failed.');
+            return;
         }
+        copySummaryAndJSONFromDataObj(dataObj,asURL);
+
+    }
+    function retrieveSummaryJSONtoClipboard(asURL) {
+        var cap = retrieveCapture();
+        if (!cap) return;
+        const dataObj = cap.data;
+        copySummaryAndJSONFromDataObj(dataObj,asURL);
+    }
+
+    function downloadJsonAndMd() {
+        const dataObj = captureData(true);
+        if (!dataObj) {
+            alert('Capture failed.');
+            return;
+        }
+        const jsonData = JSON.stringify(dataObj, null, 2);
+        const blobJson = new Blob([jsonData], { type: 'application/json;charset=utf-8;' });
+        const urlJson = URL.createObjectURL(blobJson);
+        const linkJson = document.createElement('a');
+        linkJson.href = urlJson;
+        linkJson.download = 'tasks.json';
+        document.body.appendChild(linkJson);
+        linkJson.click();
+        document.body.removeChild(linkJson);
+        URL.revokeObjectURL(urlJson);
+        let markdown = buildMarkdownFromDataObject(dataObj);
+        const blobMd = new Blob([markdown], { type: 'text/markdown;charset=utf-8;' });
+        const urlMd = URL.createObjectURL(blobMd);
+        const linkMd = document.createElement('a');
+        linkMd.href = urlMd;
+        linkMd.download = 'tasks.md';
+        document.body.appendChild(linkMd);
+        linkMd.click();
+        document.body.removeChild(linkMd);
+        URL.revokeObjectURL(urlMd);
+    }
 
 
 
@@ -917,329 +919,340 @@ function initializeSharedGlobals(){
 
 
 async function copyImage(dataUrl) {
-  const byteString = atob(dataUrl.split(',')[1]);
-  const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
-  const ab = new ArrayBuffer(byteString.length);
-  const ia = new Uint8Array(ab);
-  for (let i = 0; i < byteString.length; i++) {
-    ia[i] = byteString.charCodeAt(i);
-  }
-  const blob = new Blob([ab], { type: mimeString });
-  const clipboardItem = new ClipboardItem({ 'image/png': blob });
-  await navigator.clipboard.write([clipboardItem]);
-  alert('PNG image copied to clipboard! Paste into Slack or other apps.');
+const byteString = atob(dataUrl.split(',')[1]);
+const mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0];
+const ab = new ArrayBuffer(byteString.length);
+const ia = new Uint8Array(ab);
+for (let i = 0; i < byteString.length; i++) {
+ia[i] = byteString.charCodeAt(i);
+}
+const blob = new Blob([ab], { type: mimeString });
+const clipboardItem = new ClipboardItem({ 'image/png': blob });
+await navigator.clipboard.write([clipboardItem]);
+alert('PNG image copied to clipboard! Paste into Slack or other apps.');
 }
 
-        
+    
 
 async function captureImageToClipboard() {
 var url  = await captureImage(true);
 
-    await copyImage(url);
+await copyImage(url);
 }
 
 
 
 function minimalImageDebugFunction (){
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      if (window.html2canvas) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = src;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
+function loadScript(src) {
+return new Promise((resolve, reject) => {
+  if (window.html2canvas) {
+    resolve();
+    return;
   }
-  async function minimalTableToPng(tableElement) {
-    const canvas = await html2canvas(tableElement, {
-      allowTaint: true,
-      scale: 1
-    });
-    return canvas.toDataURL('image/png');
-  }
-  async function minimalSaveTableImage() {
-    const container = document.querySelector('.awsui-table-container');
-    if (!container) {
-      alert('No .awsui-table-container found');
-      return;
-    }
-    const table = container.querySelector('table');
-    if (!table) {
-      alert('No table found in .awsui-table-container');
-      return;
-    }
-    try {
-      await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
-      const dataUrl = await minimalTableToPng(table);
-      localStorage.setItem('tableImage', dataUrl);
-      const a = document.createElement('a');
-      a.href = dataUrl;
-      a.download = 'minimal-table.png';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      img.src = dataUrl;
-      img.onload = () => {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        canvas.style.position = 'fixed';
-        canvas.style.top = '0';
-        canvas.style.left = '0';
-        canvas.style.zIndex = '9999';
-        canvas.style.border = '2px solid green';
-        document.body.appendChild(canvas);
-        setTimeout(() => {
-          document.body.removeChild(canvas);
-        }, 5000);
-      };
-      alert('Minimal debug save complete. Downloaded PNG. Displayed for 5s. Dimensions: ' + img.width + 'x' + img.height);
-    } catch (err) {
-      alert('Error: ' + err.message);
-    }
-  }
-  minimalSaveTableImage();
+  const script = document.createElement('script');
+  script.src = src;
+  script.onload = resolve;
+  script.onerror = reject;
+  document.head.appendChild(script);
+});
+}
+async function minimalTableToPng(tableElement) {
+const canvas = await html2canvas(tableElement, {
+  allowTaint: true,
+  scale: 1
+});
+return canvas.toDataURL('image/png');
+}
+async function minimalSaveTableImage() {
+const container = document.querySelector('.awsui-table-container');
+if (!container) {
+  alert('No .awsui-table-container found');
+  return;
+}
+const table = container.querySelector('table');
+if (!table) {
+  alert('No table found in .awsui-table-container');
+  return;
+}
+try {
+  await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
+  const dataUrl = await minimalTableToPng(table);
+  localStorage.setItem('tableImage', dataUrl);
+  const a = document.createElement('a');
+  a.href = dataUrl;
+  a.download = 'minimal-table.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.src = dataUrl;
+  img.onload = () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.zIndex = '9999';
+    canvas.style.border = '2px solid green';
+    document.body.appendChild(canvas);
+    setTimeout(() => {
+      document.body.removeChild(canvas);
+    }, 5000);
+  };
+  alert('Minimal debug save complete. Downloaded PNG. Displayed for 5s. Dimensions: ' + img.width + 'x' + img.height);
+} catch (err) {
+  alert('Error: ' + err.message);
+}
+}
+minimalSaveTableImage();
 }
 
 
 function imageDebugFunction (){
-  function loadScript(src) {
-    return new Promise((resolve, reject) => {
-      if (window.html2canvas) {
-        resolve();
-        return;
-      }
-      const script = document.createElement('script');
-      script.src = src;
-      script.onload = resolve;
-      script.onerror = reject;
-      document.head.appendChild(script);
-    });
+function loadScript(src) {
+return new Promise((resolve, reject) => {
+  if (window.html2canvas) {
+    resolve();
+    return;
   }
-  async function simpleTableToPng(tableElement) {
-    console.log('Starting html2canvas render...');
-    console.log('Table element:', tableElement);
-    console.log('Table outerHTML length:', tableElement.outerHTML.length);
-    const canvas = await html2canvas(tableElement, {
-      allowTaint: true,
-      useCORS: false,
-      backgroundColor: null,
-      scale: 1,
-      logging: true,
-      onclone: (clonedDoc, element) => {
-        console.log('Clone created, table in clone:', clonedDoc.body.querySelector('table'));
-      }
-    });
-    console.log('Canvas created:', canvas);
-    console.log('Canvas dimensions:', canvas.width + 'x' + canvas.height);
-    const ctx = canvas.getContext('2d');
-    const imageData = ctx.getImageData(0, 0, 1, 1).data;
-    console.log('Top-left pixel RGBA:', imageData);
-    const dataUrl = canvas.toDataURL('image/png');
-    console.log('Data URL length:', dataUrl.length);
-    console.log('Data URL preview (first 100 chars):', dataUrl.substring(0, 100));
-    return { canvas, dataUrl };
-  }
-  async function debugSaveTableImage() {
-    const container = document.querySelector('.awsui-table-container');
-    if (!container) {
-      alert('No .awsui-table-container found');
-      return;
-    }
-    const table = container.querySelector('table');
-    if (!table) {
-      alert('No table found in .awsui-table-container');
-      return;
-    }
-    console.log('Found table, starting debug...');
-    try {
-      await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
-      const result = await simpleTableToPng(table);
-      localStorage.setItem('tableImage', result.dataUrl);
-      
-      const a = document.createElement('a');
-      a.href = result.dataUrl;
-      a.download = 'debug-table.png';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-     
-      result.canvas.style.position = 'fixed';
-      result.canvas.style.top = '0';
-      result.canvas.style.left = '0';
-      result.canvas.style.zIndex = '9999';
-      result.canvas.style.border = '2px solid red';
-      document.body.appendChild(result.canvas);
-      setTimeout(() => {
-        document.body.removeChild(result.canvas);
-      }, 10000);
-      alert('Debug save complete. Downloaded PNG. Check console and on-screen canvas. Data URL length: ' + result.dataUrl.length);
-    } catch (err) {
-      console.error('Error:', err);
-      alert('Error: ' + err.message);
-    }
-  }
-  debugSaveTableImage();
+  const script = document.createElement('script');
+  script.src = src;
+  script.onload = resolve;
+  script.onerror = reject;
+  document.head.appendChild(script);
+});
 }
-       
+async function simpleTableToPng(tableElement) {
+console.log('Starting html2canvas render...');
+console.log('Table element:', tableElement);
+console.log('Table outerHTML length:', tableElement.outerHTML.length);
+const canvas = await html2canvas(tableElement, {
+  allowTaint: true,
+  useCORS: false,
+  backgroundColor: null,
+  scale: 1,
+  logging: true,
+  onclone: (clonedDoc, element) => {
+    console.log('Clone created, table in clone:', clonedDoc.body.querySelector('table'));
+  }
+});
+console.log('Canvas created:', canvas);
+console.log('Canvas dimensions:', canvas.width + 'x' + canvas.height);
+const ctx = canvas.getContext('2d');
+const imageData = ctx.getImageData(0, 0, 1, 1).data;
+console.log('Top-left pixel RGBA:', imageData);
+const dataUrl = canvas.toDataURL('image/png');
+console.log('Data URL length:', dataUrl.length);
+console.log('Data URL preview (first 100 chars):', dataUrl.substring(0, 100));
+return { canvas, dataUrl };
+}
+async function debugSaveTableImage() {
+const container = document.querySelector('.awsui-table-container');
+if (!container) {
+  alert('No .awsui-table-container found');
+  return;
+}
+const table = container.querySelector('table');
+if (!table) {
+  alert('No table found in .awsui-table-container');
+  return;
+}
+console.log('Found table, starting debug...');
+try {
+  await loadScript('https://html2canvas.hertzen.com/dist/html2canvas.min.js');
+  const result = await simpleTableToPng(table);
+  localStorage.setItem('tableImage', result.dataUrl);
+  
+  const a = document.createElement('a');
+  a.href = result.dataUrl;
+  a.download = 'debug-table.png';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+ 
+  result.canvas.style.position = 'fixed';
+  result.canvas.style.top = '0';
+  result.canvas.style.left = '0';
+  result.canvas.style.zIndex = '9999';
+  result.canvas.style.border = '2px solid red';
+  document.body.appendChild(result.canvas);
+  setTimeout(() => {
+    document.body.removeChild(result.canvas);
+  }, 10000);
+  alert('Debug save complete. Downloaded PNG. Check console and on-screen canvas. Data URL length: ' + result.dataUrl.length);
+} catch (err) {
+  console.error('Error:', err);
+  alert('Error: ' + err.message);
+}
+}
+debugSaveTableImage();
+}
+   
 
 function getTBody (){
-    return document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];
+return document.getElementsByClassName('recommendations-table')[0].getElementsByTagName('tbody')[0];
 }
-        
-        function sortByLane() {
-            function getChuteAndLaneOfRow(row) {
-                const matches = row.getElementsByClassName('proposed-allocation-cell')[0].innerText.match(/FR-[0-9]([0-9]{2})([0-9]{2})/);
-                return [parseInt(matches[1]),parseInt(matches[2])];
-            }
-            function sortRows() {
-                var parent = getTBody();
-                var rows = Array.from(parent.getElementsByTagName('tr'));
-                if (!rows[0].isSortedByLane) {
-                    console.log('sorting');
-                    window[sharedConstLiterals.sharedGlobalIdentifier]?.tableRefreshDetector_capture.reportAlteration();
-                    for (var i = 0; i < rows.length; i++) {
-                        parent.removeChild(rows[i]);
-                    }
-                    rows = rows.filter(row => row.classList.contains('awsui-table-row'));
-                    rows.sort((a, b) =>{
-                        chuteLaneA = getChuteAndLaneOfRow(a);
-                        chuteLaneB = getChuteAndLaneOfRow(b);
-                        if (chuteLaneA[1]-chuteLaneB[1] == 0)
-                            return chuteLaneA[0]-chuteLaneB[0];
-                        return chuteLaneA[1]-chuteLaneB[1];
-                    });
-                    for (i = 0; i < rows.length; i++) {
-                        parent.appendChild(rows[i]);
-                    }
-                    rows[0].isSortedByLane = true;
-                } else {
-                    console.log('already sorted');
-                }
-            }
-            function trySort() {
-                try {
-                    sortRows();
-                } catch (e) {
-                    console.log('error when sorting!!!');
-                    console.log(e);
-                }
-                window.setTimeout(trySort, 1000);
-            }
-            window.setTimeout(trySort, 1000);
-        }
-        
-
-  function recopyImage(){
-      var text  = prompt("0 for image 1 for text");
-      if (text==="1"){
-        var v=localStorage.getItem('lastDataCapture');
-        copyToClipboard(v, "data");
-      } else{
-          var ur=localStorage.getItem('lastImgCapture');
-          if(ur)
-            copyImage(ur);
-      }
-  }
-  const recopyCode = [recopyImage, copyToClipboard, copyImage].map(f => f.toString()).join(';') + ';recopyImage();';
-  document.getElementById('recopy-image-link').href = 'javascript:(function(){' + recopyCode + '})()';
-        
-  function retrieveSummaryToClipboard(wantSimple=false){
-      var cap = retrieveCapture();
-      if(cap)
-        copyToClipboard(summaryFromDataObject(cap.data,wantSimple)[1], "summary");
-  }
-  
-          const retrieveSummaryCode = [retrieveCapture, copyToClipboard, formatTime,formatTimeStamp, summaryFromDataObject, retrieveSummaryToClipboard].map(f => f.toString()).join(';') + ';retrieveSummaryToClipboard();';
-          document.getElementById('retrieve-summary-link').href = 'javascript:(function(){' + retrieveSummaryCode + '})()';
-
-          const retrieveSimpleSummaryCode = [retrieveCapture, copyToClipboard, formatTime,formatTimeStamp, summaryFromDataObject, retrieveSummaryToClipboard]
-              .map(f => f.toString()).join(';')
-              + ';retrieveSummaryToClipboard(true);';
-          document.getElementById('retrieve-simplesummary-link').href = 'javascript:(function(){' + retrieveSimpleSummaryCode + '})()';
-  
-        function captureSummaryToClipboard(wantSimple=false){
-            copyToClipboard(summaryFromDataObject(captureData(true), wantSimple)[1], "summary");
-        }
-        
-        
-        const summaryCode = [getPlanId,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard].map(f => f.toString()).join(';') + ';captureSummaryToClipboard();';
-        document.getElementById('manual-summary-link').href = 'javascript:(function(){' + summaryCode + '})()';
-        
-        const simpleSummaryCode = [getPlanId,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard]
-            .map(f => f.toString()).join(';') 
-            + ';captureSummaryToClipboard(true);';
-        document.getElementById('manual-simplesummary-link').href = 'javascript:(function(){' + simpleSummaryCode + '})()';     
-
-        function retrieveJSONtoClipboard (){
-            var cap = retrieveCapture();
-            if(cap)
-                copyToClipboard(JSON.stringify(retrieveCapture().data),"JSON");
-        }
-        
-        
-        const retrieveJSONCode = [copyToClipboard, formatTime, formatTimeStamp,retrieveCapture,retrieveJSONtoClipboard].map(f => f.toString()).join(';')
-        + ';retrieveJSONtoClipboard();';
-        document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
- 
-        // Dynamically set the hrefs
-        const watcherCode = [sharedConstLiterals,getPlanId,getTBody,getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
-        document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
-
-
-        const retrieveMDCode = [retrieveMarkdownToClipboard, formatTime, formatTimeStamp,retrieveCapture,buildMarkdownFromDataObject,summaryFromDataObject,copyToClipboard].map(f => f.toString()).join(';') + ';retrieveMarkdownToClipboard();';
-        document.getElementById('retriever-md-link').href = 'javascript:(function(){' + retrieveMDCode + '})()';
-
-
-        
-        
-        const retrieveSummaryJSONcode = [copyToClipboard,formatTimeStamp, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
-        + ';retrieveSummaryJSON();';
-        document.getElementById('retriever-summaryjson-link').href = 'javascript:(function(){' + retrieveSummaryJSONcode + '})()';
-
-
-        const retrieveSummaryURLcode = [copyToClipboard,formatTimeStamp, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
-        + ';retrieveSummaryJSON(true);';
-        document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLcode + '})()';
-        
-
-        const manualCode = [getPlanId,captureData, captureMarkdownToClipboard,verticalizedTableRowString,FlexIterable,copyToClipboard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipboard();';
-        document.getElementById('manual-md-link').href = 'javascript:(function(){' + manualCode + '})()';
-        
-        const manualSummaryAndJSONbaseCode = [copySummaryAndJSONFromDataObj,summaryFromDataObject,getPlanId,captureData, captureSummaryAndJSONtoClipboard, copyToClipboard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
-        
-        const manualSummaryAndJSONcode =  manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard();';
-        document.getElementById('manual-saj-link').href = 'javascript:(function(){' + manualSummaryAndJSONcode + '})()';
-        
-        const manualSummaryAndURLcode = manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard(true);';
-        document.getElementById('manual-sajurl-link').href = 'javascript:(function(){' + manualSummaryAndURLcode + '})()';
-        
-        
-
-        const downloadCode = [getPlanId,captureData, downloadJsonAndMd,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';downloadJsonAndMd();';
-        document.getElementById('download-link').href = 'javascript:(function(){' + downloadCode + '})()';
-
-        const sortCode = [getTBody, sortByLane,getTimeLeft,getTimeLeftElement,formatTime, sharedConstLiterals].map(f => f.toString()).join(';') + ';sortByLane();';
-        document.getElementById('sorter-link').href = 'javascript:(function(){' + sortCode + '})()';
     
-        
-        const clearCapturesCode = [sharedConstLiterals,clearCaptures].map(f => f.toString()).join(';') + ';clearCaptures();';
-        document.getElementById('clear-captures-link').href = 'javascript:(function(){' + clearCapturesCode + '})()';
+function sortByLane() {
+    const globals = getSharedGlobals();
+    function getChuteAndLaneOfRow(row) {
+        const matches = row.getElementsByClassName('proposed-allocation-cell')[0].innerText.match(/FR-[0-9]([0-9]{2})([0-9]{2})/);
+        return [parseInt(matches[1]),parseInt(matches[2])];
+    }
+    function sortRows() {
+        var parent = getTBody();
+        var rows = Array.from(parent.getElementsByTagName('tr'));
+        if (!rows[0].isSortedByLane) {
+            console.log('sorting');
+            globals.showAlert('sorting...', "blue");
+            globals.tableRefreshDetector_capture.reportAlteration();
+            for (var i = 0; i < rows.length; i++) {
+                parent.removeChild(rows[i]);
+            }
+            rows = rows.filter(row => row.classList.contains('awsui-table-row'));
+            rows.sort((a, b) =>{
+                chuteLaneA = getChuteAndLaneOfRow(a);
+                chuteLaneB = getChuteAndLaneOfRow(b);
+                if (chuteLaneA[1]-chuteLaneB[1] == 0)
+                    return chuteLaneA[0]-chuteLaneB[0];
+                return chuteLaneA[1]-chuteLaneB[1];
+            });
+            for (i = 0; i < rows.length; i++) {
+                parent.appendChild(rows[i]);
+            }
+            rows[0].isSortedByLane = true;
+        } else {
+            console.log('already sorted');
+        }
+    }
+    function trySort() {
+        try {
+            sortRows();
+        } catch (e) {
+            console.log('error when sorting!!!');
+            console.log(e);
+            globals.showAlert('error when sorting: ' + e,"red");
+        }
+        window.setTimeout(trySort, 1000);
+    }
+    window.setTimeout(trySort, 1000);
+}
+    
 
-        
-        const captureImageCode = [captureImageToClipboard, copyImage, captureImage].map(f => f.toString()).join(';') + ';captureImageToClipboard();';
-        document.getElementById('capture-image-link').href = 'javascript:(function(){' + captureImageCode + '})()';
+function recopyImage(){
+  var text  = prompt("0 for image 1 for text");
+  if (text==="1"){
+    var v=localStorage.getItem('lastDataCapture');
+    copyToClipboard(v, "data");
+  } else{
+      var ur=localStorage.getItem('lastImgCapture');
+      if(ur)
+        copyImage(ur);
+  }
+}
+const recopyCode = [recopyImage, copyToClipboard, copyImage].map(f => f.toString()).join(';') + ';recopyImage();';
+document.getElementById('recopy-image-link').href = 'javascript:(function(){' + recopyCode + '})()';
+    
+function retrieveSummaryToClipboard(wantSimple=false){
+  var cap = retrieveCapture();
+  if(cap)
+    copyToClipboard(summaryFromDataObject(cap.data,wantSimple)[1], "summary");
+}
 
-        const retrieveImageCode = [retrieveImageToClipboard,formatTime,formatTimeStamp, retrieveCapture, captureImage, copyImage].map(f => f.toString()).join(';') + ';retrieveImageToClipboard();';
-        document.getElementById('retrieve-image-link').href = 'javascript:(function(){' + retrieveImageCode + '})()';
+      const retrieveSummaryCode = [retrieveCapture, copyToClipboard, formatTime,formatTimeStamp, summaryFromDataObject, retrieveSummaryToClipboard].map(f => f.toString()).join(';') + ';retrieveSummaryToClipboard();';
+      document.getElementById('retrieve-summary-link').href = 'javascript:(function(){' + retrieveSummaryCode + '})()';
+
+      const retrieveSimpleSummaryCode = [retrieveCapture, copyToClipboard, formatTime,formatTimeStamp, summaryFromDataObject, retrieveSummaryToClipboard]
+          .map(f => f.toString()).join(';')
+          + ';retrieveSummaryToClipboard(true);';
+      document.getElementById('retrieve-simplesummary-link').href = 'javascript:(function(){' + retrieveSimpleSummaryCode + '})()';
+
+    function captureSummaryToClipboard(wantSimple=false){
+        copyToClipboard(summaryFromDataObject(captureData(true), wantSimple)[1], "summary");
+    }
+    
+    
+    const summaryCode = [getPlanId,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard].map(f => f.toString()).join(';') + ';captureSummaryToClipboard();';
+    document.getElementById('manual-summary-link').href = 'javascript:(function(){' + summaryCode + '})()';
+    
+    const simpleSummaryCode = [getPlanId,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard]
+        .map(f => f.toString()).join(';')
+        + ';captureSummaryToClipboard(true);';
+    document.getElementById('manual-simplesummary-link').href = 'javascript:(function(){' + simpleSummaryCode + '})()';
+
+    function retrieveJSONtoClipboard (){
+        var cap = retrieveCapture();
+        if(cap)
+            copyToClipboard(JSON.stringify(retrieveCapture().data),"JSON");
+    }
+    
+    
+    const retrieveJSONCode = [copyToClipboard, formatTime, formatTimeStamp,retrieveCapture,retrieveJSONtoClipboard].map(f => f.toString()).join(';')
+    + ';retrieveJSONtoClipboard();';
+    document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
+
+    // Dynamically set the hrefs
+    const watcherCode = [getSharedGlobals,getPlanId,getTBody,getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
+    document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
+
+
+    const retrieveMDCode = [retrieveMarkdownToClipboard, formatTime, formatTimeStamp,retrieveCapture,buildMarkdownFromDataObject,summaryFromDataObject,copyToClipboard].map(f => f.toString()).join(';') + ';retrieveMarkdownToClipboard();';
+    document.getElementById('retriever-md-link').href = 'javascript:(function(){' + retrieveMDCode + '})()';
+
+
+    
+    
+    const retrieveSummaryJSONcode = [copyToClipboard,formatTimeStamp, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
+    + ';retrieveSummaryJSON();';
+    document.getElementById('retriever-summaryjson-link').href = 'javascript:(function(){' + retrieveSummaryJSONcode + '})()';
+
+
+    const retrieveSummaryURLcode = [copyToClipboard,formatTimeStamp, retrieveCapture,copySummaryAndJSONFromDataObj,summaryFromDataObject,retrieveSummaryJSONtoClipboard,formatTime].map(f => f.toString()).join(';')
+    + ';retrieveSummaryJSON(true);';
+    document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLcode + '})()';
+    
+
+    const manualCode = [getPlanId,captureData, captureMarkdownToClipboard,verticalizedTableRowString,FlexIterable,copyToClipboard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipboard();';
+    document.getElementById('manual-md-link').href = 'javascript:(function(){' + manualCode + '})()';
+    
+    const manualSummaryAndJSONbaseCode = [copySummaryAndJSONFromDataObj,summaryFromDataObject,getPlanId,captureData, captureSummaryAndJSONtoClipboard, copyToClipboard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
+    
+    const manualSummaryAndJSONcode =  manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard();';
+    document.getElementById('manual-saj-link').href = 'javascript:(function(){' + manualSummaryAndJSONcode + '})()';
+    
+    const manualSummaryAndURLcode = manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard(true);';
+    document.getElementById('manual-sajurl-link').href = 'javascript:(function(){' + manualSummaryAndURLcode + '})()';
+    
+    
+
+    const downloadCode = [getPlanId,captureData, downloadJsonAndMd,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';downloadJsonAndMd();';
+    document.getElementById('download-link').href = 'javascript:(function(){' + downloadCode + '})()';
+
+    const sortCode = [getPlanId,getTBody, sortByLane,getTimeLeft,getTimeLeftElement,formatTime, getSharedGlobals].map(f => f.toString()).join(';') + ';sortByLane();';
+    document.getElementById('sorter-link').href = 'javascript:(function(){' + sortCode + '})()';
+
+    
+    const clearCapturesCode = [getPlanId,getTBody,getSharedGlobals,clearCaptures].map(f => f.toString()).join(';') + ';clearCaptures();';
+    document.getElementById('clear-captures-link').href = 'javascript:(function(){' + clearCapturesCode + '})()';
+
+    
+    const captureImageCode = [captureImageToClipboard, copyImage, captureImage].map(f => f.toString()).join(';') + ';captureImageToClipboard();';
+    document.getElementById('capture-image-link').href = 'javascript:(function(){' + captureImageCode + '})()';
+
+    const retrieveImageCode = [retrieveImageToClipboard,formatTime,formatTimeStamp, retrieveCapture, captureImage, copyImage].map(f => f.toString()).join(';') + ';retrieveImageToClipboard();';
+    document.getElementById('retrieve-image-link').href = 'javascript:(function(){' + retrieveImageCode + '})()';
+    //TODO: if we are going to be making signifigant updates, lets implement a dependency graph to make bookmarklet compilation more readable and maintainable
+    /*
         
-    </script>
+        const dependencies = {
+            "captureImageToClipboard": ["captureImage", "copyImage"]
+        }
+     
+     
+     */
+</script>
 </body>
 </html>
