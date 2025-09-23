@@ -421,14 +421,12 @@ class sharedConstLiterals {
 
             */
 
-
-        
-        function startWatcherMain() {
-
-
-window[sharedConstLiterals.sharedGlobalIdentifier] = {
-    tableRefreshDetector_capture: 
-    {
+function initializeSharedGlobals(){
+    if (window[sharedConstLiterals.sharedGlobalIdentifier])
+        return window[sharedConstLiterals.sharedGlobalIdentifier];
+    window[sharedConstLiterals.sharedGlobalIdentifier] = {};
+    var thingy = window[sharedConstLiterals.sharedGlobalIdentifier];
+    thingy.tableRefreshDetector_capture= {
             rando: "oisj2389sdfn9"
         ,
             start() {
@@ -464,16 +462,26 @@ window[sharedConstLiterals.sharedGlobalIdentifier] = {
                     return rows[0];
                 }
             }
-    }
-};
+    };
+    thingy.alertSystem = {
+             outerAlertsContainer : null;
+             alertsContainer : null;
+             toggleButton : null;
+             currentFilter : 'all';
+    };
+    return thingy;
+}
+        
+        
+        function startWatcherMain() {
 
-            let outerAlertsContainer = null;
-            let alertsContainer = null;
-            let toggleButton = null;
-            let currentFilter = 'all';
             function initializeAlertSystem() {
-              outerAlertsContainer = document.createElement('div');
-              outerAlertsContainer.style.cssText = `
+              var sharedGlobals = initializeSharedGlobals();
+              if (sharedGlobals.alertSystem.outerAlertsContainer) {
+                return sharedGlobals.alertSystem;
+              }
+              sharedGlobals.alertSystem.outerAlertsContainer = document.createElement('div');
+              sharedGlobals.alertSystem.outerAlertsContainer.style.cssText = `
                 position: fixed;
                 top: 10px;
                 left: 50%;
@@ -493,39 +501,40 @@ window[sharedConstLiterals.sharedGlobalIdentifier] = {
                 btn.onclick = () => setFilter(type);
                 header.appendChild(btn);
               });
-              outerAlertsContainer.appendChild(header);
-              alertsContainer = document.createElement('div');
-              alertsContainer.style.cssText = `
+              sharedGlobals.alertSystem.outerAlertsContainer.appendChild(header);
+              sharedGlobals.alertSystem.alertsContainer = document.createElement('div');
+              sharedGlobals.alertSystem.alertsContainer.style.cssText = `
                 max-height: 120px;
                 overflow-y: auto;
                 padding: 10px;
               `;
-              outerAlertsContainer.appendChild(alertsContainer);
+              sharedGlobals.alertSystem.outerAlertsContainer.appendChild(alertsContainer);
               document.body.appendChild(outerAlertsContainer);
-              toggleButton = document.createElement('button');
-              toggleButton.textContent = 'Alerts';
-              toggleButton.style.cssText = `
+              sharedGlobals.alertSystem.toggleButton = document.createElement('button');
+              sharedGlobals.alertSystem.toggleButton.textContent = 'Alerts';
+              sharedGlobals.alertSystem.toggleButton.style.cssText = `
                 position: fixed;
                  top: 10px;
                 right: calc(50% - 150px);
                 transform: translateX(-50%);
                 z-index: 1000;
               `;
-              toggleButton.onclick = () => {
-                outerAlertsContainer.style.display = outerAlertsContainer.style.display === 'none' ? 'block' : 'none';
+              sharedGlobals.alertSystem.toggleButton.onclick = () => {
+                sharedGlobals.alertSystem.outerAlertsContainer.style.display = sharedGlobals.alertSystem.outerAlertsContainer.style.display === 'none' ? 'block' : 'none';
               };
-              document.body.appendChild(toggleButton);
+              document.body.appendChild(sharedGlobals.alertSystem.toggleButton);
+              return sharedGlobals.alertSystem;
             }
             function setFilter(filter) {
-              currentFilter = filter;
-              Array.from(alertsContainer.children).forEach(alert => {
+              sharedGlobals.alertSystem.currentFilter = filter;
+              Array.from(sharedGlobals.alertSystem.alertsContainer.children).forEach(alert => {
                 alert.style.display = (filter === 'all' || alert.classList.contains(filter)) ? 'block' : 'none';
               });
             }
             function showAlert(message, type = 'blue') {
-              if (!outerAlertsContainer) {
-                initializeAlertSystem();
-              }
+             
+              initializeAlertSystem();
+              
               const alert = document.createElement('div');
               alert.textContent = message;
               alert.classList.add('alert', type);
