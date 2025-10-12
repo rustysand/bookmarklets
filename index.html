@@ -97,7 +97,7 @@ When clicked, these bookmarklets will list the available captures by showing the
 <a id="retriever-summaryjson-link" href="#">Retrieve autocaptured summary and JSON  </a><br>
 <a id="retriever-summaryurl-link" href="#">Retrieve autocaptured summary and URL  </a><br>
 
-
+<h3>Other links</h3>
 <script>
     function getTimeLeftElement(){
          const timeDiv = document.querySelector('.sorter-table-header .foresight-table-metadata');
@@ -139,7 +139,7 @@ When clicked, these bookmarklets will list the available captures by showing the
         return planIdSpan.innerText;
     }
     
-    function captureData(isManual) {
+    function getHeaderCellsAndBodyRows(){
         const table = document.querySelector('.awsui-table-container');
         if (!table) return null;
         const thead = table.querySelector('thead');
@@ -149,9 +149,17 @@ When clicked, these bookmarklets will list the available captures by showing the
         const headerRow = thead.rows[0];
         if (!headerRow) return null;
         const headerCells = Array.from(headerRow.cells).map(cell => cell.innerText.trim());
-        const bodyRows = Array.from(tbody.rows);
+        const bodyRows = Array.from(tbody.rows);   
+        return [headerCells, bodyRows];
+    }
+    
+    function captureData(isManual) {
+        let a = getHeaderCellsAndBodyRows();
+        if(!a) return null;
+        let [headerCells, bodyRows] = a;
         let completedCount = 0;
         let totalCount = 0;
+        let recRows = [];
         for (const row of bodyRows) {
             const lastCellText = row.cells[row.cells.length - 1].innerText.trim();
             if (lastCellText === 'Completed') {
@@ -160,6 +168,7 @@ When clicked, these bookmarklets will list the available captures by showing the
             if(!row.classList.contains("recommendation-table-dependent-grouping-row")){
                 if (row.getElementsByTagName("td").length > 1) {
                     totalCount++;
+                    
                 }else{
                     alert("problem counting number of recommendations. TD tags <=1 but appropriate class not found.");
                 }
@@ -1108,7 +1117,7 @@ function sortByLane() {
     }
     function sortRows() {
         var parent = getTBody();
-        var rows = Array.from(parent.getElementsByTagName('tr'));
+        var [headers,rows] = getHeaderCellsAndBodyRows();
         if (!rows[0].isSortedByLane) {
             console.log('sorting');
             globals.showAlert('sorting...', "blue");
@@ -1117,6 +1126,20 @@ function sortByLane() {
                 parent.removeChild(rows[i]);
             }
             rows = rows.filter(row => row.classList.contains('awsui-table-row'));
+
+            
+            
+            
+        
+            
+  
+
+            function findIndexCaseInsensitive(arr, searchTerm){
+               const lc = searchTerm.toLowerCase();
+               return arr.findIndex(e => e.toLowerCase() === lc);
+                
+            }
+            const cptColumnIndex = findIndexCaseInsensitive(headers, "Next CPT");
             rows.sort((a, b) =>{
                 chuteLaneA = getChuteAndLaneOfRow(a);
                 chuteLaneB = getChuteAndLaneOfRow(b);
@@ -1126,6 +1149,21 @@ function sortByLane() {
             });
             for (i = 0; i < rows.length; i++) {
                 parent.appendChild(rows[i]);
+
+                cptcell = rows[i].cells[cptColumnIndex];
+                let dstr = cptcell.innerText;
+                let d = new Date(dstr);
+                d.setUTCFullYear((new Date()).getUTCFullYear() );
+                
+                let minutesDiff = (d.getTime() - Date.now())/1000/60;
+                let color = "";
+                if (minutesDiff < 80)
+                    color = "yellow";
+                if (minutesDiff < 45)
+                    color = "red";
+                if(color)
+                    cptcell.style.backgroundColor = color;
+                
             }
             rows[0].isSortedByLane = true;
         } else {
@@ -1179,10 +1217,10 @@ function retrieveSummaryToClipboard(wantSimple=false){
     }
     
     
-    const summaryCode = [getPlanId,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard].map(f => f.toString()).join(';') + ';captureSummaryToClipboard();';
+    const summaryCode = [getHeaderCellsAndBodyRows,getPlanId,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard].map(f => f.toString()).join(';') + ';captureSummaryToClipboard();';
     document.getElementById('manual-summary-link').href = 'javascript:(function(){' + summaryCode + '})()';
     
-    const simpleSummaryCode = [getPlanId,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard]
+    const simpleSummaryCode = [getPlanId,getHeaderCellsAndBodyRows,captureData, copyToClipboard, getTimeLeft, getTimeLeftElement, formatTime, summaryFromDataObject, captureSummaryToClipboard]
         .map(f => f.toString()).join(';')
         + ';captureSummaryToClipboard(true);';
     document.getElementById('manual-simplesummary-link').href = 'javascript:(function(){' + simpleSummaryCode + '})()';
@@ -1199,7 +1237,7 @@ function retrieveSummaryToClipboard(wantSimple=false){
     document.getElementById('retriever-json-link').href = 'javascript:(function(){' + retrieveJSONCode + '})()';
 
     // Dynamically set the hrefs
-    const watcherCode = [getSharedGlobals,getPlanId,getTBody,getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
+    const watcherCode = [getHeaderCellsAndBodyRows,getSharedGlobals,getPlanId,getTBody,getTimeLeft, formatTime, captureData, onTimerTick, startWatcherMain,formatTime,getTimeLeftElement, captureImage].map(f => f.toString()).join(';') + ';startWatcherMain();';
     document.getElementById('watcher-link').href = 'javascript:(function(){' + watcherCode + '})()';
 
 
@@ -1219,10 +1257,10 @@ function retrieveSummaryToClipboard(wantSimple=false){
     document.getElementById('retriever-summaryurl-link').href = 'javascript:(function(){' + retrieveSummaryURLcode + '})()';
     
 
-    const manualCode = [getPlanId,captureData, captureMarkdownToClipboard,verticalizedTableRowString,FlexIterable,copyToClipboard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipboard();';
+    const manualCode = [getPlanId,getHeaderCellsAndBodyRows,captureData, captureMarkdownToClipboard,verticalizedTableRowString,FlexIterable,copyToClipboard,getTimeLeft,getTimeLeftElement,formatTime,buildMarkdownFromDataObject,summaryFromDataObject].map(f => f.toString()).join(';') + ';captureMarkdownToClipboard();';
     document.getElementById('manual-md-link').href = 'javascript:(function(){' + manualCode + '})()';
     
-    const manualSummaryAndJSONbaseCode = [copySummaryAndJSONFromDataObj,summaryFromDataObject,getPlanId,captureData, captureSummaryAndJSONtoClipboard, copyToClipboard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
+    const manualSummaryAndJSONbaseCode = [getHeaderCellsAndBodyRows,copySummaryAndJSONFromDataObj,summaryFromDataObject,getPlanId,captureData, captureSummaryAndJSONtoClipboard, copyToClipboard, getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';');
     
     const manualSummaryAndJSONcode =  manualSummaryAndJSONbaseCode + ';captureSummaryAndJSONtoClipboard();';
     document.getElementById('manual-saj-link').href = 'javascript:(function(){' + manualSummaryAndJSONcode + '})()';
@@ -1232,10 +1270,10 @@ function retrieveSummaryToClipboard(wantSimple=false){
     
     
 
-    const downloadCode = [getPlanId,captureData, downloadJsonAndMd,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';downloadJsonAndMd();';
+    const downloadCode = [getPlanId,getHeaderCellsAndBodyRows,captureData, downloadJsonAndMd,getTimeLeft,getTimeLeftElement,formatTime].map(f => f.toString()).join(';') + ';downloadJsonAndMd();';
     document.getElementById('download-link').href = 'javascript:(function(){' + downloadCode + '})()';
 
-    const sortCode = [getPlanId,getTBody, sortByLane,getTimeLeft,getTimeLeftElement,formatTime, getSharedGlobals].map(f => f.toString()).join(';') + ';sortByLane();';
+    const sortCode = [getPlanId,getTBody,getHeaderCellsAndBodyRows, sortByLane,getTimeLeft,getTimeLeftElement,formatTime, getSharedGlobals].map(f => f.toString()).join(';') + ';sortByLane();';
     document.getElementById('sorter-link').href = 'javascript:(function(){' + sortCode + '})()';
 
     
