@@ -1156,13 +1156,12 @@ function sortByLane() {
                 d.setUTCFullYear((new Date()).getUTCFullYear() );
                 
                 let minutesDiff = (d.getTime() - Date.now())/1000/60;
-                let color = "";
+                let color = "white";
                 if (minutesDiff < 80)
                     color = "yellow";
                 if (minutesDiff < 45)
                     color = "red";
-                if(color)
-                    cptcell.style.backgroundColor = color;
+                cptcell.style.backgroundColor = color;
                 
             }
             rows[0].isSortedByLane = true;
