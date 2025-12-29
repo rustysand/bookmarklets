@@ -1166,7 +1166,7 @@ function sortByLane() {
             function multisort(arr, propsGetter){
                 arr.sort((a,b) => {
                     var aprops = propsGetter(a);
-                    var bprops = propsGetter(b)
+                    var bprops = propsGetter(b);
                     var diff;
                     var i=0;
                     while(i < aprops.length || i < bprops.length  ) {
@@ -1183,7 +1183,7 @@ function sortByLane() {
                 
             }
             
-           multisort(rows, e=>{var a = getChuteAndLaneOfRow(e); return [a[1],a[0],{"Add":1,"Remove":2}[a[2]] || 0]} );
+           multisort(rows, e=>{var a = getChuteAndLaneOfRow(e); return [a[1],a[0],{"Add":1,"Remove":2}[a[2]] || 0];} );
             for (i = 0; i < rows.length; i++) {
                 parent.appendChild(rows[i]);
 
